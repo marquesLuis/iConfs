@@ -12,7 +12,14 @@
 
 @interface NotificationViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView *NotificationsText;
 
+@property (strong, nonatomic) IBOutlet UILabel *notificationDate;
+@property (strong, nonatomic) IBOutlet UITextView *notificationText;
+
+@property int numNotification;
+
+@property (strong, nonatomic) NSString * notificationTitle;
+@property (strong, nonatomic) NSString * notificationDateContent;
+@property (strong, nonatomic) NSString * notificationContent;
 
 @end

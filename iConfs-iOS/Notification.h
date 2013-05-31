@@ -10,7 +10,7 @@
 
 @interface Notification : NSObject
 
-@property (nonatomic, strong) NSString *notificationText;
+@property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *date;
 

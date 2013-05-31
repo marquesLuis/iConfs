@@ -11,6 +11,7 @@
 		620ABA4A17578A4C000E5FFA /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4917578A4C000E5FFA /* NotificationViewController.m */; };
 		620ABA4D17579D67000E5FFA /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4C17579D67000E5FFA /* Notification.m */; };
 		620ABA5017579F05000E5FFA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4F17579F04000E5FFA /* HomeViewController.m */; };
+		62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9DBF865B1755FD6E00845BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865A1755FD6E00845BD7 /* UIKit.framework */; };
@@ -55,6 +56,8 @@
 		620ABA4C17579D67000E5FFA /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		620ABA4E17579F04000E5FFA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		620ABA4F17579F04000E5FFA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewController.h; sourceTree = "<group>"; };
+		62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
 		9D323B351758AD2600B2424D /* Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Update.m; sourceTree = "<group>"; };
 		9DBF86571755FD6E00845BD7 /* iConfs-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iConfs-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +163,8 @@
 				9DBF869C175600D700845BD7 /* Feedback.m */,
 				620ABA4817578A4C000E5FFA /* NotificationViewController.h */,
 				620ABA4917578A4C000E5FFA /* NotificationViewController.m */,
+				62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */,
+				62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */,
 				9DBF866B1755FD6E00845BD7 /* AppDelegate.h */,
 				9DBF866C1755FD6E00845BD7 /* AppDelegate.m */,
 				620ABA4B17579D67000E5FFA /* Notification.h */,
@@ -330,6 +335,7 @@
 				620ABA4D17579D67000E5FFA /* Notification.m in Sources */,
 				620ABA5017579F05000E5FFA /* HomeViewController.m in Sources */,
 				9D323B361758AD2600B2424D /* Update.m in Sources */,
+				62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
