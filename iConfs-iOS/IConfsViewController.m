@@ -57,16 +57,25 @@
 }
 
 - (IBAction)loginButton:(UIButton *)sender {
-   // [self postRquest];
-       
+    //TODO
+    NSString *email = @"lfmarques2@gmail.com";
+    NSString *password = @"123123123";
+    
+    if (self.emailField.text.length || self.passwordField.text.length){
+        email = self.emailField.text;
+        password = self.passwordField.text;
+    }
+    
+    // [self postRquest];
+    
     NSError *error;
     //First build up the JSON body for login
-   
+    
     NSString *initial = @"%@update/login";
     NSString *initialArgs = @"?registry[email]=";
-    NSString *withEmail = [initialArgs stringByAppendingString:self.emailField.text];
+    NSString *withEmail = [initialArgs stringByAppendingString:email];
     NSString *passStart = [withEmail stringByAppendingString:@"&registry[password]="];
-    NSString *completeArgs = [passStart stringByAppendingString:self.passwordField.text];
+    NSString *completeArgs = [passStart stringByAppendingString:password];
     
     NSString *completeLink = [initial stringByAppendingString:completeArgs];
     
