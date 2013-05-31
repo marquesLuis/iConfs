@@ -109,7 +109,6 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    NSLog(@"hello");
     Notification *notification = [arrayOfNotifications objectAtIndex:indexPath.row];
     
     cell.textLabel.text = [self cut: notification.title withRange:30];
