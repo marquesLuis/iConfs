@@ -172,7 +172,7 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-DU-T0g">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="241" id="YmU-M2-ecv"/>
+                                    <constraint firstAttribute="width" constant="241" id="cEB-NS-6u3"/>
                                     <constraint firstAttribute="height" constant="21" id="hbP-Dd-kn8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -181,20 +181,18 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWW-ls-H3G">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="nkW-hC-s7U"/>
-                                    <constraint firstAttribute="height" constant="128" id="zwl-rv-KSo"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tWW-ls-H3G" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="125" id="6F1-d4-1uc"/>
-                            <constraint firstItem="tWW-ls-H3G" firstAttribute="centerX" secondItem="aIq-VG-R5S" secondAttribute="centerX" type="default" id="ZiQ-ky-hON"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="38" id="hVa-Ra-iIe"/>
+                            <constraint firstAttribute="trailing" secondItem="tWW-ls-H3G" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="3Z7-SL-ouC"/>
+                            <constraint firstItem="SLu-DU-T0g" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="38" id="Fe1-8V-PeI"/>
+                            <constraint firstAttribute="bottom" secondItem="tWW-ls-H3G" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="RtM-RF-v6I"/>
+                            <constraint firstItem="tWW-ls-H3G" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="yht-f1-aHZ"/>
                             <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="20" symbolic="YES" type="default" id="zFd-8p-Koq"/>
+                            <constraint firstItem="tWW-ls-H3G" firstAttribute="top" secondItem="SLu-DU-T0g" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="zZP-xX-WMZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rhN-6Q-aQq"/>
