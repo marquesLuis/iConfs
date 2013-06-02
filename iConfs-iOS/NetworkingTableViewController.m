@@ -166,7 +166,7 @@
     else
         NSLog(@"nil");
     
-    cell.textLabel.text = networking.title;
+    //cell.textLabel.text = networking.title;
     
     
     //change colors
@@ -184,7 +184,6 @@
     netText.text = networking.text;
     [cell.contentView addSubview:netText];
     
-    //cell.detailTextLabel.text = networking.text; //[self cut:notification.text withRange:10000];
     
     //change colors
    // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
@@ -356,23 +355,38 @@
     return 50.0;
 }
 
-/*-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    NSLog(@"prepareForSegue");
-    NetworkingViewController * notif = [[NetworkingViewController alloc] init];
-    notif.notificationText = [[UITextView alloc] init];
-    notif = [segue destinationViewController];
+    NSLog(@"prepareForSegue2");
+    NetworkingViewController * network = [[NetworkingViewController alloc] init];
+    network.networkingDescription = [[UITextView alloc] init];
+    network.personPhoto = [[UIImageView alloc] init];
+    network = [segue destinationViewController];
+    NSLog(@"11111");
     NSIndexPath * path = [self.tableView indexPathForSelectedRow];
+    NSLog(@"11111");
+
+    Networking *networking = [arrayOfNetworking objectAtIndex:path.row];
+    NSLog(@"'%d'", [arrayOfNetworking count]);
+
+    network.numNetworking = path.row;
+    NSLog(networking.title);
+
+    network.networkingTitle.text = networking.title;
+    NSLog(@"11111");
+    Person * person = [self getPerson:networking.personID];
     
-    Networking *notification = [arrayOfNetworking objectAtIndex:path.row];
-    notif.numNotification = path.row;
-    notif.notificationTitle = notification.title;
-    notif.notificationDateContent = notification.date;
-    notif.notificationContent = notification.text;
+    #warning all name....
+    network.personName.text = person.firstName;
+    NSLog(@"11111");
+    network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+    network.photoPath = person.photo;
+    network.networkingDescriptionContent = networking.text;
+    NSLog(@"11111");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"segue2" sender:nil];
-}*/
+}
 
 @end
