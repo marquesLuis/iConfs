@@ -187,9 +187,60 @@
                     <view key="view" contentMode="scaleToFill" id="FDa-dO-WKK">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyp-fx-ucX">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="161" id="494-at-mpA"/>
+                                    <constraint firstAttribute="height" constant="21" id="MoE-0J-tJ7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mN3-hJ-eFw">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="339" id="lXD-SQ-Tvt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVf-UX-OtY">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="259" id="4fM-GG-SHW"/>
+                                    <constraint firstAttribute="height" constant="21" id="4uj-P8-4ry"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRa-Y6-7Bo">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="91" id="PMg-61-ojE"/>
+                                    <constraint firstAttribute="width" constant="104" id="rlN-3a-yaO"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mN3-hJ-eFw" firstAttribute="top" secondItem="pVf-UX-OtY" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="2QA-LN-tc4"/>
+                            <constraint firstItem="pVf-UX-OtY" firstAttribute="trailing" secondItem="mN3-hJ-eFw" secondAttribute="trailing" type="default" id="6RR-2T-UTn"/>
+                            <constraint firstItem="pVf-UX-OtY" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="123" id="HNl-9J-MCx"/>
+                            <constraint firstItem="pVf-UX-OtY" firstAttribute="leading" secondItem="mN3-hJ-eFw" secondAttribute="leading" type="default" id="NbO-Cu-Kea"/>
+                            <constraint firstItem="mN3-hJ-eFw" firstAttribute="centerX" secondItem="FDa-dO-WKK" secondAttribute="centerX" type="default" id="QMO-e3-dYa"/>
+                            <constraint firstItem="vyp-fx-ucX" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="34" id="hCo-ZI-PFE"/>
+                            <constraint firstItem="TRa-Y6-7Bo" firstAttribute="leading" secondItem="vyp-fx-ucX" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="lbe-Li-uAF"/>
+                            <constraint firstItem="pVf-UX-OtY" firstAttribute="leading" secondItem="vyp-fx-ucX" secondAttribute="leading" type="default" id="sNZ-jI-eDF"/>
+                            <constraint firstItem="TRa-Y6-7Bo" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="13" id="zAB-Kg-d9f"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NAr-kj-pVq"/>
+                    <connections>
+                        <outlet property="networkingDescription" destination="mN3-hJ-eFw" id="PoF-2a-KQs"/>
+                        <outlet property="networkingTitle" destination="pVf-UX-OtY" id="xYg-aL-KN5"/>
+                        <outlet property="personName" destination="vyp-fx-ucX" id="gXR-2g-4JU"/>
+                        <outlet property="personPhoto" destination="TRa-Y6-7Bo" id="uOx-06-HE7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqB-Du-eUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -440,6 +491,12 @@
         </class>
         <class className="NetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
+            </relationships>
         </class>
         <class className="NotificationTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationTableViewController.h"/>
