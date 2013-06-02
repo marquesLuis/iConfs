@@ -11,6 +11,10 @@
 		620ABA4A17578A4C000E5FFA /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4917578A4C000E5FFA /* NotificationViewController.m */; };
 		620ABA4D17579D67000E5FFA /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4C17579D67000E5FFA /* Notification.m */; };
 		620ABA5017579F05000E5FFA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 620ABA4F17579F04000E5FFA /* HomeViewController.m */; };
+		621A59EF175A36C300B02EEC /* NetworkingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59EE175A36C300B02EEC /* NetworkingTableViewController.m */; };
+		621A59F2175A403700B02EEC /* NetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F1175A403700B02EEC /* NetworkingViewController.m */; };
+		621A59F5175A40FE00B02EEC /* Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F4175A40FE00B02EEC /* Networking.m */; };
+		621A59F8175A5A5500B02EEC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F7175A5A5500B02EEC /* Person.m */; };
 		62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
@@ -56,6 +60,14 @@
 		620ABA4C17579D67000E5FFA /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		620ABA4E17579F04000E5FFA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		620ABA4F17579F04000E5FFA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		621A59ED175A36C300B02EEC /* NetworkingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingTableViewController.h; sourceTree = "<group>"; };
+		621A59EE175A36C300B02EEC /* NetworkingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingTableViewController.m; sourceTree = "<group>"; };
+		621A59F0175A403700B02EEC /* NetworkingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingViewController.h; sourceTree = "<group>"; };
+		621A59F1175A403700B02EEC /* NetworkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingViewController.m; sourceTree = "<group>"; };
+		621A59F3175A40FE00B02EEC /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
+		621A59F4175A40FE00B02EEC /* Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Networking.m; sourceTree = "<group>"; };
+		621A59F6175A5A5500B02EEC /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		621A59F7175A5A5500B02EEC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewController.h; sourceTree = "<group>"; };
 		62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
@@ -165,6 +177,14 @@
 				620ABA4917578A4C000E5FFA /* NotificationViewController.m */,
 				62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */,
 				62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */,
+				621A59ED175A36C300B02EEC /* NetworkingTableViewController.h */,
+				621A59EE175A36C300B02EEC /* NetworkingTableViewController.m */,
+				621A59F0175A403700B02EEC /* NetworkingViewController.h */,
+				621A59F1175A403700B02EEC /* NetworkingViewController.m */,
+				621A59F3175A40FE00B02EEC /* Networking.h */,
+				621A59F4175A40FE00B02EEC /* Networking.m */,
+				621A59F6175A5A5500B02EEC /* Person.h */,
+				621A59F7175A5A5500B02EEC /* Person.m */,
 				9DBF866B1755FD6E00845BD7 /* AppDelegate.h */,
 				9DBF866C1755FD6E00845BD7 /* AppDelegate.m */,
 				620ABA4B17579D67000E5FFA /* Notification.h */,
@@ -336,6 +356,10 @@
 				620ABA5017579F05000E5FFA /* HomeViewController.m in Sources */,
 				9D323B361758AD2600B2424D /* Update.m in Sources */,
 				62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */,
+				621A59EF175A36C300B02EEC /* NetworkingTableViewController.m in Sources */,
+				621A59F2175A403700B02EEC /* NetworkingViewController.m in Sources */,
+				621A59F5175A40FE00B02EEC /* Networking.m in Sources */,
+				621A59F8175A5A5500B02EEC /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
