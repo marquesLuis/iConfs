@@ -23,7 +23,7 @@
     return self;
 }
 
--(BOOL) postRequest:(NSMutableDictionary *)request
+-(NSMutableDictionary *) postRequest:(NSMutableDictionary *)request
 {
     NSError *error;
     NSMutableDictionary *jsonRequest = [self buildRequest];
@@ -43,24 +43,29 @@
         NSData * returnData = [NSURLConnection sendSynchronousRequest:urlRequest
                                                     returningResponse:&response
                                                                 error:&error];
+        //TODO ERASE THIS
         NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
-        
        NSLog(@"%@", newStr);
-        if ([newStr hasPrefix:@"<!DOCTYPE html>"]|| newStr==NULL)
-        {
-            return false;
-        }
+        
+        
+        NSError *jsonParsingError = nil;
+        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData
+                                                                  options:0 error:&jsonParsingError];
+        return json;
+    
     }
     @catch (NSException * e) {
-        return false;
+        return nil;
     }
     
-    return true;
+    return nil;
 }
 
 -(NSMutableDictionary *) buildRequest{
     NSMutableDictionary *request = [NSMutableDictionary dictionary];
-    [request setObject: [self buildFeedback] forKey:@"feedbacks"];
+    NSMutableArray *feedbacks = [self buildFeedback];
+    if(feedbacks && [feedbacks count])
+        [request setObject: feedbacks forKey:@"feedbacks"];
     return request;
 }
 
@@ -88,10 +93,58 @@
                 [result addObject:feedbacks];
             }
         }
+        sqlite3_close(notificationDB);
     }
-    sqlite3_close(notificationDB);
     return result;
     
 }
+
+-(NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
+    NSLog(@"Here");
+    for(id key in request.allKeys){
+        NSLog(key);
+    }
+    
+    NSMutableDictionary *feedbacks = [request objectForKey:@"feedbacks"];
+    if(feedbacks){
+        NSUInteger size = [[feedbacks objectForKey:@"size"] integerValue];
+        NSLog(@"%d", size);
+        NSMutableArray *feedbacks_delete = [NSMutableArray arrayWithCapacity:size];
+        
+        for(NSString *key in feedbacks.allKeys){
+            if(![key isEqual:@"size"]){
+                NSUInteger feedback = [[feedbacks objectForKey:key] integerValue];
+                [feedbacks_delete addObject:[NSNumber numberWithInt:feedback]];
+            }
+        }
+        
+        [self deleteFeedback:feedbacks_delete];
+    }
+    
+    return nil;
+}
+
+-(void) deleteFeedback:(NSMutableArray *)array
+{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"feedbacks.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        for(NSNumber *n in array){
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM FEEDBACKS WHERE ID = %d", [n integerValue]];
+        const char* query_sql = [querySql UTF8String];
+        
+            if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+                NSLog(@"Feedback eliminated");
+            }
+        }
+        sqlite3_close(notificationDB);
+    }
+}
+
 
 @end

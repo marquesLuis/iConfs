@@ -108,11 +108,13 @@
     }*/
     
     Update *update = [[Update alloc] initWithParams:completeArgs];
-    [update postRequest:[update buildRequest]];
+    [update handleResponse:[update postRequest:[update buildRequest]]];
+    
     
     //change view
     UIViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomePageIConfs"];
     [self presentViewController:second animated:YES completion:nil];
+     
     
 }
 
