@@ -35,8 +35,6 @@
     [self displayNotifications];
     
     self.title = @"Notifications";
-    //[self.NotificationsText setDelegate:self];
-    //[self.NotificationsText setDataSource:self];
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -76,8 +74,6 @@
         }
         
     }
-    //   [self.NotificationsText reloadData];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,16 +98,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    NSString *CellIdentifier = @"Cell1";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
+    //subtitle alloc
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     
     Notification *notification = [arrayOfNotifications objectAtIndex:indexPath.row];
     
     cell.textLabel.text = [self cut: notification.title withRange:30];
+    
     
     //change colors
     //cell.textLabel.textColor = [UIColor colorWithRed: 30.0/255.0 green: 144.0/255.0 blue:255.0/255.0 alpha: 1.0];
@@ -122,7 +118,7 @@
     //change colors
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     
-    // cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
@@ -144,6 +140,8 @@
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSLog(@"prepareForSegue");
     NotificationViewController * notif = [[NotificationViewController alloc] init];
     notif.notificationText = [[UITextView alloc] init];
     notif = [segue destinationViewController];
@@ -156,6 +154,8 @@
     notif.notificationContent = notification.text;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"segue1" sender:nil];
+}
 
 @end
