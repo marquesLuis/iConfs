@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "sqlite3.h"
-#import "Feedback.h"
-#import "Message.h"
 
 @interface HomeViewController : UIViewController
 
