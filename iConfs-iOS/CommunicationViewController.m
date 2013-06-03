@@ -107,7 +107,7 @@
     [alert show];
 }
 
--(void) insertOnDB:(NSString*)insert On:(BOOL)isfeedback WithName:(NSString*)name{
+-(void) insertOnDB:(NSString*)insert On:(BOOL)feedback WithName:(NSString*)name{
     sqlite3 *db;
     char *error;
     
@@ -121,7 +121,7 @@
         if (sqlite3_exec(db, [insert UTF8String], NULL, NULL, &error)==SQLITE_OK) {
             NSLog(@"Feedback added");
             
-            if(isfeedback){
+            if(feedback){
                 Feedback *feed = [[Feedback alloc]init];
                 [feed setFeedbackText:self.feedback.text];
             } else {

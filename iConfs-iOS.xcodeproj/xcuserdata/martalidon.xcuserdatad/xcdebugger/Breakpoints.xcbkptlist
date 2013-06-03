@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/NetworkingViewController.m"
-         timestampString = "391900650.893571"
+         timestampString = "391967182.233525"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "18"
-         endingLineNumber = "18"
-         landmarkName = "@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId;"
+         startingLineNumber = "17"
+         endingLineNumber = "17"
+         landmarkName = "@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId, numNetworking;"
          landmarkType = "19">
       </FileBreakpoint>
       <FileBreakpoint
@@ -21,12 +21,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/PersonProfileViewController.m"
-         timestampString = "391899995.506884"
+         timestampString = "391983086.221569"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "31"
-         endingLineNumber = "31"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-viewDidLoad"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "iConfs-iOS/NetworkingTableViewController.m"
+         timestampString = "391974773.684426"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "323"
+         endingLineNumber = "323"
+         landmarkName = "-prepareForSegue:sender:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "iConfs-iOS/NetworkingTableViewController.m"
+         timestampString = "391974773.684426"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "324"
+         endingLineNumber = "324"
+         landmarkName = "-prepareForSegue:sender:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

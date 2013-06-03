@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "NetworkingViewController.h"
+#import "HomeViewController.h"
 #import "Person.h"
 
 @interface NetworkingTableViewController : UITableViewController
+- (IBAction)goHome:(UIBarButtonItem *)sender;
+
+//- (IBAction)goBack:(UIBarButtonItem *)sender;
+@property (strong, nonatomic) UIViewController * previous;
 
 @end

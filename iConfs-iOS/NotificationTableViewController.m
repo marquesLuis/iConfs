@@ -141,7 +141,6 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
-    NSLog(@"prepareForSegue");
     NotificationViewController * notif = [[NotificationViewController alloc] init];
     notif.notificationText = [[UITextView alloc] init];
     notif = [segue destinationViewController];
@@ -158,4 +157,10 @@
     [self performSegueWithIdentifier:@"segue1" sender:nil];
 }
 
+- (IBAction)goHome:(UIBarButtonItem *)sender {
+    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    //second.previous = self;
+    //  [self performSegueWithIdentifier: @"segue3" sender: self];
+    [self presentViewController:second animated:YES completion:nil];
+}
 @end

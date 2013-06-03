@@ -11,11 +11,10 @@
 #import "PersonProfileViewController.h"
 
 @interface NetworkingViewController ()
-
 @end
 
 @implementation NetworkingViewController
-@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId;
+@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId, numNetworking;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,25 +33,14 @@
     
     self.title = netTitle;
     networkingTitle.text = netTitle;
-
+    
     [personName setTitle: namePerson forState: UIControlStateNormal];
-    NSLog(@"22222");
     [self.networkingDescription setEditable:NO];
     self.networkingDescription.text = networkingDescriptionContent;
-    NSLog(@"22222");
    // self.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     UIImage * imageFromURL = [UIImage imageWithContentsOfFile:photoPath];
-    
-    if(imageFromURL)
-        NSLog(@"not nil");
-    else
-        NSLog(@"nil");
-    
     [self.personPhoto setImage:imageFromURL];
-    
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -61,12 +49,20 @@
 }
 
 
-
-- (IBAction)personPage:(UIButton *)sender {
+/*- (IBAction)personPage:(UIButton *)sender {
     //change view
-    PersonProfileViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
+   PersonProfileViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
     second.personID = personId;
-    [self presentViewController:second animated:YES completion:nil];
+    //second.previous = self;
+  //  [self performSegueWithIdentifier: @"segue3" sender: self];
+   [self presentViewController:second animated:YES completion:nil];
+}*/
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    PersonProfileViewController *second = segue.destinationViewController;
+    second.personID = personId;
 }
+
 
 @end

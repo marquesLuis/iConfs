@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 #import "Update.h"
+#import "NetworkingTableViewController.h"
 
 @interface HomeViewController : UIViewController
 
 - (IBAction)updateButton:(UIBarButtonItem *)sender;
+//- (IBAction)networkingButton:(UIButton *)sender;
 
 @property (strong, nonatomic) Update * update;
 @end

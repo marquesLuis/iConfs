@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString * text;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, strong) NSString * date;
-//@property (nonatomic, strong) NSArray * area;
+@property (nonatomic, strong) NSString * numNetworking;
 @property (nonatomic, strong) NSString * personID;
 
 @end

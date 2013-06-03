@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 #import "sqlite3.h"
+#import "Networking.h"
+#import "NetworkingViewController.h"
 
-@interface PersonProfileViewController : UIViewController
-
+@interface PersonProfileViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+//@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+//- (IBAction)goBack:(UIBarButtonItem *)sender;
+//@property (strong, nonatomic) UIViewController * previous;
 @property (strong, nonatomic) NSString * personID;
-
 @end

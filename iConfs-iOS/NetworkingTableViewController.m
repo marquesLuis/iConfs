@@ -17,6 +17,7 @@
 @end
 
 @implementation NetworkingTableViewController
+@synthesize previous;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -37,7 +38,6 @@
     [self displayNetworking];
     
     self.title = @"Networking";
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -66,6 +66,8 @@
         
         if (sqlite3_prepare(networkingDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *netID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+
                 NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 NSString *text = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
@@ -76,6 +78,7 @@
                 [networking setText:text];
                 [networking setPersonID:personID];
                 [networking setDate:date];
+                //[networking setIdNet:netID];
                 [arrayOfNetworking addObject:networking];
             }
             sqlite3_close(networkingDB);
@@ -142,18 +145,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"view");
     NSString *CellIdentifier = @"Cell";    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     Networking *networking = [arrayOfNetworking objectAtIndex:indexPath.row];
-    int n = [arrayOfNetworking count];
-    NSLog(@"'%d'", n);
-    
-    if(networking)
-        NSLog(@"not nil");
-    else
-        NSLog(@"nil");
     
     //cell.textLabel.text = networking.title;
     
@@ -184,11 +179,6 @@
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     UIImage * imageFromURL = [UIImage imageWithContentsOfFile:person.photo];//@"/Users/martalidon/Pictures/apple.jpg"];//person.photo];
-
-    if(imageFromURL)
-        NSLog(@"not nil");
-    else
-        NSLog(@"nil");
     
     [imageView setImage:imageFromURL];
     [cell addSubview:imageView];
@@ -212,7 +202,7 @@
     } else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"]) {
         [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
     } else {
-      //  ALog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+        //error
     }
 }
 
@@ -231,17 +221,16 @@
     char *error;
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
          NSLog(@"insert person DB -> OK");
-        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO PEOPLE(FIRSTNAME, LASTNAME, PREFIX, AFFILIATION,  EMAIL, PHOTO, BIOGRAPHY, CALENDARVERSION, DATE) VALUES ('Marta', 'Lidon', 'Dr.', 'FCT', 'marta.lidon@gmail.com', '/Users/martalidon/Pictures/apple.jpg', 'ME', '1', '1900-01-01 00:00:00')"];
+        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO PEOPLE(FIRSTNAME, LASTNAME, PREFIX, AFFILIATION,  EMAIL, PHOTO, BIOGRAPHY, CALENDARVERSION, DATE) VALUES ('Ana', 'Gonçalves', 'Dr.', 'FCT', 'anaflores@gmail.com', '/Users/martalidon/Pictures/apple.jpg', 'Herodotus, a 5th century B.C. Greek historian is considered within the Western tradition to be the father of history, and, along with his contemporary Thucydides, helped form the foundations for the modern study of human history. Their work continues to be read today and the divide between the culture-focused Herodotus and the military-focused Thucydides remains a point of contention or approach in modern historical writing. In the Eastern tradition, a state chronicle the Spring and Autumn Annals was known to be compiled from as early as 722 BCE although only 2nd century BCE texts survived.Ancient influences have helped spawn variant interpretations of the nature of history which have evolved over the centuries and continue to change today. The modern study of history is wide-ranging, and includes the study of specific regions and the study of certain topical or thematical elements of historical investigation. Often history is taught as part of primary and secondary education, and the academic study of history is a major discipline in University studies.', '1', '1900-01-01 00:00:00')"];
         
         //NSLog(inserStmt);
         
         //Definitions
         NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSLog(documentsDirectoryPath);
+        
         //Get Image From URL
         UIImage * imageFromURL = [UIImage imageWithContentsOfFile:@"/Users/martalidon/Pictures/apple.jpg"];
-     //   NSLog(imageFromURL);
-        
+     
         //Save Image to Directory
         [self saveImage:imageFromURL withFileName:@"apple" ofType:@"jpg" inDirectory:documentsDirectoryPath];
         
@@ -309,24 +298,6 @@
 }
 */
 
-/*-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NotificationViewController * notif = [[NotificationViewController alloc] init];
-    notif.notificationText = [[UITextView alloc] init];
-    notif = [segue destinationViewController];
-    NSIndexPath * path = [self.tableView indexPathForSelectedRow];
-    
-    Notification *notification = [arrayOfNotifications objectAtIndex:path.row];
-    notif.numNotification = path.row;
-    notif.notificationTitle = notification.title;
-    notif.notificationDateContent = notification.date;
-    notif.notificationContent = notification.text;
-}*/
-
-
-/*
- *
- */
-
 /* 
  * tamanho de uma cell
  */
@@ -345,8 +316,9 @@
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+       NSLog(@"hello1");
     
-    NSLog(@"prepareForSegue2");
+    
     NetworkingViewController * network = [[NetworkingViewController alloc] init];
     network.networkingDescription = [[UITextView alloc] init];
     network.personPhoto = [[UIImageView alloc] init];
@@ -354,8 +326,12 @@
     NSIndexPath * path = [self.tableView indexPathForSelectedRow];
 
     Networking *networking = [arrayOfNetworking objectAtIndex:path.row];
+    NSLog(@"hello1");
+
     network.numNetworking = path.row;
-  
+    NSLog(@"hello1");
+
+    //network.previous = self;
 
     network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
@@ -365,10 +341,16 @@
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
+    NSLog(@"hello1");
 }
 
 /*- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"segue2" sender:nil];
 }*/
+
+- (IBAction)goHome:(UIBarButtonItem *)sender {
+    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
+    [self presentViewController:second animated:YES completion:nil];
+}
 
 @end

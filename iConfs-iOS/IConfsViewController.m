@@ -113,7 +113,7 @@
     
     
     //change view
-    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomePageIConfs"];
+    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     second.update = update;
     [self presentViewController:second animated:YES completion:nil];
      

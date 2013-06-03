@@ -63,12 +63,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q86-Wv-zlY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-337" y="-78"/>
+            <point key="canvasLocation" x="107" y="-78"/>
         </scene>
         <!--Home View Controller - HomePageIConfs-->
         <scene sceneID="IgL-MN-Lgp">
             <objects>
-                <viewController storyboardIdentifier="HomePageIConfs" title="HomePageIConfs" id="9qT-Qf-qzL" customClass="HomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" title="HomePageIConfs" id="9qT-Qf-qzL" customClass="HomeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAQ-Vj-hDn">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -100,7 +100,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Xau-kq-OwU" kind="modal" id="ujC-zi-QLx"/>
+                                    <segue destination="Xau-kq-OwU" kind="modal" id="iOw-0v-aWM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhJ-BT-VIX">
@@ -129,30 +129,30 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="oO3-oR-lgM" kind="modal" id="TsV-gp-8gB"/>
+                                    <segue destination="Tzd-UH-xKH" kind="modal" id="ObN-5k-8Hz"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="UFn-7s-Y4L" secondAttribute="trailing" constant="39" id="23a-RE-RQZ"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" type="default" id="B2P-rM-dJC"/>
-                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="centerX" secondItem="OGL-9d-R5S" secondAttribute="centerX" type="default" id="Pxw-CL-Fwl"/>
+                            <constraint firstAttribute="bottom" secondItem="Jjm-gF-B4D" secondAttribute="bottom" constant="27" id="Qv6-kW-NhR"/>
                             <constraint firstItem="yCg-gF-EnB" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" type="default" id="RJd-fd-ukW"/>
                             <constraint firstAttribute="trailing" secondItem="MhJ-BT-VIX" secondAttribute="trailing" constant="45" id="RjV-aY-ilf"/>
                             <constraint firstAttribute="trailing" secondItem="yCg-gF-EnB" secondAttribute="trailing" constant="8" id="cLV-Ma-zMA"/>
+                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="leading" secondItem="UFn-7s-Y4L" secondAttribute="leading" type="default" id="dAm-59-Qj9"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" type="default" id="dfC-tO-Hdv"/>
-                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="129" id="g8b-9u-2UL"/>
                             <constraint firstItem="MhJ-BT-VIX" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="209" id="gku-DX-Crv"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="trailing" secondItem="qAQ-Vj-hDn" secondAttribute="trailing" type="default" id="kFW-vP-fFJ"/>
                             <constraint firstAttribute="bottom" secondItem="UFn-7s-Y4L" secondAttribute="bottom" constant="227" id="n6S-BX-kgh"/>
+                            <constraint firstAttribute="trailing" secondItem="Jjm-gF-B4D" secondAttribute="trailing" constant="28" id="vHG-9z-3RV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IIK-dc-mJ7"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdX-JP-ijD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="604" y="-71"/>
+            <point key="canvasLocation" x="840" y="67"/>
         </scene>
         <!--Networking Table View Controller-->
         <scene sceneID="25T-xN-DZr">
@@ -172,7 +172,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="Lf2-YB-DYM" kind="push" identifier="segue2" id="4X1-zN-nKP"/>
+                                    <segue destination="Lf2-YB-DYM" kind="push" id="xie-RR-f5D"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -181,11 +181,17 @@
                             <outlet property="delegate" destination="ei1-3G-pZP" id="lKc-cJ-PsS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="QBa-bp-u7N"/>
+                    <navigationItem key="navigationItem" id="QBa-bp-u7N">
+                        <barButtonItem key="leftBarButtonItem" title="Home" id="pQl-xW-j6r">
+                            <connections>
+                                <action selector="goHome:" destination="ei1-3G-pZP" id="XwH-sV-4dR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rsZ-M1-5Ls" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1023" y="-955"/>
+            <point key="canvasLocation" x="1344" y="-875"/>
         </scene>
         <!--Networking View Controller-->
         <scene sceneID="Nyx-sv-VA1">
@@ -228,21 +234,21 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="personPage:" destination="Lf2-YB-DYM" eventType="touchUpInside" id="JwM-6M-m7a"/>
+                                    <segue destination="Yhg-Oj-yx2" kind="push" identifier="segue3" id="kjg-XO-6Hz"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mN3-hJ-eFw" firstAttribute="top" secondItem="pVf-UX-OtY" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="2QA-LN-tc4"/>
+                            <constraint firstItem="pVf-UX-OtY" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="122" id="2Ye-vZ-TKS"/>
                             <constraint firstItem="pVf-UX-OtY" firstAttribute="trailing" secondItem="mN3-hJ-eFw" secondAttribute="trailing" type="default" id="6RR-2T-UTn"/>
-                            <constraint firstItem="pVf-UX-OtY" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="123" id="HNl-9J-MCx"/>
                             <constraint firstAttribute="trailing" secondItem="TRa-Y6-7Bo" secondAttribute="trailing" constant="17" id="Lju-cU-ELz"/>
                             <constraint firstItem="vat-ms-T83" firstAttribute="leading" secondItem="pVf-UX-OtY" secondAttribute="leading" type="default" id="NTh-FM-Pwa"/>
                             <constraint firstItem="pVf-UX-OtY" firstAttribute="leading" secondItem="mN3-hJ-eFw" secondAttribute="leading" type="default" id="NbO-Cu-Kea"/>
                             <constraint firstItem="mN3-hJ-eFw" firstAttribute="centerX" secondItem="FDa-dO-WKK" secondAttribute="centerX" type="default" id="QMO-e3-dYa"/>
-                            <constraint firstItem="vat-ms-T83" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="29" id="bW5-Hf-VYV"/>
-                            <constraint firstItem="TRa-Y6-7Bo" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="13" id="zAB-Kg-d9f"/>
+                            <constraint firstItem="TRa-Y6-7Bo" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="12" id="af1-wW-PAn"/>
+                            <constraint firstItem="vat-ms-T83" firstAttribute="top" secondItem="FDa-dO-WKK" secondAttribute="top" constant="28" id="kNH-sf-Bs5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="NAr-kj-pVq"/>
@@ -255,14 +261,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqB-Du-eUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1504" y="-955"/>
+            <point key="canvasLocation" x="1807" y="-875"/>
         </scene>
         <!--Person Profile View Controller-->
         <scene sceneID="NXm-ed-Vsx">
             <objects>
                 <viewController storyboardIdentifier="PersonProfileViewController" id="Yhg-Oj-yx2" customClass="PersonProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jh6-9K-yfU">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XWA-n3-PaT">
@@ -275,14 +281,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XWA-n3-PaT" firstAttribute="top" secondItem="Jh6-9K-yfU" secondAttribute="top" constant="546" id="58H-6p-557"/>
-                            <constraint firstItem="XWA-n3-PaT" firstAttribute="centerX" secondItem="Jh6-9K-yfU" secondAttribute="centerX" type="default" id="EZs-bR-RbZ"/>
+                            <constraint firstAttribute="trailing" secondItem="XWA-n3-PaT" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ULT-NU-INo"/>
                             <constraint firstItem="XWA-n3-PaT" firstAttribute="leading" secondItem="Jh6-9K-yfU" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="nGC-db-5rl"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Of5-fO-KHX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHD-To-YFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050" y="-958"/>
+            <point key="canvasLocation" x="2328" y="-883"/>
         </scene>
         <!--Notification Table View Controller-->
         <scene sceneID="PlN-f5-YwT">
@@ -312,7 +319,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Tfy-xC-rVI">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="cmT-aU-g4v"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="cmT-aU-g4v">
+                            <connections>
+                                <action selector="goHome:" destination="bEv-H0-8mp" id="2m4-Ym-Hp5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="idU-ev-zhy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -375,7 +386,7 @@
                                     <navigationItem title="Organization" id="vBe-UK-UJ7">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="FA5-MN-KfN">
                                             <connections>
-                                                <segue destination="9qT-Qf-qzL" kind="modal" id="uLW-6d-Dsm"/>
+                                                <segue destination="9qT-Qf-qzL" kind="modal" id="b72-zS-eCI"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -461,7 +472,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEq-FH-buG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402" y="-41"/>
+            <point key="canvasLocation" x="1708" y="-61"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vrk-B4-Ued">
@@ -482,22 +493,22 @@
             <point key="canvasLocation" x="592" y="758"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="1fm-6b-XRy">
+        <scene sceneID="dwK-it-30O">
             <objects>
-                <navigationController id="oO3-oR-lgM" sceneMemberID="viewController">
+                <navigationController id="Tzd-UH-xKH" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fsy-KR-fib">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OGT-Nw-CUU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="ei1-3G-pZP" kind="relationship" relationship="rootViewController" id="Cqq-ao-DNA"/>
+                        <segue destination="ei1-3G-pZP" kind="relationship" relationship="rootViewController" id="vMt-19-wUE"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4iI-5p-xIZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h3Y-IX-87M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="590" y="-955"/>
+            <point key="canvasLocation" x="850" y="-875"/>
         </scene>
     </scenes>
     <classes>
@@ -514,6 +525,7 @@
         <class className="HomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="networkingButton:" candidateClass="UIButton"/>
                 <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -530,11 +542,13 @@
         </class>
         <class className="NetworkingTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goHome:" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="NetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="personPage:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
@@ -543,6 +557,9 @@
         </class>
         <class className="NotificationTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goHome:" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="NotificationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
@@ -553,6 +570,9 @@
         </class>
         <class className="PersonProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
