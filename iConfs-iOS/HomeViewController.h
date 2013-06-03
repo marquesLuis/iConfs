@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
+#import "Update.h"
 
 @interface HomeViewController : UIViewController
 
+- (IBAction)updateButton:(UIBarButtonItem *)sender;
+
+@property (strong, nonatomic) Update * update;
 @end

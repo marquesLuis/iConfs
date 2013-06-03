@@ -75,7 +75,13 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGL-9d-R5S">
                                 <items>
-                                    <navigationItem title="iConfs" id="OqJ-T0-Pxu"/>
+                                    <navigationItem title="iConfs" id="OqJ-T0-Pxu">
+                                        <barButtonItem key="leftBarButtonItem" title="Update" id="SZK-W3-5Ql">
+                                            <connections>
+                                                <action selector="updateButton:" destination="9qT-Qf-qzL" id="QRt-QC-jaZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="yCg-gF-EnB">
@@ -494,6 +500,61 @@
             <point key="canvasLocation" x="590" y="-955"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CommunicationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="sendButton:"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="IConfsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButton:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NetworkingTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingTableViewController.h"/>
+        </class>
+        <class className="NetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="personPage:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NotificationTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationTableViewController.h"/>
+        </class>
+        <class className="NotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="PersonProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

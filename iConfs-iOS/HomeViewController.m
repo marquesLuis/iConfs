@@ -13,6 +13,7 @@
 @end
 
 @implementation HomeViewController
+@synthesize update;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +28,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.update = update;
+    
+    
+    
     
 }
 
@@ -56,4 +61,7 @@
 
 
 
+- (IBAction)updateButton:(UIBarButtonItem *)sender {
+    [self.update update];
+}
 @end
