@@ -7,13 +7,15 @@
 //
 
 #import "NetworkingViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "PersonProfileViewController.h"
 
 @interface NetworkingViewController ()
 
 @end
 
 @implementation NetworkingViewController
-@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath;
+@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,7 +32,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = networkingTitle.text;
+    self.title = netTitle;
+    networkingTitle.text = netTitle;
+
+    [personName setTitle: namePerson forState: UIControlStateNormal];
     NSLog(@"22222");
     [self.networkingDescription setEditable:NO];
     self.networkingDescription.text = networkingDescriptionContent;
@@ -47,10 +52,21 @@
     
 }
 
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+- (IBAction)personPage:(UIButton *)sender {
+    //change view
+    PersonProfileViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
+    second.personID = personId;
+    [self presentViewController:second animated:YES completion:nil];
 }
 
 @end

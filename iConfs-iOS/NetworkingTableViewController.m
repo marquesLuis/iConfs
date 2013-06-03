@@ -59,10 +59,8 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"networkings.db"];
-     NSLog(@"net");
     if (sqlite3_open([dbPathString UTF8String], &networkingDB)==SQLITE_OK) {
         [arrayOfNetworking removeAllObjects];
-         NSLog(@"ok");
         NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS"];
         const char* query_sql = [querySql UTF8String];
         
@@ -72,7 +70,6 @@
                 NSString *text = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                 NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
-                NSLog(@"add net");
                  Networking *networking = [[Networking alloc]init];
                 
                 [networking setTitle:title];
@@ -95,11 +92,8 @@
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
-        [arrayOfNetworking removeAllObjects];
         
         NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE ID = %@", personId];
-        NSLog(@"person clause id: ");
-        //NSLog(querySql);
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -109,10 +103,7 @@
                 NSString *prefix = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                 NSString *affiliation = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                 NSString *email = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
-
-#warning BLOB é mau... 
                 NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
-
                 NSString *biography = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 7)];
                 NSString *calendarVersion = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
                 NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 9)];
@@ -125,11 +116,9 @@
                 [person setBiography:biography];
                 [person setCalendar_version:calendarVersion];
                 [person setDate:date];
-                [person setPhoto:photo];//[self getImageFromURL:photo]];
-                [arrayOfNetworking addObject:person];
+                [person setPhoto:photo];
             }
             sqlite3_close(peopleDB);
-          
         }
         
     }
@@ -362,31 +351,24 @@
     network.networkingDescription = [[UITextView alloc] init];
     network.personPhoto = [[UIImageView alloc] init];
     network = [segue destinationViewController];
-    NSLog(@"11111");
     NSIndexPath * path = [self.tableView indexPathForSelectedRow];
-    NSLog(@"11111");
 
     Networking *networking = [arrayOfNetworking objectAtIndex:path.row];
-    NSLog(@"'%d'", [arrayOfNetworking count]);
-
     network.numNetworking = path.row;
-    NSLog(networking.title);
+  
 
-    network.networkingTitle.text = networking.title;
-    NSLog(@"11111");
+    network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
     
-    #warning all name....
-    network.personName.text = person.firstName;
-    NSLog(@"11111");
+    network.namePerson = [[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
-    NSLog(@"11111");
+    network.personId = networking.personID;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+/*- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"segue2" sender:nil];
-}
+}*/
 
 @end
