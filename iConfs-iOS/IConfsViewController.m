@@ -109,7 +109,7 @@
     }*/
     
     Update *update = [[Update alloc] initWithParams:completeArgs];
-    [update handleResponse:[update postRequest:[update buildRequest]]];
+    [update update];
     
     
     //change view
@@ -137,7 +137,9 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MESSAGES( ID INTEGER PRIMARY KEY AUTOINCREMENT, MESSAGE TEXT, EMAIL TEXT)" WithName:@"messages.db"];
     
     //notifications
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE DATETIME)" WithName:@"notifications.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE DATETIME, SERVER_ID INTEGER)" WithName:@"notifications.db"];
+    
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notifications_status.db"];
     
     //areas
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AREA(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT)" WithName:@"areas.db"];
