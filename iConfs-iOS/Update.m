@@ -188,8 +188,8 @@
                sqlite3_finalize(statement);
            }
        }else{
-           NSString *lastUpdate = @"2013-06-02 21:04:13 UTC";
-           NSString *lastID = @"2";
+           NSString *lastUpdate = @"2000-01-01 00:00:00.0000 UTC";
+           NSString *lastID = @"0";
            [result setObject:lastUpdate forKey:@"last_update"];
            [result setObject:lastID forKey:@"last_id"];
            [result setObject:lastID forKey:@"last_removed_id"];
