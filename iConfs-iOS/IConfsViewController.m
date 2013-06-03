@@ -30,6 +30,7 @@
 	// Do any additional setup after loading the view.
     [self treatKeyboard];
     [self createDatabases];
+    [self initDB];
 }
 
 - (void)didReceiveMemoryWarning
@@ -138,7 +139,7 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MESSAGES( ID INTEGER PRIMARY KEY AUTOINCREMENT, MESSAGE TEXT, EMAIL TEXT)" WithName:@"messages.db"];
     
     //notifications
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE DATETIME, SERVER_ID INTEGER)" WithName:@"notifications.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE TEXT, SERVER_ID INTEGER)" WithName:@"notifications.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notifications_status.db"];
     
@@ -194,8 +195,27 @@
             s = [s stringByAppendingString:name];
             s = [s stringByAppendingString:@" created! =)"];
             NSLog(@"%@", s);
-            
         }
+    }
+}
+
+-(void) initDB{
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications_status.db"];
+    sqlite3 *db;
+    char *error;
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO NOTIFICATIONS_STATUS(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')"];
+        
+        const char *insert_stmt = [inserStmt UTF8String];
+        
+        if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
+            NSLog(@"Notification_Status added");
+        }else{
+            NSLog(@"%s", error);
+        }
+        sqlite3_close(db);
     }
 }
 

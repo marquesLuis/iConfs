@@ -33,7 +33,7 @@
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
     NSString *postURL = [@"http://0.0.0.0:3000/update/update" stringByAppendingString:[self auth_params]];
     
-  //  NSLog(postURL);
+    //  NSLog(postURL);
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [urlRequest setHTTPMethod:@"POST"];
@@ -48,14 +48,15 @@
                                                                 error:&error];
         //TODO ERASE THIS
         NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
-       NSLog(@"%@", newStr);
+        NSLog(@"String received:");
+        NSLog(@"%@", newStr);
         
         
         NSError *jsonParsingError = nil;
-        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData
-                                                                  options:0 error:&jsonParsingError];
+        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
+        
         return json;
-    
+        
     }
     @catch (NSException * e) {
         return nil;
@@ -152,57 +153,57 @@
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications_status.db"];
     
-   if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
-       
-       int last_row = 0;
-       NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM NOTIFICATIONS_STATUS"];
-       const char* query_sql = [querySql UTF8String];
-       
-       @try{
-           
-       
-       if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *messageID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-                last_row = [messageID integerValue];
-                break;
-            }
-            sqlite3_finalize(statement);
-        }
-       }@catch (NSException *e) {
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         
-       }
-       if(last_row){
-           querySql = [NSString stringWithFormat:@"SELECT * FROM NOTIFICATIONS_STATUS WHERE ID = %d",last_row];
-           query_sql = [querySql UTF8String];
-           
-           if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-               while (sqlite3_step(statement)==SQLITE_ROW) {
-                   NSString *lastUpdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
-                   NSString *lastID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
-                   NSString *lastRemovedID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
-                   [result setObject:lastUpdate forKey:@"last_update"];
-                   [result setObject:lastID forKey:@"last_id"];
-                   [result setObject:lastRemovedID forKey:@"last_removed_id"];
-               }
-               sqlite3_finalize(statement);
-           }
-       }else{
-           NSString *lastUpdate = @"2000-01-01 00:00:00.0000 UTC";
-           NSString *lastID = @"0";
-           [result setObject:lastUpdate forKey:@"last_update"];
-           [result setObject:lastID forKey:@"last_id"];
-           [result setObject:lastID forKey:@"last_removed_id"];
-       }
-       
+        int last_row = 0;
+        NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM NOTIFICATIONS_STATUS"];
+        const char* query_sql = [querySql UTF8String];
+        
+        @try{
+            
+            
+            if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *messageID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    last_row = [messageID integerValue];
+                    break;
+                }
+                sqlite3_finalize(statement);
+            }
+        }@catch (NSException *e) {
+            
+        }
+        if(last_row){
+            querySql = [NSString stringWithFormat:@"SELECT * FROM NOTIFICATIONS_STATUS WHERE ID = %d",last_row];
+            query_sql = [querySql UTF8String];
+            
+            if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *lastUpdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                    NSString *lastID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                    NSString *lastRemovedID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                    [result setObject:lastUpdate forKey:@"last_update"];
+                    [result setObject:lastID forKey:@"last_id"];
+                    [result setObject:lastRemovedID forKey:@"last_removed_id"];
+                }
+                sqlite3_finalize(statement);
+            }
+        }else{
+            NSString *lastUpdate = @"2000-01-01 00:00:01";
+            NSString *lastID = @"0";
+            [result setObject:lastUpdate forKey:@"last_update"];
+            [result setObject:lastID forKey:@"last_id"];
+            [result setObject:lastID forKey:@"last_removed_id"];
+        }
+        
         sqlite3_close(notificationDB);
     }
-
+    
     return result;
 }
 
 -(NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
-    NSLog(@"Here");
+    NSLog(@"Handling");
     for(id key in request.allKeys){
         NSLog(key);
     }
@@ -239,23 +240,111 @@
     
     NSMutableDictionary *notifications = [request objectForKey:@"notifications"];
     if(notifications){
+        NSLog(@"Handling Notifications");
+        NSUInteger last_notif_id = [[notifications objectForKey:@"last_id"] integerValue];
+        NSString *last_notif_update = [notifications objectForKey:@"last_update"];
+        NSUInteger last_notif_removed_id = [[notifications objectForKey:@"last_removed"] integerValue];
+        [self updateNotifStatusID:last_notif_id onDate:last_notif_update removed:last_notif_removed_id];
+        
         NSMutableDictionary *news = [notifications objectForKey:@"news"];
         if(news){
-            
+            for(NSString *key in news.allKeys){
+                NSMutableDictionary *notif = [news objectForKey:key];
+                [self addNotificationwithID:[[notif objectForKey:@"id"] integerValue] withTitle: [notif objectForKey:@"title"] withContent: [notif objectForKey:@"content"] withDate:[notif objectForKey:@"updated_at"]];
+            }
         }
         NSMutableDictionary *updated = [notifications objectForKey:@"updated"];
         if(updated){
-            
+            for(NSString *key in updated.allKeys){
+                NSMutableDictionary *notif = [updated objectForKey:key];
+                [self removeNotificationWithID: [[notif objectForKey:@"id"] integerValue]];
+                [self addNotificationwithID:[[notif objectForKey:@"id"] integerValue] withTitle: [notif objectForKey:@"title"] withContent: [notif objectForKey:@"content"] withDate:[notif objectForKey:@"updated_at"]];
+            }
         }
         NSMutableDictionary *deleted = [notifications objectForKey:@"deleted"];
         if(deleted){
+            NSUInteger size = [[deleted objectForKey:@"size"] integerValue];
+            NSMutableArray *notifs_delete = [NSMutableArray arrayWithCapacity:size];
             
+            for(NSString *key in deleted.allKeys){
+                if(![key isEqual:@"size"]){
+                    NSUInteger old_notif = [[deleted objectForKey:key] integerValue];
+                    [notifs_delete addObject:[NSNumber numberWithInt:old_notif]];
+                }
+            }
+            
+            [self deleteNotifs:notifs_delete];
         }
     }
     
     
     
     return nil;
+}
+
+
+-(void) removeNotificationWithID: (NSUInteger) server_id{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM NOTIFICATIONS WHERE ID = %d", server_id];
+        const char* query_sql = [querySql UTF8String];
+        
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"Notification eliminated");
+        }
+        
+        sqlite3_close(notificationDB);
+    }
+    
+}
+
+-(void) addNotificationwithID:(NSUInteger) server_id withTitle: (NSString *) title withContent: (NSString *) content withDate:(NSString *) date{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications.db"];
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO NOTIFICATIONS(TITLE, NOTIFICATION, DATE, SERVER_ID) VALUES ('%@', '%@', '%@', '%d')",title, content, date, server_id];
+        const char* query_sql = [querySql UTF8String];
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"Notification added");
+        }else{
+            NSLog(@"Notification Status NOT updated");
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
+    }
+}
+
+-(void) updateNotifStatusID:(NSUInteger) last_notif_id onDate:(NSString *) last_notif_update removed:(NSUInteger) last_notif_removed_id{
+    [self insertNotifStatusID:last_notif_id onDate:last_notif_update removed:last_notif_removed_id];
+}
+
+-(void) insertNotifStatusID:(NSUInteger) last_notif_id onDate:(NSString *) last_notif_update removed:(NSUInteger) last_notif_removed_id{
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications_status.db"];
+    sqlite3 *db;
+    char *error;
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO NOTIFICATIONS_STATUS(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('%@', '%d', '%d')",last_notif_update,last_notif_id,last_notif_removed_id];
+        
+        const char *insert_stmt = [inserStmt UTF8String];
+        
+        if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
+            NSLog(@"Notification_Status added");
+        }else{
+            NSLog(@"%s", error);
+        }
+        sqlite3_close(db);
+    }
 }
 
 -(void) deleteFeedback:(NSMutableArray *)array
@@ -268,9 +357,9 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         for(NSNumber *n in array){
-        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM FEEDBACKS WHERE ID = %d", [n integerValue]];
-        const char* query_sql = [querySql UTF8String];
-        
+            NSString *querySql = [NSString stringWithFormat:@"DELETE FROM FEEDBACKS WHERE ID = %d", [n integerValue]];
+            const char* query_sql = [querySql UTF8String];
+            
             if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
                 NSLog(@"Feedback eliminated");
             }
@@ -300,5 +389,25 @@
     }
 }
 
+-(void) deleteNotifs:(NSMutableArray *)array
+{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        for(NSNumber *n in array){
+            NSString *querySql = [NSString stringWithFormat:@"DELETE FROM NOTIFICATIONS WHERE ID = %d", [n integerValue]];
+            const char* query_sql = [querySql UTF8String];
+            
+            if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+                NSLog(@"Notification eliminated");
+            }
+        }
+        sqlite3_close(notificationDB);
+    }
+}
 
 @end
