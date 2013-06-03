@@ -13,6 +13,7 @@
 @interface Update : NSObject
 
 -(id) initWithParams:(NSString *)params;
+-(void) update;
 -(NSMutableDictionary *) postRequest:(NSMutableDictionary *)request;
 -(NSMutableDictionary *) buildRequest;
 -(NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request;
