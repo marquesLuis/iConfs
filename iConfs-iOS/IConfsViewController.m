@@ -30,7 +30,6 @@
 	// Do any additional setup after loading the view.
     [self treatKeyboard];
     [self createDatabases];
-    [self initDB];
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,10 +146,10 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AREA(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT)" WithName:@"areas.db"];
     
     //people
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, CALENDARVERSION INTEGER, DATE DATETIME)" WithName:@"people.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, DATE TEXT)" WithName:@"people.db"];
     
     //networkings
-#warning people is only an integer, not a firegn key...
+    #warning people is only an integer, not a firegn key...
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NETWORKINGS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NETWORKING TEXT, DATE DATETIME, PEOPLE INTEGER)" WithName:@"networkings.db"];
     
     //networking key and areas key
@@ -190,6 +189,8 @@
             sqlite3_exec(feedback, sql_stnt, NULL, NULL, &error);
             sqlite3_close(feedback);
             
+            if (![name compare:@"notifications_status.db"])
+                [self initDB];
             
             NSString *s = @"table ";
             s = [s stringByAppendingString:name];
