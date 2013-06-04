@@ -16,6 +16,14 @@
 		621A59F5175A40FE00B02EEC /* Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F4175A40FE00B02EEC /* Networking.m */; };
 		621A59F8175A5A5500B02EEC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F7175A5A5500B02EEC /* Person.m */; };
 		621A59FB175BC6D600B02EEC /* PersonProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59FA175BC6D600B02EEC /* PersonProfileViewController.m */; };
+		621A59FE175E012400B02EEC /* ProgramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59FD175E012400B02EEC /* ProgramViewController.m */; };
+		621A5A06175E18B100B02EEC /* Contacts.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A59FF175E18B100B02EEC /* Contacts.jpg */; };
+		621A5A07175E18B100B02EEC /* maps.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A00175E18B100B02EEC /* maps.jpg */; };
+		621A5A08175E18B100B02EEC /* Networking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A01175E18B100B02EEC /* Networking.jpg */; };
+		621A5A09175E18B100B02EEC /* Notes.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A02175E18B100B02EEC /* Notes.jpg */; };
+		621A5A0A175E18B100B02EEC /* Notifications.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A03175E18B100B02EEC /* Notifications.jpg */; };
+		621A5A0B175E18B100B02EEC /* Organization.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A04175E18B100B02EEC /* Organization.jpg */; };
+		621A5A0C175E18B100B02EEC /* Schedule.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A05175E18B100B02EEC /* Schedule.jpg */; };
 		62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
@@ -71,6 +79,15 @@
 		621A59F7175A5A5500B02EEC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		621A59F9175BC6D600B02EEC /* PersonProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonProfileViewController.h; sourceTree = "<group>"; };
 		621A59FA175BC6D600B02EEC /* PersonProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonProfileViewController.m; sourceTree = "<group>"; };
+		621A59FC175E012300B02EEC /* ProgramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramViewController.h; sourceTree = "<group>"; };
+		621A59FD175E012400B02EEC /* ProgramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramViewController.m; sourceTree = "<group>"; };
+		621A59FF175E18B100B02EEC /* Contacts.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Contacts.jpg; sourceTree = "<group>"; };
+		621A5A00175E18B100B02EEC /* maps.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = maps.jpg; sourceTree = "<group>"; };
+		621A5A01175E18B100B02EEC /* Networking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Networking.jpg; sourceTree = "<group>"; };
+		621A5A02175E18B100B02EEC /* Notes.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Notes.jpg; sourceTree = "<group>"; };
+		621A5A03175E18B100B02EEC /* Notifications.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Notifications.jpg; sourceTree = "<group>"; };
+		621A5A04175E18B100B02EEC /* Organization.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Organization.jpg; sourceTree = "<group>"; };
+		621A5A05175E18B100B02EEC /* Schedule.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Schedule.jpg; sourceTree = "<group>"; };
 		62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewController.h; sourceTree = "<group>"; };
 		62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
@@ -198,6 +215,8 @@
 				620ABA4F17579F04000E5FFA /* HomeViewController.m */,
 				9DBF86981756006200845BD7 /* IConfsViewController.h */,
 				9DBF86991756006200845BD7 /* IConfsViewController.m */,
+				621A59FC175E012300B02EEC /* ProgramViewController.h */,
+				621A59FD175E012400B02EEC /* ProgramViewController.m */,
 				9D323B341758AD2600B2424D /* Update.h */,
 				9D323B351758AD2600B2424D /* Update.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
@@ -209,6 +228,13 @@
 		9DBF86631755FD6E00845BD7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				621A59FF175E18B100B02EEC /* Contacts.jpg */,
+				621A5A00175E18B100B02EEC /* maps.jpg */,
+				621A5A01175E18B100B02EEC /* Networking.jpg */,
+				621A5A02175E18B100B02EEC /* Notes.jpg */,
+				621A5A03175E18B100B02EEC /* Notifications.jpg */,
+				621A5A04175E18B100B02EEC /* Organization.jpg */,
+				621A5A05175E18B100B02EEC /* Schedule.jpg */,
 				9DBF86641755FD6E00845BD7 /* iConfs-iOS-Info.plist */,
 				9DBF86651755FD6E00845BD7 /* InfoPlist.strings */,
 				9DBF86681755FD6E00845BD7 /* main.m */,
@@ -315,6 +341,13 @@
 				9DBF86711755FD6E00845BD7 /* Default@2x.png in Resources */,
 				9DBF86731755FD6E00845BD7 /* Default-568h@2x.png in Resources */,
 				620ABA471756213A000E5FFA /* MainStoryboard.storyboard in Resources */,
+				621A5A06175E18B100B02EEC /* Contacts.jpg in Resources */,
+				621A5A07175E18B100B02EEC /* maps.jpg in Resources */,
+				621A5A08175E18B100B02EEC /* Networking.jpg in Resources */,
+				621A5A09175E18B100B02EEC /* Notes.jpg in Resources */,
+				621A5A0A175E18B100B02EEC /* Notifications.jpg in Resources */,
+				621A5A0B175E18B100B02EEC /* Organization.jpg in Resources */,
+				621A5A0C175E18B100B02EEC /* Schedule.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +399,7 @@
 				621A59F5175A40FE00B02EEC /* Networking.m in Sources */,
 				621A59F8175A5A5500B02EEC /* Person.m in Sources */,
 				621A59FB175BC6D600B02EEC /* PersonProfileViewController.m in Sources */,
+				621A59FE175E012400B02EEC /* ProgramViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

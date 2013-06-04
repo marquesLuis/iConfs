@@ -12,9 +12,11 @@
 #import "Person.h"
 
 @interface NetworkingTableViewController : UITableViewController
-- (IBAction)goHome:(UIBarButtonItem *)sender;
 
-//- (IBAction)goBack:(UIBarButtonItem *)sender;
-@property (strong, nonatomic) UIViewController * previous;
+- (IBAction)goHome:(UIBarButtonItem *)sender;
+- (IBAction)changeToAllOrPref:(UISegmentedControl *)sender;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *prefOrAllButton;
+@property (strong, nonatomic) NSString * personID;
+
 
 @end

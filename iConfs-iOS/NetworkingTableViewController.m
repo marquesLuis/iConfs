@@ -12,19 +12,28 @@
 @interface NetworkingTableViewController (){
     NSString *dbPathNetworking;
     NSMutableArray *arrayOfNetworking;
+    BOOL isAll;
 }
-
 @end
 
 @implementation NetworkingTableViewController
-@synthesize previous;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
-    }
+        /*NSArray *itemArray = [NSArray arrayWithObjects: @"My interests", @"All", nil];
+        UISegmentedControl *optionAllOrPref = [[UISegmentedControl alloc] initWithItems:itemArray];
+        optionAllOrPref.frame = CGRectMake(0, self.view.frame.size.height-52, self.view.frame.size.width, 48);
+        
+        optionAllOrPref.segmentedControlStyle = UISegmentedControlStylePlain;
+        optionAllOrPref.selectedSegmentIndex = 1;
+        self.tableView.tableHeaderView = optionAllOrPref;*/
+        //[self.tableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        //self.tableView.tableHeaderView = self.prefOrAllButton;
+        isAll = YES;
+
+           }
     return self;
 }
 
@@ -32,10 +41,10 @@
 {
     [super viewDidLoad];
    
-    [self insertPerson];
+    //[self insertPerson];
     
     arrayOfNetworking = [[NSMutableArray alloc]init];
-    [self displayNetworking];
+    [self displayNetworking:@"SELECT * FROM NETWORKINGS"];
     
     self.title = @"Networking";
     // Uncomment the following line to preserve selection between presentations.
@@ -52,7 +61,7 @@
 }
 
 
--(void) displayNetworking{
+-(void) displayNetworking:(NSString*)selectquery{
     sqlite3_stmt *statement;
     sqlite3 *networkingDB;
     
@@ -61,24 +70,22 @@
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"networkings.db"];
     if (sqlite3_open([dbPathString UTF8String], &networkingDB)==SQLITE_OK) {
         [arrayOfNetworking removeAllObjects];
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS"];
-        const char* query_sql = [querySql UTF8String];
+        const char* query_sql = [selectquery UTF8String];
         
         if (sqlite3_prepare(networkingDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *netID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-
                 NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 NSString *text = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                 NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                  Networking *networking = [[Networking alloc]init];
-                
+                NSLog(title);
+                NSLog(text);
+                NSLog(personID);
                 [networking setTitle:title];
                 [networking setText:text];
                 [networking setPersonID:personID];
                 [networking setDate:date];
-                //[networking setIdNet:netID];
                 [arrayOfNetworking addObject:networking];
             }
             sqlite3_close(networkingDB);
@@ -128,6 +135,21 @@
     return person;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.tableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    //[[[UIApplication sharedApplication] keyWindow] setBackgroundColor:[UIColor whiteColor]];
+    /*NSArray *itemArray = [NSArray arrayWithObjects: @"My interests", @"All", nil];
+    UISegmentedControl *optionAllOrPref = [[UISegmentedControl alloc] initWithItems:itemArray];
+    optionAllOrPref.frame = CGRectMake(0, self.view.frame.size.height-52, self.view.frame.size.width, 48);
+    
+    optionAllOrPref.segmentedControlStyle = UISegmentedControlStylePlain;
+    optionAllOrPref.selectedSegmentIndex = 1;*/
+    self.tableView.tableHeaderView = self.prefOrAllButton;
+//self.prefOrAllButton.frame = CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50);
+
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -171,10 +193,14 @@
     
     //change colors
    // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-    
+    NSLog(@"cellRow");
+    NSLog(networking.personID);
+    NSLog(networking.title);
     Person *person = [self getPerson:networking.personID];
     UILabel * personName = [[UILabel alloc] initWithFrame:Label3Frame];
     personName.text = person.firstName;
+    NSLog(person.firstName);
+
     [cell.contentView addSubview:personName];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
@@ -212,7 +238,7 @@
     return result;
 }
 
--(void) insertPerson{
+/*-(void) insertPerson{
     NSLog(@"insert person");
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
@@ -257,7 +283,7 @@
     //UIImage * imageFromWeb = [self loadImage:@"apple" ofType:@"jpg" inDirectory:documentsDirectoryPath];
     
     //--------------------------photo----------------------
-}
+}*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -307,17 +333,15 @@
             // The first cell
             return 80.0;
         } else if (indexPath.row == 1) {
-                return 44.0;
+                return 80.0;
         }
     }
     
     // Default
-    return 50.0;
+    return 80.0;
 }
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-       NSLog(@"hello1");
-    
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{    
     
     NetworkingViewController * network = [[NetworkingViewController alloc] init];
     network.networkingDescription = [[UITextView alloc] init];
@@ -326,13 +350,8 @@
     NSIndexPath * path = [self.tableView indexPathForSelectedRow];
 
     Networking *networking = [arrayOfNetworking objectAtIndex:path.row];
-    NSLog(@"hello1");
 
     network.numNetworking = path.row;
-    NSLog(@"hello1");
-
-    //network.previous = self;
-
     network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
     
@@ -341,7 +360,6 @@
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
-    NSLog(@"hello1");
 }
 
 /*- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -351,6 +369,68 @@
 - (IBAction)goHome:(UIBarButtonItem *)sender {
     HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     [self presentViewController:second animated:YES completion:nil];
+}
+
+- (IBAction)changeToAllOrPref:(UISegmentedControl *)sender {
+    if(sender.selectedSegmentIndex == 0)
+        isAll = NO;
+    else
+        isAll = YES;
+   // [self displayNetworking:@"SELECT * FROM NETWORKINGS WHERE "];
+    
+}
+
+-(NSMutableArray*)getIdAreasOfPerson{
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSMutableArray *areas = [[NSMutableArray alloc]init];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people_area.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE ID = %@", self.personID];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                [areas addObject:area];
+                
+            }
+        }
+        sqlite3_close(db);
+    }
+    return areas;
+}
+
+-(NSString*)getAreas{
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"areas.db"];
+    NSString * personInterests = @"";
+    NSMutableArray *areas = [self getIdAreasOfPerson];
+    
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        for (NSString *areaId in areas){
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE ID = %@", areaId];
+            const char* query_sql = [querySql UTF8String];
+            
+            if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                    personInterests = [personInterests stringByAppendingString:area];
+                }
+            }
+        }
+        sqlite3_close(db);
+    }
+    return personInterests;
 }
 
 @end

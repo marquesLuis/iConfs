@@ -46,7 +46,7 @@
     NSString * areas = [self getAreas:personID];
     
     
-	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height)];
+	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     #warning tamanho justo para a janela
     scroll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height*2);
@@ -344,16 +344,6 @@
  * tamanho de uma cell
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            // The first cell
-            return 80.0;
-        } else if (indexPath.row == 1) {
-            return 80.0;
-        }
-    }
-    
-    // Default
     return 80.0;
 }
 
