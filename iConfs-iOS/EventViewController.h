@@ -1,5 +1,5 @@
 //
-//  ProgramViewController.h
+//  EventViewController.h
 //  iConfs-iOS
 //
 //  Created by Marta Lidon on 04/06/13.
@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "sqlite3.h"
 
-
-@interface ProgramViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface EventViewController : UIViewController
 
 @end

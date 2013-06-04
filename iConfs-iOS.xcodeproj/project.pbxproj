@@ -24,6 +24,7 @@
 		621A5A0A175E18B100B02EEC /* Notifications.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A03175E18B100B02EEC /* Notifications.jpg */; };
 		621A5A0B175E18B100B02EEC /* Organization.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A04175E18B100B02EEC /* Organization.jpg */; };
 		621A5A0C175E18B100B02EEC /* Schedule.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A05175E18B100B02EEC /* Schedule.jpg */; };
+		621A5A0F175E1DB100B02EEC /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A0E175E1DB100B02EEC /* EventViewController.m */; };
 		62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
@@ -88,6 +89,8 @@
 		621A5A03175E18B100B02EEC /* Notifications.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Notifications.jpg; sourceTree = "<group>"; };
 		621A5A04175E18B100B02EEC /* Organization.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Organization.jpg; sourceTree = "<group>"; };
 		621A5A05175E18B100B02EEC /* Schedule.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Schedule.jpg; sourceTree = "<group>"; };
+		621A5A0D175E1DB100B02EEC /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
+		621A5A0E175E1DB100B02EEC /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
 		62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewController.h; sourceTree = "<group>"; };
 		62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				9D323B351758AD2600B2424D /* Update.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
+				621A5A0D175E1DB100B02EEC /* EventViewController.h */,
+				621A5A0E175E1DB100B02EEC /* EventViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 				621A59F8175A5A5500B02EEC /* Person.m in Sources */,
 				621A59FB175BC6D600B02EEC /* PersonProfileViewController.m in Sources */,
 				621A59FE175E012400B02EEC /* ProgramViewController.m in Sources */,
+				621A5A0F175E1DB100B02EEC /* EventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
