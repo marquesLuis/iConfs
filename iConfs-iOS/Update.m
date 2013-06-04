@@ -198,7 +198,6 @@
         
         sqlite3_close(notificationDB);
     }
-    
     return result;
 }
 
@@ -244,6 +243,7 @@
         NSUInteger last_notif_id = [[notifications objectForKey:@"last_id"] integerValue];
         NSString *last_notif_update = [notifications objectForKey:@"last_update"];
         NSUInteger last_notif_removed_id = [[notifications objectForKey:@"last_removed"] integerValue];
+        
         [self updateNotifStatusID:last_notif_id onDate:last_notif_update removed:last_notif_removed_id];
         
         NSMutableDictionary *news = [notifications objectForKey:@"news"];
