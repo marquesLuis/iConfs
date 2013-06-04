@@ -16,5 +16,5 @@
 - (IBAction)updateButton:(UIBarButtonItem *)sender;
 //- (IBAction)networkingButton:(UIButton *)sender;
 
-@property (strong, nonatomic) Update * update;
+@property  (strong, nonatomic) Update * update;
 @end
