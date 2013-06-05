@@ -99,18 +99,17 @@
     UILabel * netTitle = [[UILabel alloc] initWithFrame:Label1Frame];
     netTitle.text = networking.title;
     [cell.contentView addSubview:netTitle];
-     NSLog(@"fill cell");
     UILabel * netText = [[UILabel alloc] initWithFrame:Label2Frame];
     netText.text = networking.text;
     [cell.contentView addSubview:netText];
-     NSLog(@"fill cell");
     
     //change colors
     // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     
     Person *person = [self getPerson:networking.personID];
     UILabel * personName = [[UILabel alloc] initWithFrame:Label3Frame];
-    personName.text = person.firstName;
+    NSString * letter = [person.firstName substringToIndex:1];
+    personName.text = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
     
     [cell.contentView addSubview:personName];
      NSLog(@"fill cell");
