@@ -685,7 +685,7 @@
     NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
-        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], [values uppercaseString]];
+        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
