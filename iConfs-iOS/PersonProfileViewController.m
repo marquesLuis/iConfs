@@ -348,16 +348,4 @@
 }
 
 
-- (IBAction)goBack:(UIBarButtonItem *)sender {
-    //change view
-    /*NetworkingViewController *network= [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
-    NSLog(@"id net");
-    network.netTitle = networkingFrom.title;
-    network.namePerson = [[[[_personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:_personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:_personProfile.lastName];
-    network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
-    network.photoPath = _personProfile.photo;
-    network.networkingDescriptionContent = networkingFrom.text;
-    network.personId = personID;
-    [self presentViewController:network animated:YES completion:nil];*/
-}
 @end

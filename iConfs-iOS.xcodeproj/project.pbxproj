@@ -16,7 +16,6 @@
 		621A59F5175A40FE00B02EEC /* Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F4175A40FE00B02EEC /* Networking.m */; };
 		621A59F8175A5A5500B02EEC /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59F7175A5A5500B02EEC /* Person.m */; };
 		621A59FB175BC6D600B02EEC /* PersonProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59FA175BC6D600B02EEC /* PersonProfileViewController.m */; };
-		621A59FE175E012400B02EEC /* ProgramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A59FD175E012400B02EEC /* ProgramViewController.m */; };
 		621A5A06175E18B100B02EEC /* Contacts.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A59FF175E18B100B02EEC /* Contacts.jpg */; };
 		621A5A07175E18B100B02EEC /* maps.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A00175E18B100B02EEC /* maps.jpg */; };
 		621A5A08175E18B100B02EEC /* Networking.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A01175E18B100B02EEC /* Networking.jpg */; };
@@ -24,7 +23,12 @@
 		621A5A0A175E18B100B02EEC /* Notifications.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A03175E18B100B02EEC /* Notifications.jpg */; };
 		621A5A0B175E18B100B02EEC /* Organization.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A04175E18B100B02EEC /* Organization.jpg */; };
 		621A5A0C175E18B100B02EEC /* Schedule.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A05175E18B100B02EEC /* Schedule.jpg */; };
-		621A5A0F175E1DB100B02EEC /* EventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A0E175E1DB100B02EEC /* EventViewController.m */; };
+		621A5A1F175E456300B02EEC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 621A5A1E175E456300B02EEC /* MapKit.framework */; };
+		621A5A21175E456C00B02EEC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 621A5A20175E456C00B02EEC /* QuartzCore.framework */; };
+		621A5A27175E493700B02EEC /* TapkuLibrary.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 621A5A26175E493700B02EEC /* TapkuLibrary.bundle */; };
+		621A5A33175E499300B02EEC /* libTapkuLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 621A5A2E175E494000B02EEC /* libTapkuLibrary.a */; };
+		621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */; };
+		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
 		62A5A88A17592F0B00CC5A30 /* NotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
@@ -53,6 +57,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		621A5A2D175E494000B02EEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = TapkuLibrary;
+		};
+		621A5A2F175E494000B02EEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3B45DDF1134C736600D24C1A;
+			remoteInfo = LogicTests;
+		};
+		621A5A31175E497A00B02EEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = TapkuLibrary;
+		};
 		9DBF86821755FD6E00845BD7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9DBF864F1755FD6E00845BD7 /* Project object */;
@@ -80,8 +105,6 @@
 		621A59F7175A5A5500B02EEC /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		621A59F9175BC6D600B02EEC /* PersonProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonProfileViewController.h; sourceTree = "<group>"; };
 		621A59FA175BC6D600B02EEC /* PersonProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonProfileViewController.m; sourceTree = "<group>"; };
-		621A59FC175E012300B02EEC /* ProgramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgramViewController.h; sourceTree = "<group>"; };
-		621A59FD175E012400B02EEC /* ProgramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgramViewController.m; sourceTree = "<group>"; };
 		621A59FF175E18B100B02EEC /* Contacts.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Contacts.jpg; sourceTree = "<group>"; };
 		621A5A00175E18B100B02EEC /* maps.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = maps.jpg; sourceTree = "<group>"; };
 		621A5A01175E18B100B02EEC /* Networking.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Networking.jpg; sourceTree = "<group>"; };
@@ -89,8 +112,14 @@
 		621A5A03175E18B100B02EEC /* Notifications.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Notifications.jpg; sourceTree = "<group>"; };
 		621A5A04175E18B100B02EEC /* Organization.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Organization.jpg; sourceTree = "<group>"; };
 		621A5A05175E18B100B02EEC /* Schedule.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Schedule.jpg; sourceTree = "<group>"; };
-		621A5A0D175E1DB100B02EEC /* EventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewController.h; sourceTree = "<group>"; };
-		621A5A0E175E1DB100B02EEC /* EventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewController.m; sourceTree = "<group>"; };
+		621A5A1E175E456300B02EEC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		621A5A20175E456C00B02EEC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		621A5A26175E493700B02EEC /* TapkuLibrary.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TapkuLibrary.bundle; path = "iConfs-iOS/ownFrameworks/tapkulibrary/src/TapkuLibrary.bundle"; sourceTree = "<group>"; };
+		621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TapkuLibrary.xcodeproj; path = "iConfs-iOS/ownFrameworks/tapkulibrary/src/TapkuLibrary.xcodeproj"; sourceTree = "<group>"; };
+		621A5A3D175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProgramTKCalendarDayViewController.h; sourceTree = "<group>"; };
+		621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProgramTKCalendarDayViewController.m; sourceTree = "<group>"; };
+		621A5A53175E98CB00B02EEC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		621A5A54175E98CB00B02EEC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		62A5A88817592F0B00CC5A30 /* NotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTableViewController.h; sourceTree = "<group>"; };
 		62A5A88917592F0B00CC5A30 /* NotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTableViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
@@ -132,6 +161,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				621A5A33175E499300B02EEC /* libTapkuLibrary.a in Frameworks */,
+				621A5A21175E456C00B02EEC /* QuartzCore.framework in Frameworks */,
+				621A5A1F175E456300B02EEC /* MapKit.framework in Frameworks */,
 				9DBF86A8175602F200845BD7 /* libsqlite3.0.dylib in Frameworks */,
 				9DBF865B1755FD6E00845BD7 /* UIKit.framework in Frameworks */,
 				9DBF865D1755FD6E00845BD7 /* Foundation.framework in Frameworks */,
@@ -154,9 +186,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		621A5A29175E494000B02EEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				621A5A2E175E494000B02EEC /* libTapkuLibrary.a */,
+				621A5A30175E494000B02EEC /* LogicTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9DBF864E1755FD6E00845BD7 = {
 			isa = PBXGroup;
 			children = (
+				621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */,
+				621A5A26175E493700B02EEC /* TapkuLibrary.bundle */,
+				621A5A20175E456C00B02EEC /* QuartzCore.framework */,
+				621A5A1E175E456300B02EEC /* MapKit.framework */,
 				9DBF86A7175602F100845BD7 /* libsqlite3.0.dylib */,
 				9DBF86621755FD6E00845BD7 /* iConfs-iOS */,
 				9DBF86841755FD6E00845BD7 /* iConfs-iOSTests */,
@@ -218,14 +263,14 @@
 				620ABA4F17579F04000E5FFA /* HomeViewController.m */,
 				9DBF86981756006200845BD7 /* IConfsViewController.h */,
 				9DBF86991756006200845BD7 /* IConfsViewController.m */,
-				621A59FC175E012300B02EEC /* ProgramViewController.h */,
-				621A59FD175E012400B02EEC /* ProgramViewController.m */,
 				9D323B341758AD2600B2424D /* Update.h */,
 				9D323B351758AD2600B2424D /* Update.m */,
+				621A5A3D175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.h */,
+				621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */,
+				621A5A53175E98CB00B02EEC /* Event.h */,
+				621A5A54175E98CB00B02EEC /* Event.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
-				621A5A0D175E1DB100B02EEC /* EventViewController.h */,
-				621A5A0E175E1DB100B02EEC /* EventViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -284,6 +329,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				621A5A32175E497A00B02EEC /* PBXTargetDependency */,
 			);
 			name = "iConfs-iOS";
 			productName = "iConfs-iOS";
@@ -328,6 +374,12 @@
 			mainGroup = 9DBF864E1755FD6E00845BD7;
 			productRefGroup = 9DBF86581755FD6E00845BD7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 621A5A29175E494000B02EEC /* Products */;
+					ProjectRef = 621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9DBF86561755FD6E00845BD7 /* iConfs-iOS */,
@@ -335,6 +387,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		621A5A2E175E494000B02EEC /* libTapkuLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTapkuLibrary.a;
+			remoteRef = 621A5A2D175E494000B02EEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		621A5A30175E494000B02EEC /* LogicTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LogicTests.octest;
+			remoteRef = 621A5A2F175E494000B02EEC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9DBF86551755FD6E00845BD7 /* Resources */ = {
@@ -353,6 +422,7 @@
 				621A5A0A175E18B100B02EEC /* Notifications.jpg in Resources */,
 				621A5A0B175E18B100B02EEC /* Organization.jpg in Resources */,
 				621A5A0C175E18B100B02EEC /* Schedule.jpg in Resources */,
+				621A5A27175E493700B02EEC /* TapkuLibrary.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +474,8 @@
 				621A59F5175A40FE00B02EEC /* Networking.m in Sources */,
 				621A59F8175A5A5500B02EEC /* Person.m in Sources */,
 				621A59FB175BC6D600B02EEC /* PersonProfileViewController.m in Sources */,
-				621A59FE175E012400B02EEC /* ProgramViewController.m in Sources */,
-				621A5A0F175E1DB100B02EEC /* EventViewController.m in Sources */,
+				621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */,
+				621A5A55175E98CB00B02EEC /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +491,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		621A5A32175E497A00B02EEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TapkuLibrary;
+			targetProxy = 621A5A31175E497A00B02EEC /* PBXContainerItemProxy */;
+		};
 		9DBF86831755FD6E00845BD7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9DBF86561755FD6E00845BD7 /* iConfs-iOS */;
@@ -509,7 +584,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iConfs-iOS/iConfs-iOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "/Users/martalidon/Developer/iConfs/iConfs-iOS/ownFrameworks/tapkulibrary/src";
 				INFOPLIST_FILE = "iConfs-iOS/iConfs-iOS-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -520,7 +597,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iConfs-iOS/iConfs-iOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "/Users/martalidon/Developer/iConfs/iConfs-iOS/ownFrameworks/tapkulibrary/src";
 				INFOPLIST_FILE = "iConfs-iOS/iConfs-iOS-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

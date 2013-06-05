@@ -13,8 +13,6 @@
 #import "NetworkingViewController.h"
 
 @interface PersonProfileViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-//@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
-//- (IBAction)goBack:(UIBarButtonItem *)sender;
-//@property (strong, nonatomic) UIViewController * previous;
+
 @property (strong, nonatomic) NSString * personID;
 @end

@@ -79,9 +79,6 @@
                 NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                 NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                  Networking *networking = [[Networking alloc]init];
-                NSLog(title);
-                NSLog(text);
-                NSLog(personID);
                 [networking setTitle:title];
                 [networking setText:text];
                 [networking setPersonID:personID];
@@ -193,13 +190,10 @@
     
     //change colors
    // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-    NSLog(@"cellRow");
-    NSLog(networking.personID);
-    NSLog(networking.title);
+    
     Person *person = [self getPerson:networking.personID];
     UILabel * personName = [[UILabel alloc] initWithFrame:Label3Frame];
     personName.text = person.firstName;
-    NSLog(person.firstName);
 
     [cell.contentView addSubview:personName];
     
