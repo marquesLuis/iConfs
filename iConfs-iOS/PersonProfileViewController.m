@@ -414,7 +414,8 @@
     network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
     
-    network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+    NSString * letter = [person.firstName substringToIndex:1];
+    network.namePerson = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;

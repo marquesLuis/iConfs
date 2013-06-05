@@ -76,13 +76,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"fill cell");
     NSString *CellIdentifier = @"Cell5";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    NSLog(@"fill cell");
 
     Networking *networking = [_arrayOfNetworking objectAtIndex:indexPath.row];
     
@@ -99,28 +97,24 @@
     UILabel * netTitle = [[UILabel alloc] initWithFrame:Label1Frame];
     netTitle.text = networking.title;
     [cell.contentView addSubview:netTitle];
-     NSLog(@"fill cell");
     UILabel * netText = [[UILabel alloc] initWithFrame:Label2Frame];
     netText.text = networking.text;
     [cell.contentView addSubview:netText];
-     NSLog(@"fill cell");
     
     //change colors
     // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     
     Person *person = [self getPerson:networking.personID];
     UILabel * personName = [[UILabel alloc] initWithFrame:Label3Frame];
-    personName.text = person.firstName;
+    NSString * letter = [person.firstName substringToIndex:1];
+    personName.text = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
     
     [cell.contentView addSubview:personName];
-     NSLog(@"fill cell");
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     UIImage * imageFromURL = [UIImage imageWithContentsOfFile:person.photo];//@"/Users/martalidon/Pictures/apple.jpg"];//person.photo];
-     NSLog(@"fill cell");
     [imageView setImage:imageFromURL];
     [cell addSubview:imageView];
     // cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-     NSLog(@"fill cell9");
     return cell;
 }
 
@@ -138,7 +132,11 @@
     network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
     
-    network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+    
+    NSString * letter = [person.firstName substringToIndex:1];
+    network.namePerson = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
+
+    
     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
@@ -148,7 +146,6 @@
 
 -(void) displayNetworking:(NSString*)selectquery{
 
-    NSLog(@"displayNetworking");
     sqlite3_stmt *statement;
     sqlite3 *networkingDB;
     
