@@ -127,8 +127,7 @@
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jjm-gF-B4D">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="Whc-MF-dbX"/>
-                                    <constraint firstAttribute="height" constant="72" id="mZM-wf-i8H"/>
+                                    <constraint firstAttribute="height" constant="72" id="pKA-JQ-37W"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" image="Organization.jpg">
@@ -143,8 +142,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhJ-BT-VIX">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="NXU-us-oBy"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                <state key="normal" title="Notifications">
+                                <state key="normal" image="Notifications.jpg">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -157,10 +159,10 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFn-7s-Y4L">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="72" id="OqP-E6-fLk"/>
+                                    <constraint firstAttribute="width" constant="73" id="2Cz-xK-pBT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                <state key="normal" title="Networking">
+                                <state key="normal" image="Networking.jpg">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -173,7 +175,8 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSP-t5-Er5">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="NRV-I6-D9o"/>
+                                    <constraint firstAttribute="width" constant="73" id="JkE-fY-OM9"/>
+                                    <constraint firstAttribute="height" constant="72" id="RnX-BC-Zbh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="Schedule.jpg">
@@ -187,26 +190,67 @@
                                     <segue destination="yGN-Jh-vfb" kind="modal" id="Fhv-h5-NBu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Program" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJx-wi-3C3">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6G3-I1-9pZ"/>
+                                    <constraint firstAttribute="width" constant="58" id="Hcw-Rs-mcq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xnm-P4-fzq">
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Networking" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXx-mh-isf">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="qq8-bI-Is7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Organization" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zva-c2-rDI">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="oJU-yW-cVI"/>
+                                    <constraint firstAttribute="width" constant="78" id="w6D-fG-AlO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="centerY" secondItem="MhJ-BT-VIX" secondAttribute="centerY" type="default" id="9Yh-2c-yPK"/>
+                            <constraint firstItem="Xnm-P4-fzq" firstAttribute="baseline" secondItem="cXx-mh-isf" secondAttribute="baseline" type="default" id="45p-pA-ivE"/>
+                            <constraint firstItem="zva-c2-rDI" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="7Ah-yJ-XHI"/>
+                            <constraint firstAttribute="bottom" secondItem="zva-c2-rDI" secondAttribute="bottom" constant="220" id="AJZ-Tz-see"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" type="default" id="B2P-rM-dJC"/>
-                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="190" id="FfW-dY-unp"/>
-                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="top" secondItem="MhJ-BT-VIX" secondAttribute="top" type="default" id="O2x-SV-2mq"/>
-                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" constant="46" id="PwO-hv-dtB"/>
+                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="top" secondItem="MhJ-BT-VIX" secondAttribute="top" type="default" id="BMa-mE-QKn"/>
+                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="233" id="Fy0-pP-MQZ"/>
+                            <constraint firstItem="Xnm-P4-fzq" firstAttribute="trailing" secondItem="MhJ-BT-VIX" secondAttribute="trailing" type="default" id="LgV-2m-hPC"/>
+                            <constraint firstItem="nSP-t5-Er5" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="O1q-NL-e9e"/>
                             <constraint firstItem="yCg-gF-EnB" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" type="default" id="RJd-fd-ukW"/>
-                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="trailing" secondItem="Jjm-gF-B4D" secondAttribute="trailing" type="default" id="U1p-Le-XNM"/>
+                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="RUc-d9-eHi"/>
+                            <constraint firstItem="nSP-t5-Er5" firstAttribute="bottom" secondItem="MhJ-BT-VIX" secondAttribute="bottom" type="default" id="Ueh-Eb-M1i"/>
+                            <constraint firstItem="Xnm-P4-fzq" firstAttribute="leading" secondItem="MhJ-BT-VIX" secondAttribute="leading" type="default" id="Wq7-9o-XlN"/>
+                            <constraint firstItem="PJx-wi-3C3" firstAttribute="centerX" secondItem="nSP-t5-Er5" secondAttribute="centerX" type="default" id="aWS-cz-LdY"/>
+                            <constraint firstItem="nSP-t5-Er5" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="100" id="b3k-AV-bhg"/>
+                            <constraint firstItem="cXx-mh-isf" firstAttribute="top" secondItem="Xnm-P4-fzq" secondAttribute="top" type="default" id="b8q-zU-CRm"/>
+                            <constraint firstItem="OGL-9d-R5S" firstAttribute="centerX" secondItem="MhJ-BT-VIX" secondAttribute="centerX" type="default" id="cgJ-Ht-EcQ"/>
+                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="bottom" secondItem="MhJ-BT-VIX" secondAttribute="bottom" type="default" id="d6F-iL-Y5R"/>
+                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="top" secondItem="nSP-t5-Er5" secondAttribute="top" type="default" id="dT7-aO-GdS"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" type="default" id="dfC-tO-Hdv"/>
-                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="97" id="ffw-A3-cAw"/>
-                            <constraint firstItem="nSP-t5-Er5" firstAttribute="bottom" secondItem="Jjm-gF-B4D" secondAttribute="bottom" type="default" id="jy5-eI-AuS"/>
+                            <constraint firstAttribute="trailing" secondItem="UFn-7s-Y4L" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="gGY-wk-BQC"/>
                             <constraint firstItem="OGL-9d-R5S" firstAttribute="trailing" secondItem="qAQ-Vj-hDn" secondAttribute="trailing" type="default" id="kFW-vP-fFJ"/>
                             <constraint firstAttribute="trailing" secondItem="yCg-gF-EnB" secondAttribute="trailing" constant="8" id="nr6-Rn-RHw"/>
-                            <constraint firstItem="nSP-t5-Er5" firstAttribute="top" secondItem="Jjm-gF-B4D" secondAttribute="top" type="default" id="nuN-Rq-48a"/>
-                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="leading" secondItem="nSP-t5-Er5" secondAttribute="leading" type="default" id="tnf-f0-QHk"/>
-                            <constraint firstItem="UFn-7s-Y4L" firstAttribute="trailing" secondItem="nSP-t5-Er5" secondAttribute="trailing" type="default" id="vF9-q1-4yD"/>
-                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="leading" secondItem="Jjm-gF-B4D" secondAttribute="leading" type="default" id="wqz-Lr-F0G"/>
-                            <constraint firstAttribute="trailing" secondItem="nSP-t5-Er5" secondAttribute="trailing" constant="65" id="yx5-5t-xYz"/>
+                            <constraint firstItem="PJx-wi-3C3" firstAttribute="top" secondItem="qAQ-Vj-hDn" secondAttribute="top" constant="174" id="p3I-KQ-YPg"/>
+                            <constraint firstAttribute="trailing" secondItem="cXx-mh-isf" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rmc-2s-t11"/>
+                            <constraint firstItem="Jjm-gF-B4D" firstAttribute="trailing" secondItem="nSP-t5-Er5" secondAttribute="trailing" type="default" id="sh0-qA-d5j"/>
+                            <constraint firstItem="Xnm-P4-fzq" firstAttribute="baseline" secondItem="PJx-wi-3C3" secondAttribute="baseline" type="default" id="ttv-nR-Iat"/>
+                            <constraint firstItem="PJx-wi-3C3" firstAttribute="top" secondItem="Xnm-P4-fzq" secondAttribute="top" type="default" id="xsM-Du-6Iw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IIK-dc-mJ7"/>
@@ -292,6 +336,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="NAr-kj-pVq"/>
                     <connections>
+                        <outlet property="navigationBar" destination="ArS-Nb-rcF" id="dRp-iL-IuY"/>
                         <outlet property="networkingDescription" destination="mN3-hJ-eFw" id="PoF-2a-KQs"/>
                         <outlet property="networkingTitle" destination="pVf-UX-OtY" id="xYg-aL-KN5"/>
                         <outlet property="personName" destination="vat-ms-T83" id="fEv-d6-o6O"/>
@@ -339,6 +384,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Of5-fO-KHX"/>
+                    <connections>
+                        <outlet property="navigationBar" destination="Vgz-Mp-B6X" id="HFg-xX-N1e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHD-To-YFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -605,6 +653,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Networking.jpg" width="50" height="50"/>
+        <image name="Notifications.jpg" width="50" height="50"/>
         <image name="Organization.jpg" width="50" height="50"/>
         <image name="Schedule.jpg" width="50" height="50"/>
     </resources>
@@ -654,6 +704,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goToPersonProfile:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
@@ -672,6 +723,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
             </relationships>
         </class>
         <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">

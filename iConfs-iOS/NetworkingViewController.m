@@ -31,7 +31,7 @@
     
     self.title = netTitle;
     networkingTitle.text = netTitle;
-  //  self.navigationBar.topItem.title = notificationTitle;
+    self.navigationBar.topItem.title = netTitle;
 
     [personName setTitle: namePerson forState: UIControlStateNormal];
     [self.networkingDescription setEditable:NO];

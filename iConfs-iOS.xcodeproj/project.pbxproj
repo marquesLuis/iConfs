@@ -29,7 +29,6 @@
 		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
 		62FC9A56175F721900A22AAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */; };
 		62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */; };
-		62FC9A5D175F83EA00A22AAD /* NetworkingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5B175F83EA00A22AAD /* NetworkingTableViewController.m */; };
 		62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
@@ -121,8 +120,6 @@
 		62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		62FC9A58175F81B100A22AAD /* AllNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotificationViewController.h; sourceTree = "<group>"; };
 		62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotificationViewController.m; sourceTree = "<group>"; };
-		62FC9A5B175F83EA00A22AAD /* NetworkingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingTableViewController.m; sourceTree = "<group>"; };
-		62FC9A5C175F83EA00A22AAD /* NetworkingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingTableViewController.h; sourceTree = "<group>"; };
 		62FC9A5E175F947D00A22AAD /* AllNetworkingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNetworkingViewController.h; sourceTree = "<group>"; };
 		62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNetworkingViewController.m; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
@@ -248,8 +245,6 @@
 				62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */,
 				620ABA4817578A4C000E5FFA /* NotificationViewController.h */,
 				620ABA4917578A4C000E5FFA /* NotificationViewController.m */,
-				62FC9A5B175F83EA00A22AAD /* NetworkingTableViewController.m */,
-				62FC9A5C175F83EA00A22AAD /* NetworkingTableViewController.h */,
 				620ABA4B17579D67000E5FFA /* Notification.h */,
 				620ABA4C17579D67000E5FFA /* Notification.m */,
 				621A59F0175A403700B02EEC /* NetworkingViewController.h */,
@@ -490,7 +485,6 @@
 			files = (
 				9DBF868C1755FD6E00845BD7 /* iConfs_iOSTests.m in Sources */,
 				9D323B371758AD2600B2424D /* Update.m in Sources */,
-				62FC9A5D175F83EA00A22AAD /* NetworkingTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

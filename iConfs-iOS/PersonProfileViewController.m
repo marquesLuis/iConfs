@@ -39,6 +39,8 @@
     [super viewDidLoad];
     
     self.title = [[[[_personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:_personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:_personProfile.lastName];;
+    
+    self.navigationBar.topItem.title = @"Profile";
 
     
 	// Do any additional setup after loading the view.
