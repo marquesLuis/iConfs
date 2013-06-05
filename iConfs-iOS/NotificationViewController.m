@@ -30,9 +30,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = notificationTitle;
-    self.navigationBar.topItem.title = notificationTitle;
     [self.notificationText setEditable:NO];
+    self.notificationName.text = notificationTitle;
     self.notificationText.text = notificationContent;
     self.notificationDate.text = notificationDateContent;
 }

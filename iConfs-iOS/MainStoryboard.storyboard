@@ -434,8 +434,7 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-DU-T0g">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="hbP-Dd-kn8"/>
-                                    <constraint firstAttribute="width" constant="270" id="oP8-su-g2V"/>
+                                    <constraint firstAttribute="height" constant="21" id="yL6-B5-Qay"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -444,14 +443,14 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWW-ls-H3G">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="448" id="LqO-Wl-Bbv"/>
+                                    <constraint firstAttribute="height" constant="394" id="4TL-p1-Atk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkz-jT-bTl">
                                 <items>
-                                    <navigationItem id="Z5u-bu-ay3">
+                                    <navigationItem title="Notification" id="Z5u-bu-ay3">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="nYn-q8-dCS">
                                             <connections>
                                                 <segue destination="dJg-70-ExF" kind="modal" id="YcB-Ci-IRk"/>
@@ -460,23 +459,36 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hC-3u-klw">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="275" id="a25-LT-c5V"/>
+                                    <constraint firstAttribute="height" constant="21" id="efP-dO-6ma"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="leading" secondItem="SLu-DU-T0g" secondAttribute="leading" type="default" id="0Gh-Fp-1ua"/>
                             <constraint firstItem="hkz-jT-bTl" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" type="default" id="1GA-Ri-f7d"/>
                             <constraint firstAttribute="trailing" secondItem="tWW-ls-H3G" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="3Z7-SL-ouC"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="63" id="Ajf-RS-BI4"/>
                             <constraint firstItem="tWW-ls-H3G" firstAttribute="bottom" secondItem="aIq-VG-R5S" secondAttribute="bottom" type="default" id="Azi-jk-okR"/>
                             <constraint firstItem="hkz-jT-bTl" firstAttribute="trailing" secondItem="aIq-VG-R5S" secondAttribute="trailing" type="default" id="E68-Vf-Hl3"/>
+                            <constraint firstAttribute="trailing" secondItem="SLu-DU-T0g" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="FfZ-Z6-RjH"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="63" id="Hx1-zB-fLu"/>
                             <constraint firstItem="hkz-jT-bTl" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" type="default" id="aDJ-r4-A7u"/>
+                            <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="109" id="kaz-1K-HLY"/>
+                            <constraint firstAttribute="trailing" secondItem="3hC-3u-klw" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qDT-R0-KFD"/>
                             <constraint firstItem="tWW-ls-H3G" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="yht-f1-aHZ"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="centerX" secondItem="hkz-jT-bTl" secondAttribute="centerX" type="default" id="zAA-7b-bAY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rhN-6Q-aQq"/>
                     <connections>
                         <outlet property="navigationBar" destination="hkz-jT-bTl" id="d0j-Fx-jLM"/>
                         <outlet property="notificationDate" destination="SLu-DU-T0g" id="gN7-bT-haT"/>
+                        <outlet property="notificationName" destination="3hC-3u-klw" id="aDR-Ns-gUe"/>
                         <outlet property="notificationText" destination="tWW-ls-H3G" id="UhL-tz-cVP"/>
                     </connections>
                 </viewController>
@@ -716,6 +728,7 @@
             <relationships>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
             </relationships>
         </class>
@@ -742,7 +755,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="LVI-Q5-6Lc"/>
+        <segue reference="YcB-Ci-IRk"/>
         <segue reference="JrP-9o-gag"/>
         <segue reference="L4t-4W-91a"/>
     </inferredMetricsTieBreakers>

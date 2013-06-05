@@ -13,6 +13,7 @@
 @interface NotificationViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
+@property (strong, nonatomic) IBOutlet UILabel *notificationName;
 
 @property (strong, nonatomic) IBOutlet UILabel *notificationDate;
 @property (strong, nonatomic) IBOutlet UITextView *notificationText;
