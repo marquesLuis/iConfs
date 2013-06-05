@@ -66,18 +66,5 @@
          startingLineNumber = "424"
          endingLineNumber = "424">
       </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "iConfs-iOS/NetworkingViewController.m"
-         timestampString = "392158855.332547"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
-         landmarkName = "@implementation NetworkingViewController"
-         landmarkType = "3">
-      </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
