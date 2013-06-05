@@ -34,6 +34,7 @@
     [self initBDFile:@"events_status.db" table:@"events_status"];
     [self initBDFile:@"networkings_status.db" table:@"networkings_status"];
     [self initBDFile:@"people_status.db" table:@"PEOPLE_STATUS"];
+    [self initBDFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -208,7 +209,9 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"events_status.db"];
     
     //Attending
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING( ID INTEGER PRIMARY KEY AUTOINCREMENT, SESSION_ID INTEGER)" WithName:@"attending.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING( ID INTEGER PRIMARY KEY AUTOINCREMENT, SESSION_ID INTEGER, SERVER_ID INTEGER)" WithName:@"attending.db"];
+    
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"attending_status.db"];
     
     //Author
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AUTHOR( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, NAME TEXT, PERSON_ID INTEGER)" WithName:@"author.db"];

@@ -249,7 +249,7 @@
 }
 
 -(NSMutableDictionary *) buildEvents{
-  return [self buildStatus:@"events_status.db" fromTable:@"events_status"];
+    return [self buildStatus:@"events_status.db" fromTable:@"events_status"];
 }
 
 - (NSMutableDictionary *) buildNetworking{
@@ -258,6 +258,10 @@
 
 - (NSMutableDictionary *) buildPeople{
     return [self buildStatus:@"people_status.db" fromTable:@"PEOPLE_STATUS"];
+}
+
+- (NSMutableDictionary *) buildAttending{
+    return [self buildStatus:@"attending_status.db" fromTable:@"ATTENDING_STATUS"];
 }
 
 -(NSMutableDictionary *) buildRequest{
@@ -280,6 +284,9 @@
     NSMutableDictionary *people = [self buildPeople];
     if (people && [people count])
         [request setObject:people forKey:@"people"];
+    NSMutableDictionary *attending = [self buildAttending];
+    if (attending && [attending count])
+        [request setObject:attending forKey:@"attending"];
     return request;
 }
 
@@ -456,7 +463,7 @@
     
     [self updateStatus:networkings status_table_name:status_table_name status_db_file:status_db_file];
     
-     NSString * definition = @"TITLE, NETWORKING, DATE, PERSON_ID, SERVER_ID";
+    NSString * definition = @"TITLE, NETWORKING, DATE, PERSON_ID, SERVER_ID";
     
     NSMutableDictionary *news = [networkings objectForKey:@"news"];
     if(news){
@@ -473,7 +480,7 @@
                     [self insertTo:net_area_db_file table:net_area_table_name definition:@"AREA_ID, NETWORKING_ID" values:the_value];
                 }
             }
-                
+            
         }
     }
     
@@ -499,7 +506,7 @@
     NSMutableArray *deleted = [networkings objectForKey:@"deleted"];
     if(deleted && [deleted count]){
         for(NSNumber * n in deleted)
-             [self removeFrom:net_area_db_file table:net_area_table_name attribute:@"NETWORKING_ID" withID:[n integerValue]];
+            [self removeFrom:net_area_db_file table:net_area_table_name attribute:@"NETWORKING_ID" withID:[n integerValue]];
         [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     }
 }
@@ -549,6 +556,42 @@
     }
 }
 
+- (NSString *)readAttending:(NSMutableDictionary *)att{
+    int event_id = [[att objectForKey:@"event_id"] integerValue];
+    int server_id = [[att objectForKey:@"server_id"] integerValue];
+    
+    return [@"" stringByAppendingFormat:@"'%d', '%d'", event_id, server_id];
+}
+
+- (void) handleAttending:(NSMutableDictionary *)attendings{
+    NSLog(@"Handling Attending");
+    NSString * db_file = @"attending.db";
+    NSString * table_name = @"ATTENDING";
+    
+    NSString * status_db_file =@"attending_status.db";
+    NSString * status_table_name = @"ATTENDING_STATUS";
+    
+    NSString * definition = @"SESSION_ID, SERVER_ID";
+    
+    [self updateStatus:attendings status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSMutableDictionary *news = [attendings objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *event = [news objectForKey:key];
+            NSString * values = [self readAttending:event];
+            [self insertTo:db_file table:table_name definition:definition values:values];
+        }
+    }
+    
+    NSMutableArray *deleted = [attendings objectForKey:@"deleted"];
+    if(deleted && [deleted count])
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+    
+    
+
+}
+
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
     NSLog(@"Handling");
     for(NSString *key in request.allKeys){
@@ -583,6 +626,11 @@
     NSMutableDictionary *people = [request objectForKey:@"people"];
     if (people){
         [self handlePeople:people];
+    }
+    
+    NSMutableDictionary *attending = [request objectForKey:@"attendings"];
+    if (attending){
+        [self handleAttending:attending];
     }
     
     return nil;
