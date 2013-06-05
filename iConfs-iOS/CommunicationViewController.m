@@ -9,7 +9,7 @@
 #import "CommunicationViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#import "IConfsViewController.h"
+#import "HomeViewController.h"
 
 @interface CommunicationViewController (){
     BOOL isfeedback;
@@ -92,7 +92,7 @@
     }
     
     //change view
-    IConfsViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"IConfsViewController"];
+    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     [self presentViewController:second animated:YES completion:nil];
     
     

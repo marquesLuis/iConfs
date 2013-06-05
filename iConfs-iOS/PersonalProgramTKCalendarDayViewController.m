@@ -64,20 +64,22 @@
     
     sqlite3 *db;
     NSMutableArray *events = [[NSMutableArray alloc]init];
-
+    NSLog(@"fill day!");
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
     NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
     
     if (sqlite3_open([dbPathAttending UTF8String], &db) == SQLITE_OK)
-    {
+    {    NSLog(@"fill day!1");
+
         NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathEvents UTF8String]];
 
         char *errorMessage;
         
         if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
-        {
+        {    NSLog(@"fill day!2");
+
             
             sqlite3_stmt *myStatment;
             
@@ -85,7 +87,8 @@
             
             if (sqlite3_prepare_v2(db, [strSQL UTF8String], -1, &myStatment, nil) == SQLITE_OK){
                 while (sqlite3_step(myStatment)==SQLITE_ROW) {
-                    
+                    NSLog(@"fill day!3");
+
                     Event * e = [[Event alloc]init];
                     NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 3)];
                     NSString *description = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 4)];
@@ -94,7 +97,8 @@
                     NSString *dateEnd = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 8)];
                     NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
                     NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 11)];
-                    
+                    NSLog(title);
+
                     e.title = title;
                     e.descrption = description;
                     e.kind = kind;

@@ -56,11 +56,20 @@
    [self presentViewController:second animated:YES completion:nil];
 }*/
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+/*- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    PersonProfileViewController *second = segue.destinationViewController;
+    PersonProfileViewController *second = [[PersonProfileViewController alloc] init];
+     second = [segue destinationViewController];
     second.personID = personId;
-}
+}*/
 
+
+- (IBAction)goToPersonProfile:(UIButton *)sender {
+    
+    PersonProfileViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
+    network.personID = personId;
+    [self presentViewController:network animated:YES completion:nil];
+    
+}
 
 @end

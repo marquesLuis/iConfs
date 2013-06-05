@@ -12,8 +12,6 @@
 #import "Networking.h"
 
 @interface NetworkingViewController : UIViewController
-//- (IBAction)personPage:(UIButton *)sender;
-//- (IBAction)personPage:(UIButton *)sender;
 
 @property (strong, nonatomic) IBOutlet UIButton *personName;
 @property (strong, nonatomic) IBOutlet UILabel *networkingTitle;
@@ -25,8 +23,9 @@
 @property (strong, nonatomic) NSString * networkingId;
 @property (strong, nonatomic) IBOutlet UITextView *networkingDescription;
 @property (strong, nonatomic) IBOutlet UIImageView *personPhoto;
-//@property (strong, nonatomic) UIViewController * previous;
 @property int numNetworking;
 
+//- (IBAction)goToPersonProfile:(UIButton *)sender;
+- (IBAction)goToPersonProfile:(UIButton *)sender;
 
 @end

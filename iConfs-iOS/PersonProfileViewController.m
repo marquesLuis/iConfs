@@ -11,7 +11,7 @@
 @interface PersonProfileViewController () <UITableViewDelegate, UITableViewDataSource>
     @property (nonatomic, strong)  Person * personProfile;
     @property (nonatomic, strong) NSMutableArray * personNetworking;
-    @property (nonatomic, retain) UITableView *tableNetworking;
+//    @property (nonatomic, retain) UITableView *tableNetworking;
 
 @end
 
@@ -46,7 +46,7 @@
     NSString * areas = [self getAreas:personID];
     
     
-	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height)];
     
     #warning tamanho justo para a janela
     scroll.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height*2);
@@ -246,7 +246,7 @@
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"networkings.db"];
     if (sqlite3_open([dbPathString UTF8String], &networkingDB)==SQLITE_OK) {
         [_personNetworking removeAllObjects];
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS WHERE PEOPLE = %@", personId];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS WHERE PERSON_ID = %@", personId];
         const char* query_sql = [querySql UTF8String];
         if (sqlite3_prepare(networkingDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
@@ -317,6 +317,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   // [self performSegueWithIdentifier:@"segue3" sender:self];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
     network.networkingDescription = [[UITextView alloc] init];
@@ -329,7 +331,7 @@
     network.netTitle = networking.title;
     Person * person = [self getPerson:networking.personID];
     
-    network.namePerson = [[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+    network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
@@ -337,8 +339,65 @@
     //network.previous = self;
     
     //change view
+    
+    
     [self presentViewController:network animated:YES completion:nil];
 }
+
+/**-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+ 
+ NetworkingViewController * network = [[NetworkingViewController alloc] init];
+ network.networkingDescription = [[UITextView alloc] init];
+ network.personPhoto = [[UIImageView alloc] init];
+ network = [segue destinationViewController];
+ NSIndexPath * path = [self.tableView indexPathForSelectedRow];
+ 
+ Networking *networking = [arrayOfNetworking objectAtIndex:path.row];
+ 
+ network.numNetworking = path.row;
+ network.netTitle = networking.title;
+ Person * person = [self getPerson:networking.personID];
+ 
+ network.namePerson = [[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+ network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+ network.photoPath = person.photo;
+ network.networkingDescriptionContent = networking.text;
+ network.personId = networking.personID;
+ }
+
+ **/
+
+/*-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    
+    NetworkingViewController * network = [[NetworkingViewController alloc] init];
+    network.networkingDescription = [[UITextView alloc] init];
+    network.personPhoto = [[UIImageView alloc] init];
+    NSIndexPath * indexPath = [tableNetworking indexPathForSelectedRow];
+    Networking *networking = [_personNetworking objectAtIndex:indexPath.row];
+    network.numNetworking = indexPath.row;
+    
+    
+    network.netTitle = networking.title;
+    Person * person = [self getPerson:networking.personID];
+    
+    network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+    network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+    network.photoPath = person.photo;
+    network.networkingDescriptionContent = networking.text;
+    network.personId = networking.personID;
+    //network.previous = self;
+    
+    //change view
+     network = [segue destinationViewController];
+    
+   // [self presentViewController:network animated:YES completion:nil];
+}
+
+*/
+ 
+ 
+
 
 /*
  * tamanho de uma cell
@@ -348,4 +407,30 @@
 }
 
 
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    
+    
+    
+    NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
+    network.networkingDescription = [[UITextView alloc] init];
+    network.personPhoto = [[UIImageView alloc] init];
+    NSIndexPath * indexPath = [tableNetworking indexPathForSelectedRow];
+    Networking *networking = [_personNetworking objectAtIndex:indexPath.row];
+    network.numNetworking = indexPath.row;
+    
+    
+    network.netTitle = networking.title;
+    Person * person = [self getPerson:networking.personID];
+    
+    network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+    network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+    network.photoPath = person.photo;
+    network.networkingDescriptionContent = networking.text;
+    network.personId = networking.personID;
+    //network.previous = self;
+    
+    [self presentViewController:network animated:YES completion:nil];
+    
+    // [self presentViewController:network animated:YES completion:nil];
+}
 @end

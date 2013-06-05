@@ -9,15 +9,14 @@
 #import "NotificationTableViewController.h"
 #import "NotificationViewController.h"
 
-@interface NotificationTableViewController (){
+@interface NotificationViewController (){
     
-    NSString *dbPathNotification;
-    NSMutableArray *arrayOfNotifications;
+    
 }
 
 @end
 
-@implementation NotificationTableViewController
+@implementation NotificationViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,50 +29,18 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"my view");
     [super viewDidLoad];
     arrayOfNotifications = [[NSMutableArray alloc]init];
     [self displayNotifications];
     
     self.title = @"Notifications";
     
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
--(void) displayNotifications {
-    sqlite3_stmt *statement;
-    sqlite3 *notificationDB;
-    
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docPath = [path objectAtIndex:0];
-    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications.db"];
-    
-    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
-        [arrayOfNotifications removeAllObjects];
-        
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NOTIFICATIONS"];
-        const char* query_sql = [querySql UTF8String];
-        
-        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *notificationTitle = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
-                NSString *notificationText = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
-                NSString *notificationDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
-                
-                Notification *notification = [[Notification alloc]init];
-                
-                [notification setTitle:notificationTitle];
-                [notification setText:notificationText];
-                [notification setDate:notificationDate];
-                [arrayOfNotifications addObject:notification];
-            }
-            sqlite3_close(notificationDB);
-        }
-        
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -139,7 +106,7 @@
     return [[text substringWithRange:stringRange] stringByAppendingString:rest];
 }
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+/*-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     
     NotificationViewController * notif = [[NotificationViewController alloc] init];
     notif.notificationText = [[UITextView alloc] init];
@@ -151,10 +118,22 @@
     notif.notificationTitle = notification.title;
     notif.notificationDateContent = notification.date;
     notif.notificationContent = notification.text;
-}
+}*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"segue1" sender:nil];
+   // [self performSegueWithIdentifier:@"segue1" sender:nil];
+    
+    NotificationViewController * notif = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationViewController"];
+    notif.notificationText = [[UITextView alloc] init];
+    NSIndexPath * path = [self.tableView indexPathForSelectedRow];
+    
+    Notification *notification = [arrayOfNotifications objectAtIndex:path.row];
+    notif.numNotification = path.row;
+    notif.notificationTitle = notification.title;
+    notif.notificationDateContent = notification.date;
+    notif.notificationContent = notification.text;
+    
+    [self presentViewController:notif animated:YES completion:nil];
 }
 
 - (IBAction)goHome:(UIBarButtonItem *)sender {

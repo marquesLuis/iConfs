@@ -207,7 +207,7 @@
     return cell;
 }
 
--(UIImage *) getImageFromURL:(NSString *)fileURL {
+/*-(UIImage *) getImageFromURL:(NSString *)fileURL {
     UIImage * result;
     
     NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
@@ -230,7 +230,7 @@
     UIImage * result = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.%@", directoryPath, fileName, extension]];
     
     return result;
-}
+}*/
 
 /*-(void) insertPerson{
     NSLog(@"insert person");

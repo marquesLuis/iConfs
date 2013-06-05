@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "HomeViewController.h"
-@interface NotificationTableViewController : UITableViewController
-//@property (strong, nonatomic) UIViewController * previous;
+@interface NotificationTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
 - (IBAction)goHome:(UIBarButtonItem *)sender;
+@property (strong, nonatomic) IBOutlet UITableView *tableNotification;
 
 @end

@@ -11,6 +11,7 @@
 #import "Notification.h"
 
 @interface NotificationViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 
 @property (strong, nonatomic) IBOutlet UILabel *notificationDate;
