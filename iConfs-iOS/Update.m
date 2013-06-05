@@ -204,6 +204,10 @@
     return [self buildStatus:@"networkings_status.db" fromTable:@"networkings_status"];
 }
 
+- (NSMutableDictionary *) buildPeople{
+    return [self buildStatus:@"people_status.db" fromTable:@"PEOPLE_STATUS"];
+}
+
 -(NSMutableDictionary *) buildRequest{
     NSMutableDictionary *request = [NSMutableDictionary dictionary];
     NSMutableArray *feedbacks = [self buildFeedback];
@@ -221,6 +225,9 @@
     NSMutableDictionary *networkings = [self buildNetworking];
     if (networkings && [networkings count])
         [request setObject: networkings forKey:@"networkings"];
+    NSMutableDictionary *people = [self buildPeople];
+    if (people && [people count])
+        [request setObject:people forKey:@"people"];
     return request;
 }
 
@@ -445,6 +452,51 @@
     }
 }
 
+- (NSString *) readPerson: (NSMutableDictionary *)person{
+    NSString * first = [person objectForKey:@"first"];
+    NSString * last = [person objectForKey:@"last"];
+    NSString * pre = [person objectForKey:@"pre"];
+    NSString * aff = [person objectForKey:@"affiliation"];
+    NSString * email =[person objectForKey:@"email"];
+    NSString * photo = [person objectForKey:@"photo"];
+    NSString * bio = [person objectForKey:@"bio"];
+    int server_id = [[person objectForKey:@"server_id"] integerValue];
+    NSString * date = [person objectForKey:@"last_date"];
+    
+    return [@"" stringByAppendingFormat:@"'%@','%@','%@','%@','%@','%@','%@','%d','%@'", first, last, pre, aff, email, photo, bio, server_id, date];
+}
+
+- (void) handlePeople:(NSMutableDictionary *)people{
+    NSLog(@"Handling People");
+    NSString * db_file = @"people.db";
+    NSString * table_name = @"PEOPLE";
+    
+    NSString * status_db_file =@"people_status.db";
+    NSString * status_table_name = @"PEOPLE_STATUS";
+    
+    [self updateStatus:people status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSString * definition = @"FIRSTNAME, LASTNAME, PREFIX, AFFILIATION, EMAIL, PHOTO, BIOGRAPHY, SERVER_ID, LAST_DATE";
+    
+    NSMutableDictionary *news = [people objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *event = [news objectForKey:key];
+            NSString * values = [self readPerson:event];
+            [self insertTo:db_file table:table_name definition:definition values:values];
+        }
+    }
+    
+    NSMutableDictionary *updated = [people objectForKey:@"updated"];
+    if(updated){
+        for(NSString *key in updated.allKeys){
+            NSMutableDictionary *event = [updated objectForKey:key];
+            NSString * values = [self readPerson:event];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[event objectForKey:@"id"] integerValue] definition:definition values:values];
+        }
+    }
+}
+
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
     NSLog(@"Handling");
     for(NSString *key in request.allKeys){
@@ -474,6 +526,11 @@
     NSMutableDictionary *networkings = [request objectForKey:@"networkings"];
     if (networkings){
         [self handleNetworkings:networkings];
+    }
+    
+    NSMutableDictionary *people = [request objectForKey:@"people"];
+    if (people){
+        [self handlePeople:people];
     }
     
     return nil;
