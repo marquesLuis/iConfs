@@ -100,7 +100,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE ID = %@", personId];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE SERVER_ID = %@", personId];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {

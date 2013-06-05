@@ -11,7 +11,7 @@
 @interface PersonProfileViewController () <UITableViewDelegate, UITableViewDataSource>
     @property (nonatomic, strong)  Person * personProfile;
     @property (nonatomic, strong) NSMutableArray * personNetworking;
-//    @property (nonatomic, retain) UITableView *tableNetworking;
+    @property (nonatomic, retain) UITableView *tableNetworking;
 
 @end
 
@@ -148,7 +148,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE ID = %@", personId];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE PERSON_ID = %@", personId];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -176,7 +176,7 @@
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
         for (NSString *areaId in areas){
-            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE ID = %@", areaId];
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE SERVER_ID = %@", areaId];
             const char* query_sql = [querySql UTF8String];
         
             if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -207,7 +207,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE ID = %@", personId];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE SERVER_ID = %@", personId];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -317,8 +317,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // [self performSegueWithIdentifier:@"segue3" sender:self];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
     network.networkingDescription = [[UITextView alloc] init];
@@ -336,11 +334,6 @@
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
-    //network.previous = self;
-    
-    //change view
-    
-    
     [self presentViewController:network animated:YES completion:nil];
 }
 
@@ -408,9 +401,6 @@
 
 
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    
-    
-    
     NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
     network.networkingDescription = [[UITextView alloc] init];
     network.personPhoto = [[UIImageView alloc] init];
@@ -427,10 +417,7 @@
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
-    //network.previous = self;
     
     [self presentViewController:network animated:YES completion:nil];
-    
-    // [self presentViewController:network animated:YES completion:nil];
 }
 @end

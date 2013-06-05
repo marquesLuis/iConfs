@@ -187,7 +187,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE ID = %@", personId];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE SERVER_ID = %@", personId];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -229,7 +229,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE ID = %@", personID];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE PERSON_ID = %@", personID];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -257,7 +257,7 @@
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
         for (NSString *areaId in areas){
-            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE ID = %@", areaId];
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE SERVER_ID = %@", areaId];
             const char* query_sql = [querySql UTF8String];
             
             if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {

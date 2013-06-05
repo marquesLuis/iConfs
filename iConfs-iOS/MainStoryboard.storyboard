@@ -316,24 +316,6 @@
                                     <constraint firstAttribute="height" constant="318" id="GSm-O5-xM1"/>
                                 </constraints>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PN6-zY-T8O">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="252" id="XZq-l6-Cez"/>
-                                    <constraint firstAttribute="width" constant="160" id="kZX-Sq-l5P"/>
-                                </constraints>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="paC-gg-33q">
-                                        <rect key="frame" x="0.0" y="22" width="160" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="140" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-Mp-B6X">
                                 <items>
                                     <navigationItem id="yww-AD-EmJ">
@@ -350,8 +332,6 @@
                         <constraints>
                             <constraint firstItem="XWA-n3-PaT" firstAttribute="top" secondItem="Jh6-9K-yfU" secondAttribute="top" constant="546" id="58H-6p-557"/>
                             <constraint firstItem="Vgz-Mp-B6X" firstAttribute="trailing" secondItem="Jh6-9K-yfU" secondAttribute="trailing" type="default" id="FaS-03-nwU"/>
-                            <constraint firstItem="PN6-zY-T8O" firstAttribute="top" secondItem="Jh6-9K-yfU" secondAttribute="top" constant="67" id="RDq-xq-o4m"/>
-                            <constraint firstItem="PN6-zY-T8O" firstAttribute="leading" secondItem="Jh6-9K-yfU" secondAttribute="leading" constant="75" id="Tc8-Fy-dFd"/>
                             <constraint firstAttribute="trailing" secondItem="XWA-n3-PaT" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="ULT-NU-INo"/>
                             <constraint firstItem="Vgz-Mp-B6X" firstAttribute="top" secondItem="Jh6-9K-yfU" secondAttribute="top" type="default" id="aNf-ac-yi2"/>
                             <constraint firstItem="Vgz-Mp-B6X" firstAttribute="leading" secondItem="Jh6-9K-yfU" secondAttribute="leading" type="default" id="ldS-AV-6uU"/>
@@ -359,9 +339,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Of5-fO-KHX"/>
-                    <connections>
-                        <outlet property="tableNetworking" destination="PN6-zY-T8O" id="PJx-gm-TN4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHD-To-YFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -658,6 +635,7 @@
         <class className="HomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="networkingButton:" candidateClass="UIButton"/>
                 <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -694,7 +672,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">

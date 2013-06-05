@@ -15,7 +15,7 @@
 @interface PersonProfileViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) NSString * personID;
-@property (strong, nonatomic) IBOutlet UITableView *tableNetworking;
+//@property (strong, nonatomic) IBOutlet UITableView *tableNetworking;
 
 - (IBAction)goBack:(UIBarButtonItem *)sender;
 
