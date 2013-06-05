@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.update = update;
+    self.update = [[Update alloc] initDB];
     
     
     

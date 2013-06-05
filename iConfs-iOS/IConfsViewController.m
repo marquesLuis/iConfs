@@ -131,7 +131,7 @@
         return;
     }
     
-    Update *update = [[Update alloc] initWithParams:completeArgs];
+    Update *update = [[Update alloc] initDB];
     [update update];
     
     

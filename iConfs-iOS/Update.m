@@ -14,11 +14,63 @@
 
 @implementation Update
 
--(id) initWithParams:(NSString *)params
+-(id) initDB
 {
     self = [super init];
     if(self){
-        _auth_params = params;
+        NSString *email = @"";
+        NSString *password = @"";
+        
+        NSString * table_name = @"MY_SELF";
+        NSString * db_file = @"my_self.db";
+        
+        sqlite3_stmt *statement;
+        sqlite3 *notificationDB;
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docPath = [path objectAtIndex:0];
+        NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+        
+        if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+            
+            int last_row = 0;
+            NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM %@",table_name];
+            const char* query_sql = [querySql UTF8String];
+            
+            @try{
+                
+                
+                if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                    while (sqlite3_step(statement)==SQLITE_ROW) {
+                        NSString *messageID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                        last_row = [messageID integerValue];
+                        break;
+                    }
+                    sqlite3_finalize(statement);
+                }
+            }@catch (NSException *e) {
+                
+            }
+            if(last_row){
+                querySql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE ID = %d",table_name, last_row];
+                query_sql = [querySql UTF8String];
+                
+                if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                    while (sqlite3_step(statement)==SQLITE_ROW) {
+                        email = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                        password = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 11)];
+                    }
+                    sqlite3_finalize(statement);
+                }
+            }
+            sqlite3_close(notificationDB);
+        }
+        
+        NSString *initialArgs = @"?registry[email]=";
+        NSString *withEmail = [initialArgs stringByAppendingString:email];
+        NSString *passStart = [withEmail stringByAppendingString:@"&registry[password]="];
+        NSString *completeArgs = [passStart stringByAppendingString:password];
+        
+        _auth_params = completeArgs;
     }
     return self;
 }
