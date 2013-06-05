@@ -10,7 +10,7 @@
 #import "Update.h"
 
 @interface IConfsViewController (){
-
+    
 } @end
 
 @implementation IConfsViewController
@@ -33,6 +33,7 @@
     [self initBDFile:@"notifications_status.db" table:@"notifications_status"];
     [self initBDFile:@"events_status.db" table:@"events_status"];
     [self initBDFile:@"networkings_status.db" table:@"networkings_status"];
+    [self initBDFile:@"people_status.db" table:@"PEOPLE_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,29 +88,48 @@
     NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://0.0.0.0:3000/"];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postUrlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    [request setHTTPMethod:@"GET"]; 
-  
-   /* @try {
+    [request setHTTPMethod:@"GET"];
+    
+    @try {
         // Try something
-    
-    // Send a synchronous request
-    NSURLResponse * response = nil;
-    NSData * returnData = [NSURLConnection sendSynchronousRequest:request
-                                                returningResponse:&response
-                                                            error:&error];
-    NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
-    
-    NSLog(@"%@", newStr);
-    if ([newStr hasPrefix:@"<!DOCTYPE html>"]|| newStr==NULL)
-    {
-        [self alertMessages:@"Error on Login" withMessage:@"Something went wrong on your login :("];
-        return;
-    }
+        
+        // Send a synchronous request
+        NSURLResponse * response = nil;
+        NSData * returnData = [NSURLConnection sendSynchronousRequest:request
+                                                    returningResponse:&response
+                                                                error:&error];
+        NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
+        
+        NSError *jsonParsingError = nil;
+        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
+        
+        NSMutableDictionary * person = [json objectForKey:@"person"];
+        NSString * first = [person objectForKey:@"first"];
+        NSString * last = [person objectForKey:@"last"];
+        NSString * pre = [person objectForKey:@"pre"];
+        NSString * aff = [person objectForKey:@"affiliation"];
+        NSString * photo = [person objectForKey:@"photo"];
+        NSString * bio = [person objectForKey:@"bio"];
+        int server_id = [[person objectForKey:@"server_id"] integerValue];
+        NSString * last_date = [person objectForKey:@"last_date"];
+        NSString * info_update = [person objectForKey:@"info_update"];
+        NSString * values = [@"" stringByAppendingFormat:@"'%@', '%@','%@','%@','%@','%@','%@','%d','%@','%@','%@'", first, last, pre, aff, email, photo, bio, server_id, last_date, info_update, password];
+        [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"FIRSTNAME, LASTNAME, PREFIX, AFFILIATION, EMAIL, PHOTO, BIOGRAPHY, SERVER_ID, LAST_DATE, INFO_LAST_DATE, PASSWORD" values:values];
+        
+        NSMutableDictionary * dates = [json objectForKey:@"dates"];
+        [self insertTo:@"calendar.db" table:@"CALENDAR" definition:@"FIRST, LAST" values:[@"" stringByAppendingFormat:@"'%@', '%@'", [dates objectForKey:@"begin"], [dates objectForKey:@"end"]]];
+        
+        NSLog(@"%@", newStr);
+        if ([newStr hasPrefix:@"<!DOCTYPE html>"]|| newStr==NULL)
+        {
+            [self alertMessages:@"Error on Login" withMessage:@"Something went wrong on your login :("];
+            return;
+        }
     }
     @catch (NSException * e) {
         [self alertMessages:@"Failed Connection" withMessage:@"Check your internet connection"];
         return;
-    }*/
+    }
     
     Update *update = [[Update alloc] initWithParams:completeArgs];
     [update update];
@@ -119,7 +139,7 @@
     HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     second.update = update;
     [self presentViewController:second animated:YES completion:nil];
-     
+    
     
 }
 
@@ -151,11 +171,11 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AREAS_STATUS(ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"areas_status.db"];
     
     //people
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT, INFO_LAST_DATE TEXT, HAS_PRIVATE INTEGER)" WithName:@"people.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MY_SELF( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT, INFO_LAST_DATE TEXT, PASSWORD TEXT)" WithName:@"my_self.db"];
     
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT)" WithName:@"people_status.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"people_status.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MY_SELF_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, INFO_LAST_DATE TEXT)" WithName:@"my_self_status.db"];
     
@@ -179,6 +199,9 @@
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
     
+    //calendar
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CALENDAR( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRST TEXT, LAST TEXT)" WithName:@"calendar.db"];
+    
     //Events
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
     
@@ -194,6 +217,8 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS LOCATION( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, IMG TEXT, SERVER_ID INTEGER)" WithName:@"location.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS LOCATION_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"location_status.db"];
+    
+    
     
 }
 
@@ -247,6 +272,26 @@
             NSLog(@"%s", error);
         }
         sqlite3_close(db);
+    }
+}
+
+-(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], [values uppercaseString]];
+        const char* query_sql = [querySql UTF8String];
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ inserted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT inserted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
     }
 }
 @end

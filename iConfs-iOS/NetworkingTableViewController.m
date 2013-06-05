@@ -175,9 +175,9 @@
     //change colors
     //cell.textLabel.textColor = [UIColor colorWithRed: 30.0/255.0 green: 144.0/255.0 blue:255.0/255.0 alpha: 1.0];
     
-    CGRect Label1Frame = CGRectMake(10, 10, 290, 25);
-    CGRect Label2Frame = CGRectMake(10, 30, 290, 25);
-    CGRect Label3Frame = CGRectMake(10, 50, 290, 25);
+    CGRect Label1Frame = CGRectMake(10, 10, 175, 25);
+    CGRect Label2Frame = CGRectMake(10, 30, 175, 25);
+    CGRect Label3Frame = CGRectMake(10, 50, 175, 25);
 
     UILabel * netTitle = [[UILabel alloc] initWithFrame:Label1Frame];
     netTitle.text = networking.title;
@@ -322,16 +322,6 @@
  * tamanho de uma cell
  */
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            // The first cell
-            return 80.0;
-        } else if (indexPath.row == 1) {
-                return 80.0;
-        }
-    }
-    
-    // Default
     return 80.0;
 }
 

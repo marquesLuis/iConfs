@@ -63,23 +63,23 @@
     name.scrollEnabled = YES;
     [scroll addSubview:name];
     
-    UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 295, 25)];
+    UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 120, 295, 25)];
     labelEmail.text = @"Email:";
     labelEmail.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
     [scroll addSubview:labelEmail];
     
-    UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(150, 95, 295, 25)];
+    UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 145, 295, 25)];
     [email setEditable:NO];
     [email setText:_personProfile.email];
     email.scrollEnabled = YES;
     [scroll addSubview:email];
     
-    UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 120, 295, 25)];
+    UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 295, 25)];
     labelIns.text = @"Institution:";
     labelIns.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
     [scroll addSubview:labelIns];
    
-    UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 145, 295, 25)];
+    UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 95, 295, 25)];
     [institution setEditable:NO];
     [institution setText:_personProfile.affiliation];
     institution.scrollEnabled = YES;
