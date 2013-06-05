@@ -112,7 +112,7 @@
     biography.scrollEnabled = YES;
 
     [biography setText:_personProfile.biography];
-    [biography setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
+    //[biography setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
     [scroll addSubview:biography];
     
     [self.view addSubview:scroll];
