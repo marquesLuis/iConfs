@@ -584,7 +584,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iConfs-iOS/iConfs-iOS-Prefix.pch";
-				HEADER_SEARCH_PATHS = "/Users/martalidon/Developer/iConfs/iConfs-iOS/ownFrameworks/tapkulibrary/src";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/iConfs-iOS/ownFrameworks/tapkulibrary/src";
 				INFOPLIST_FILE = "iConfs-iOS/iConfs-iOS-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -597,7 +597,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iConfs-iOS/iConfs-iOS-Prefix.pch";
-				HEADER_SEARCH_PATHS = "/Users/martalidon/Developer/iConfs/iConfs-iOS/ownFrameworks/tapkulibrary/src";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/iConfs-iOS/ownFrameworks/tapkulibrary/src";
 				INFOPLIST_FILE = "iConfs-iOS/iConfs-iOS-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
