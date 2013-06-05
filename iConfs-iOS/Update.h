@@ -12,7 +12,7 @@
 
 @interface Update : NSObject
 
--(id) initWithParams:(NSString *)params;
+-(id) initDB;
 -(void) update;
 -(NSMutableDictionary *) postRequest:(NSMutableDictionary *)request;
 -(NSMutableDictionary *) buildRequest;

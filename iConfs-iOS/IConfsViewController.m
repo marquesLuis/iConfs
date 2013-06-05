@@ -34,6 +34,7 @@
     [self initBDFile:@"events_status.db" table:@"events_status"];
     [self initBDFile:@"networkings_status.db" table:@"networkings_status"];
     [self initBDFile:@"people_status.db" table:@"PEOPLE_STATUS"];
+    [self initBDFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,7 +132,7 @@
         return;
     }
     
-    Update *update = [[Update alloc] initWithParams:completeArgs];
+    Update *update = [[Update alloc] initDB];
     [update update];
     
     
@@ -208,7 +209,9 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"events_status.db"];
     
     //Attending
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING( ID INTEGER PRIMARY KEY AUTOINCREMENT, SESSION_ID INTEGER)" WithName:@"attending.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING( ID INTEGER PRIMARY KEY AUTOINCREMENT, SESSION_ID INTEGER, SERVER_ID INTEGER)" WithName:@"attending.db"];
+    
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"attending_status.db"];
     
     //Author
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AUTHOR( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, NAME TEXT, PERSON_ID INTEGER)" WithName:@"author.db"];
@@ -262,14 +265,36 @@
     sqlite3 *db;
     char *error;
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
-        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO %@(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')", [table_file uppercaseString]];
         
-        const char *insert_stmt = [inserStmt UTF8String];
+        sqlite3_stmt *statement;
         
-        if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
-            NSLog(@"%@ added", [table_file capitalizedString]);
-        }else{
-            NSLog(@"%s", error);
+        int last_row = 0;
+        NSString *querySql = [NSString stringWithFormat:@"SELECT COUNT(*) FROM %@",[table_file uppercaseString]];
+        const char* query_sql = [querySql UTF8String];
+        
+        @try{
+            if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *messageID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    last_row = [messageID integerValue];
+                    break;
+                }
+                sqlite3_finalize(statement);
+            }
+        }@catch (NSException *e) {
+            last_row = 0;
+        }
+        if (!last_row){
+            
+            NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO %@(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')", [table_file uppercaseString]];
+            
+            const char *insert_stmt = [inserStmt UTF8String];
+            
+            if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
+                NSLog(@"%@ added", [table_file capitalizedString]);
+            }else{
+                NSLog(@"%s", error);
+            }
         }
         sqlite3_close(db);
     }

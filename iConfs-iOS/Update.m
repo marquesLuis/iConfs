@@ -14,11 +14,63 @@
 
 @implementation Update
 
--(id) initWithParams:(NSString *)params
+-(id) initDB
 {
     self = [super init];
     if(self){
-        _auth_params = params;
+        NSString *email = @"";
+        NSString *password = @"";
+        
+        NSString * table_name = @"MY_SELF";
+        NSString * db_file = @"my_self.db";
+        
+        sqlite3_stmt *statement;
+        sqlite3 *notificationDB;
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docPath = [path objectAtIndex:0];
+        NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+        
+        if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+            
+            int last_row = 0;
+            NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM %@",table_name];
+            const char* query_sql = [querySql UTF8String];
+            
+            @try{
+                
+                
+                if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                    while (sqlite3_step(statement)==SQLITE_ROW) {
+                        NSString *messageID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                        last_row = [messageID integerValue];
+                        break;
+                    }
+                    sqlite3_finalize(statement);
+                }
+            }@catch (NSException *e) {
+                
+            }
+            if(last_row){
+                querySql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE ID = %d",table_name, last_row];
+                query_sql = [querySql UTF8String];
+                
+                if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                    while (sqlite3_step(statement)==SQLITE_ROW) {
+                        email = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                        password = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 11)];
+                    }
+                    sqlite3_finalize(statement);
+                }
+            }
+            sqlite3_close(notificationDB);
+        }
+        
+        NSString *initialArgs = @"?registry[email]=";
+        NSString *withEmail = [initialArgs stringByAppendingString:email];
+        NSString *passStart = [withEmail stringByAppendingString:@"&registry[password]="];
+        NSString *completeArgs = [passStart stringByAppendingString:password];
+        
+        _auth_params = completeArgs;
     }
     return self;
 }
@@ -197,7 +249,7 @@
 }
 
 -(NSMutableDictionary *) buildEvents{
-  return [self buildStatus:@"events_status.db" fromTable:@"events_status"];
+    return [self buildStatus:@"events_status.db" fromTable:@"events_status"];
 }
 
 - (NSMutableDictionary *) buildNetworking{
@@ -206,6 +258,10 @@
 
 - (NSMutableDictionary *) buildPeople{
     return [self buildStatus:@"people_status.db" fromTable:@"PEOPLE_STATUS"];
+}
+
+- (NSMutableDictionary *) buildAttending{
+    return [self buildStatus:@"attending_status.db" fromTable:@"ATTENDING_STATUS"];
 }
 
 -(NSMutableDictionary *) buildRequest{
@@ -228,6 +284,9 @@
     NSMutableDictionary *people = [self buildPeople];
     if (people && [people count])
         [request setObject:people forKey:@"people"];
+    NSMutableDictionary *attending = [self buildAttending];
+    if (attending && [attending count])
+        [request setObject:attending forKey:@"attending"];
     return request;
 }
 
@@ -404,7 +463,7 @@
     
     [self updateStatus:networkings status_table_name:status_table_name status_db_file:status_db_file];
     
-     NSString * definition = @"TITLE, NETWORKING, DATE, PERSON_ID, SERVER_ID";
+    NSString * definition = @"TITLE, NETWORKING, DATE, PERSON_ID, SERVER_ID";
     
     NSMutableDictionary *news = [networkings objectForKey:@"news"];
     if(news){
@@ -421,7 +480,7 @@
                     [self insertTo:net_area_db_file table:net_area_table_name definition:@"AREA_ID, NETWORKING_ID" values:the_value];
                 }
             }
-                
+            
         }
     }
     
@@ -447,7 +506,7 @@
     NSMutableArray *deleted = [networkings objectForKey:@"deleted"];
     if(deleted && [deleted count]){
         for(NSNumber * n in deleted)
-             [self removeFrom:net_area_db_file table:net_area_table_name attribute:@"NETWORKING_ID" withID:[n integerValue]];
+            [self removeFrom:net_area_db_file table:net_area_table_name attribute:@"NETWORKING_ID" withID:[n integerValue]];
         [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     }
 }
@@ -497,6 +556,42 @@
     }
 }
 
+- (NSString *)readAttending:(NSMutableDictionary *)att{
+    int event_id = [[att objectForKey:@"event_id"] integerValue];
+    int server_id = [[att objectForKey:@"server_id"] integerValue];
+    
+    return [@"" stringByAppendingFormat:@"'%d', '%d'", event_id, server_id];
+}
+
+- (void) handleAttending:(NSMutableDictionary *)attendings{
+    NSLog(@"Handling Attending");
+    NSString * db_file = @"attending.db";
+    NSString * table_name = @"ATTENDING";
+    
+    NSString * status_db_file =@"attending_status.db";
+    NSString * status_table_name = @"ATTENDING_STATUS";
+    
+    NSString * definition = @"SESSION_ID, SERVER_ID";
+    
+    [self updateStatus:attendings status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSMutableDictionary *news = [attendings objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *event = [news objectForKey:key];
+            NSString * values = [self readAttending:event];
+            [self insertTo:db_file table:table_name definition:definition values:values];
+        }
+    }
+    
+    NSMutableArray *deleted = [attendings objectForKey:@"deleted"];
+    if(deleted && [deleted count])
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+    
+    
+
+}
+
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
     NSLog(@"Handling");
     for(NSString *key in request.allKeys){
@@ -531,6 +626,11 @@
     NSMutableDictionary *people = [request objectForKey:@"people"];
     if (people){
         [self handlePeople:people];
+    }
+    
+    NSMutableDictionary *attending = [request objectForKey:@"attendings"];
+    if (attending){
+        [self handleAttending:attending];
     }
     
     return nil;
