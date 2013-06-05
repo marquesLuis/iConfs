@@ -87,7 +87,7 @@
     institution.scrollEnabled = YES;
     [scroll addSubview:institution];
 
-    UILabel *interest = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
+   /* UILabel *interest = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
     interest.text = @"Interests:";
     interest.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
     [scroll addSubview:interest];
@@ -98,16 +98,16 @@
     interests.scrollEnabled = YES;
     [interests setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
     [scroll addSubview:interests];
-
+*/
     [self.view addSubview:scroll];
     
-    UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, 295, 295, 25)];
+    UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
     personalDescription.text = @"Personal description:";
     personalDescription.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
 
     [scroll addSubview:personalDescription];
     
-    UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, 320, 295, 200)];
+    UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 200)];
     [biography setEditable:NO];
     biography.scrollEnabled = YES;
 
@@ -119,7 +119,7 @@
       _personNetworking = [[NSMutableArray alloc] init];
     [self displayNetworking:personID];
 
-    UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, 520, 295, 25)];
+    UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, 395, 295, 25)];
     networking.text = @"Networking:";
     networking.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
 
@@ -131,7 +131,7 @@
     [imageView setImage:imageFromURL];
     [scroll addSubview:imageView];
         
-    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(15, 545, 295, 150) style:UITableViewStylePlain];
+    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(15, 420, 295, 150) style:UITableViewStylePlain];
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
     [scroll addSubview:self.tableNetworking ];
