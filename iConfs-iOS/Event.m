@@ -1,13 +1,13 @@
 //
-//  EventViewController.h
+//  Event.m
 //  iConfs-iOS
 //
 //  Created by Marta Lidon on 04/06/13.
 //  Copyright (c) 2013 FCTUNL. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "Event.h"
 
-@interface EventViewController : UIViewController
+@implementation Event
 
 @end
