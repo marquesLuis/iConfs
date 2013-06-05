@@ -30,6 +30,9 @@
 	// Do any additional setup after loading the view.
     [self treatKeyboard];
     [self createDatabases];
+    [self initBDFile:@"notifications_status.db" table:@"notifications_status"];
+    [self initBDFile:@"events_status.db" table:@"events_status"];
+    [self initBDFile:@"networkings_status.db" table:@"networkings_status"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,7 +180,7 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
     
     //Events
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DURATION INTEGER, DATE TEXT, LOCATION_ID INTEGER, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"events_status.db"];
     
@@ -219,9 +222,6 @@
             sqlite3_exec(feedback, sql_stnt, NULL, NULL, &error);
             sqlite3_close(feedback);
             
-            if (![name compare:@"notifications_status.db"])
-                [self initDB];
-            
             NSString *s = @"table ";
             s = [s stringByAppendingString:name];
             s = [s stringByAppendingString:@" created! =)"];
@@ -230,24 +230,23 @@
     }
 }
 
--(void) initDB{
+-(void) initBDFile:(NSString *)db_file table:(NSString *) table_file{
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
-    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notifications_status.db"];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
     sqlite3 *db;
     char *error;
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
-        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO NOTIFICATIONS_STATUS(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')"];
+        NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO %@(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')", [table_file uppercaseString]];
         
         const char *insert_stmt = [inserStmt UTF8String];
         
         if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
-            NSLog(@"Notification_Status added");
+            NSLog(@"%@ added", [table_file capitalizedString]);
         }else{
             NSLog(@"%s", error);
         }
         sqlite3_close(db);
     }
 }
-
 @end
