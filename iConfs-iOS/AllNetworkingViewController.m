@@ -39,7 +39,7 @@
 
     [self displayNetworking:@"SELECT * FROM NETWORKINGS"];
     
-    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-80) style:UITableViewStylePlain];
+    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-80) style:UITableViewStyleGrouped];
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
     [self.view addSubview:self.tableNetworking ];

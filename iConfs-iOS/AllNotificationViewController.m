@@ -28,16 +28,15 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
     _arrayOfNotifications = [[NSMutableArray alloc]init];
     [self displayNotifications];
-    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40) style:UITableViewStylePlain];
+    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40) style:UITableViewStyleGrouped];
     self.tableNotifications.dataSource = self;
     self.tableNotifications.delegate = self;
-    
     [self.view addSubview:self.tableNotifications ];
     self.title = @"Notifications";
 }
