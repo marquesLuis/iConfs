@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface Author : NSObject
+@property (strong, nonatomic) NSString* eventID;
+@property (strong, nonatomic) NSString* name;
+@property (strong, nonatomic) NSString * personID;
 
 @end

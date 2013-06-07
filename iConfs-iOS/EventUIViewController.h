@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface EventUIViewController : UIViewController
+#import "Event.h"
+#import "Author.h"
+#import "sqlite3.h"
+#import <QuartzCore/QuartzCore.h>
+@interface EventUIViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (strong, nonatomic) Event * event;
+- (IBAction)addNote:(UIButton *)sender;
 
 @end
