@@ -13,6 +13,5 @@
 #import <TapkuLibrary/TapkuLibrary.h>
 
 @interface PersonalProgramTKCalendarDayViewController : TKCalendarDayViewController<TKCalendarDayViewDelegate>
-- (IBAction)goHome:(UIBarButtonItem *)sender;
 
 @end

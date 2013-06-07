@@ -39,7 +39,7 @@
 
     [self displayNetworking:@"SELECT * FROM NETWORKINGS"];
     
-    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-80) style:UITableViewStyleGrouped];
+    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-80) style:UITableViewStyleGrouped];
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
     [self.view addSubview:self.tableNetworking ];
@@ -119,8 +119,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
+     [self performSegueWithIdentifier:@"segue2" sender:nil];
+
+   // [self presentViewController:network animated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
+
+    NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
     
     
     network.networkingDescription = [[UITextView alloc] init];
@@ -135,13 +143,14 @@
     
     NSString * letter = [person.firstName substringToIndex:1];
     network.namePerson = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
-
+    
     
     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
-    [self presentViewController:network animated:YES completion:nil];
+        
+    
 }
 
 -(void) displayNetworking:(NSString*)selectquery{

@@ -12,8 +12,9 @@
 #import "Notification.h"
 
 @interface AllNotificationViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-@property (strong, nonatomic) IBOutlet UITableView *tableNotifications;
+//@property (strong, nonatomic) IBOutlet UITableView *tableNotifications;
 
+@property (strong, nonatomic) IBOutlet UITableView *tableNotifications;
 
 @end
 

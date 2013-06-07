@@ -12,6 +12,7 @@
     NSString * beginDate;
     NSString * endDate;
     NSMutableArray *events;
+    int eventSelected;
 }
 
 @end
@@ -112,20 +113,13 @@
                     NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
                     NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 13)];
                     NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 3)];
-                    NSLog(title);
-                    NSLog(dateBegin);
-                    NSLog(dateEnd);
-                    NSLog(date);
-
                     e.title = title;
                     e.description = description;
                     e.kind = kind;
                     e.eventID = eventID;
                     e.begin = [date stringByAppendingString:dateBegin];
                     e.date = date;
-                    NSLog(e.begin);
                     e.end = [date stringByAppendingString:dateEnd];
-                                        NSLog(e.end);
                     e.localID = local;
                     [events addObject:e];
                 }
@@ -190,23 +184,23 @@
     NSString *beginDateDB = date;
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd HH:mm"];
-  //  dateFormatter1.timeZone = [NSTimeZone defaultTimeZone ];
     return  [dateFormatter1 dateFromString:beginDateDB];
 }
 
 - (void) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventViewWasSelected:(TKCalendarDayEventView *)eventView{
     NSLog(@"selected event from program!");
-    EventUIViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"EventUIViewController"];
-    second.event = [events objectAtIndex:eventView.identifier.intValue];
-    [self presentViewController:second animated:YES completion:nil];
+    eventSelected = eventView.identifier.intValue;
+    [self performSegueWithIdentifier:@"segue6" sender:nil];
 
+    //[self presentViewController:second animated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{    EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
+    second.event = [events objectAtIndex:eventSelected];
 }
 
 
 
 
-- (IBAction)goHome:(UIBarButtonItem *)sender {
-    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-    [self presentViewController:second animated:YES completion:nil];
-}
 @end

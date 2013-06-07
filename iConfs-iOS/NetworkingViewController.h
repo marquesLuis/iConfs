@@ -27,6 +27,6 @@
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 //- (IBAction)goToPersonProfile:(UIButton *)sender;
-- (IBAction)goToPersonProfile:(UIButton *)sender;
+//- (IBAction)goToPersonProfile:(UIButton *)sender;
 
 @end

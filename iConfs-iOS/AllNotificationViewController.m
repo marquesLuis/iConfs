@@ -34,7 +34,7 @@
     [super viewDidLoad];
     _arrayOfNotifications = [[NSMutableArray alloc]init];
     [self displayNotifications];
-    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, self.view.frame.size.height-40) style:UITableViewStyleGrouped];
+    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-40) style:UITableViewStyleGrouped];
     self.tableNotifications.dataSource = self;
     self.tableNotifications.delegate = self;
     [self.view addSubview:self.tableNotifications ];
@@ -119,9 +119,21 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // [self performSegueWithIdentifier:@"segue1" sender:nil];
+    [self performSegueWithIdentifier:@"segue5" sender:nil];
     
-    NotificationViewController * notif = [self.storyboard instantiateViewControllerWithIdentifier:@"NotificationViewController"];
+    
+    
+  //  [self presentViewController:notif animated:YES completion:nil];
+}
+
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    NSIndexPath *indexPath = [tableNotifications indexPathForSelectedRow];
+    
+    NotificationViewController * notif = (NotificationViewController*)segue.destinationViewController;
     notif.notificationText = [[UITextView alloc] init];
     
     Notification *notification = [_arrayOfNotifications objectAtIndex:indexPath.row];
@@ -130,9 +142,7 @@
     notif.notificationDateContent = notification.date;
     notif.notificationContent = notification.text;
     
-    [self presentViewController:notif animated:YES completion:nil];
 }
-
 
 /*
  * tamanho de uma cell

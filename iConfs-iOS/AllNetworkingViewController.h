@@ -14,7 +14,8 @@
 
 @interface AllNetworkingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) IBOutlet UITableView *tableNetworking;
+@property (strong, nonatomic) IBOutlet UITableView *tableNetworking;
+//@property (nonatomic, strong) IBOutlet UITableView *tableNetworking;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 
