@@ -27,7 +27,8 @@
 		621A5A33175E499300B02EEC /* libTapkuLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 621A5A2E175E494000B02EEC /* libTapkuLibrary.a */; };
 		621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */; };
 		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
-		6225D18A1760C76A007D5E93 /* EventTKCalendarDayEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6225D1891760C76A007D5E93 /* EventTKCalendarDayEventView.m */; };
+		62F3AF6F1760CE3E00E4BA8F /* EventUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */; };
+		62F3AF751760E68F00E4BA8F /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF741760E68F00E4BA8F /* Author.m */; };
 		62FC9A56175F721900A22AAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */; };
 		62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */; };
 		62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */; };
@@ -118,8 +119,10 @@
 		621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProgramTKCalendarDayViewController.m; sourceTree = "<group>"; };
 		621A5A53175E98CB00B02EEC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		621A5A54175E98CB00B02EEC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
-		6225D1881760C76A007D5E93 /* EventTKCalendarDayEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTKCalendarDayEventView.h; sourceTree = "<group>"; };
-		6225D1891760C76A007D5E93 /* EventTKCalendarDayEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTKCalendarDayEventView.m; sourceTree = "<group>"; };
+		62F3AF6D1760CE3E00E4BA8F /* EventUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUIViewController.h; sourceTree = "<group>"; };
+		62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUIViewController.m; sourceTree = "<group>"; };
+		62F3AF731760E68F00E4BA8F /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		62F3AF741760E68F00E4BA8F /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		62FC9A58175F81B100A22AAD /* AllNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotificationViewController.h; sourceTree = "<group>"; };
 		62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotificationViewController.m; sourceTree = "<group>"; };
@@ -274,8 +277,10 @@
 				62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
-				6225D1881760C76A007D5E93 /* EventTKCalendarDayEventView.h */,
-				6225D1891760C76A007D5E93 /* EventTKCalendarDayEventView.m */,
+				62F3AF6D1760CE3E00E4BA8F /* EventUIViewController.h */,
+				62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */,
+				62F3AF731760E68F00E4BA8F /* Author.h */,
+				62F3AF741760E68F00E4BA8F /* Author.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -481,7 +486,8 @@
 				621A5A55175E98CB00B02EEC /* Event.m in Sources */,
 				62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */,
 				62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */,
-				6225D18A1760C76A007D5E93 /* EventTKCalendarDayEventView.m in Sources */,
+				62F3AF6F1760CE3E00E4BA8F /* EventUIViewController.m in Sources */,
+				62F3AF751760E68F00E4BA8F /* Author.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

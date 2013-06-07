@@ -57,7 +57,7 @@
     labelName.text = @"Name:";
     labelName.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
     [scroll addSubview:labelName];
-    
+
     UITextView *name = [[UITextView alloc] initWithFrame:CGRectMake(150, 45, 200, 25)];
     [name setEditable:NO];
     NSString * n = [[[[_personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:_personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:_personProfile.lastName];
