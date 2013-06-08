@@ -85,7 +85,8 @@
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
     NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
-    
+    [events removeAllObjects];
+
     if (sqlite3_open([dbPathAttending UTF8String], &db) == SQLITE_OK)
     {    
 
@@ -94,10 +95,7 @@
         char *errorMessage;
         
         if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
-        {    
-
-            
-            sqlite3_stmt *myStatment;
+        { sqlite3_stmt *myStatment;
             
             NSString *strSQL = @"select * from main.ATTENDING attending inner join SECOND.EVENTS event on attending.SESSION_ID = event.SERVER_ID";
             
@@ -144,11 +142,10 @@
         
 		
 		event.endDate = [self convertNSStringToNSDate:ev.end];
-        NSLog(@"date:");
-        NSLog(@"%@, %@, %@", event.startDate, event, ev);
         
 		[ret addObject:event];
         i++;
+        NSLog(@"%d", i);
 		
 	}
 	return ret;
@@ -191,8 +188,6 @@
     NSLog(@"selected event from program!");
     eventSelected = eventView.identifier.intValue;
     [self performSegueWithIdentifier:@"segue6" sender:nil];
-
-    //[self presentViewController:second animated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

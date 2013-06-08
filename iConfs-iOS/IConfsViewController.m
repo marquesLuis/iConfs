@@ -132,17 +132,35 @@
         return;
     }
     
-    Update *update = [[Update alloc] initDB];
+   /* Update *update = [[Update alloc] initDB];
     [update update];
     
     
     //change view
     HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
     second.update = update;
-    [self presentViewController:second animated:YES completion:nil];
-    
+    [self presentViewController:second animated:YES completion:nil];*/
+    //[self performSegueWithIdentifier:@"segue0" sender:nil];
+
     
 }
+
+
+// [self presentViewController:network animated:YES completion:nil];
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    Update *update = [[Update alloc] initDB];
+    [update update];
+    
+    
+    HomeViewController * home = (HomeViewController*)segue.destinationViewController;
+    home.update = update;
+}
+
+    
 
 -(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
