@@ -10,7 +10,6 @@
 #import "Update.h"
 
 @interface IConfsViewController (){
-    
 } @end
 
 @implementation IConfsViewController
@@ -62,11 +61,10 @@
     [self.view addGestureRecognizer:singleTapRecognizer];
 }
 
-- (IBAction)loginButton:(UIButton *)sender {
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
     //TODO
     NSString *email = @"lfmarques2@gmail.com";
     NSString *password = @"123123123";
-    
     if (self.emailField.text.length || self.passwordField.text.length){
         email = self.emailField.text;
         password = self.passwordField.text;
@@ -93,7 +91,6 @@
     
     @try {
         // Try something
-        
         // Send a synchronous request
         NSURLResponse * response = nil;
         NSData * returnData = [NSURLConnection sendSynchronousRequest:request
@@ -123,44 +120,30 @@
         NSLog(@"%@", newStr);
         if ([newStr hasPrefix:@"<!DOCTYPE html>"]|| newStr==NULL)
         {
+            
             [self alertMessages:@"Error on Login" withMessage:@"Something went wrong on your login :("];
-            return;
+            return NO;
         }
+        
     }
     @catch (NSException * e) {
         [self alertMessages:@"Failed Connection" withMessage:@"Check your internet connection"];
-        return;
+        return NO;
     }
-    
-   /* Update *update = [[Update alloc] initDB];
-    [update update];
-    
-    
-    //change view
-    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-    second.update = update;
-    [self presentViewController:second animated:YES completion:nil];*/
-    //[self performSegueWithIdentifier:@"segue0" sender:nil];
+    return YES;
 
-    
 }
-
-
-// [self presentViewController:network animated:YES completion:nil];
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
-    Update *update = [[Update alloc] initDB];
-    [update update];
-    
-    
-    HomeViewController * home = (HomeViewController*)segue.destinationViewController;
-    home.update = update;
+        Update *update = [[Update alloc] initDB];
+        [update update];
+        HomeViewController * home = (HomeViewController*)segue.destinationViewController;
+        home.update = update;
 }
 
-    
+
 
 -(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
