@@ -275,12 +275,12 @@
 				621A5A54175E98CB00B02EEC /* Event.m */,
 				62FC9A5E175F947D00A22AAD /* AllNetworkingViewController.h */,
 				62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */,
-				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
-				9DBF86631755FD6E00845BD7 /* Supporting Files */,
 				62F3AF6D1760CE3E00E4BA8F /* EventUIViewController.h */,
 				62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */,
 				62F3AF731760E68F00E4BA8F /* Author.h */,
 				62F3AF741760E68F00E4BA8F /* Author.m */,
+				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
+				9DBF86631755FD6E00845BD7 /* Supporting Files */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";

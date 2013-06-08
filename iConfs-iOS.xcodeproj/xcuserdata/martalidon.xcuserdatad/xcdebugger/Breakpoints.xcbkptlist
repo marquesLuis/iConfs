@@ -71,11 +71,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/PersonalProgramTKCalendarDayViewController.m"
-         timestampString = "392394444.095799"
+         timestampString = "392427279.841598"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "189"
-         endingLineNumber = "189"
+         startingLineNumber = "264"
+         endingLineNumber = "264"
          landmarkName = "-calendarDayTimelineView:eventViewWasSelected:"
          landmarkType = "5">
       </FileBreakpoint>
