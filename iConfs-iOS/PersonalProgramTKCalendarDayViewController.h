@@ -9,9 +9,9 @@
 #import "sqlite3.h"
 #import "Event.h"
 #import "HomeViewController.h"
+#import "EventUIViewController.h"
 #import <TapkuLibrary/TapkuLibrary.h>
 
 @interface PersonalProgramTKCalendarDayViewController : TKCalendarDayViewController<TKCalendarDayViewDelegate>
-- (IBAction)goHome:(UIBarButtonItem *)sender;
 
 @end

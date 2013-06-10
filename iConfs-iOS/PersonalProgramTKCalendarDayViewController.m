@@ -11,6 +11,8 @@
 @interface PersonalProgramTKCalendarDayViewController ()<TKCalendarDayViewDelegate> {
     NSString * beginDate;
     NSString * endDate;
+    NSMutableArray *events;
+    int eventSelected;
 }
 
 @end
@@ -32,17 +34,48 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Personal Program";
     
     
     [self getBeginAndEnd];
-    
+    events = [[NSMutableArray alloc]init];
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
     dateFormatter1.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     NSDate *date = [dateFormatter1 dateFromString:beginDate];
     self.dayView.date = date;
+    
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
 }
+
+/*-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    NSLog(@"change position");
+    [self.dayView reloadData];
+}*/
+
+
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification
+{
+    NSLog(@"deviceOrientationDidChange");
+    [self.dayView reloadData];
+    
+}
+
+
+/*- (BOOL)supportedInterfaceOrientations:(UIInterfaceOrientation)interfaceOrientation
+{
+    NSLog(@"interfaces supported");
+    // Return YES for supported orientations.
+    return (interfaceOrientation == UIInterfaceOrientationPortrait)
+    || (interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+    ||(interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}*/
 
 
 -(void)getBeginAndEnd{
@@ -76,77 +109,108 @@
 
 #pragma mark TKCalendarDayViewDelegate
 - (NSArray *) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventsForDate:(NSDate *)eventDate{
+    NSLog(@"called!!!");
+   // UIInterfaceOrientation orien = [[UIDevice currentDevice] orientation];
+    UIInterfaceOrientation orien = [UIApplication sharedApplication].statusBarOrientation;
+
+    NSLog(@"%d", orien);
+
+
 
     sqlite3 *db;
-    NSMutableArray *events = [[NSMutableArray alloc]init];
-    NSLog(@"fill day!");
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
-    NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
-    NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
     
-    if (sqlite3_open([dbPathAttending UTF8String], &db) == SQLITE_OK)
-    {    NSLog(@"fill day!1");
+    if(UIInterfaceOrientationIsPortrait(orien)){
+        self.title = @"Personal Program";
 
-        NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathEvents UTF8String]];
-
-        char *errorMessage;
-        
-        if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
-        {    NSLog(@"fill day!2");
-
+        NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
+        NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
+        [events removeAllObjects];
             
+        if (sqlite3_open([dbPathAttending UTF8String], &db) == SQLITE_OK)
+        {    
+
+            NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathEvents UTF8String]];
+
+            char *errorMessage;
+            
+            if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
+            { sqlite3_stmt *myStatment;
+                
+                NSString *strSQL = @"select * from main.ATTENDING attending inner join SECOND.EVENTS event on attending.SESSION_ID = event.SERVER_ID";
+                
+                if (sqlite3_prepare_v2(db, [strSQL UTF8String], -1, &myStatment, nil) == SQLITE_OK){
+                    while (sqlite3_step(myStatment)==SQLITE_ROW) {
+
+                        Event * e = [[Event alloc]init];
+                        NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 4)];
+                        NSString *description = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 5)];
+                        NSString *kind = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 7)];
+                        NSString *dateBegin = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 8)];
+                        NSString *dateEnd = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 9)];
+                        NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
+                        NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 13)];
+                        NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 3)];
+                        e.title = title;
+                        e.description = description;
+                        e.kind = kind;
+                        e.eventID = eventID;
+                        e.begin = [date stringByAppendingString:dateBegin];
+                        e.date = date;
+                        e.end = [date stringByAppendingString:dateEnd];
+                        e.localID = local;
+                        [events addObject:e];
+                    }
+                
+                } else
+                        NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
+            }
+        }
+    } else {
+        NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
+        [events removeAllObjects];
+        self.title = @"Complete Program";
+        if (sqlite3_open([dbPathEvents UTF8String], &db)==SQLITE_OK) {
             sqlite3_stmt *myStatment;
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM EVENTS"];
+            const char* query_sql = [querySql UTF8String];
             
-            NSString *strSQL = @"select * from main.ATTENDING attending inner join SECOND.EVENTS event on attending.SESSION_ID = event.SERVER_ID";
-            
-            if (sqlite3_prepare_v2(db, [strSQL UTF8String], -1, &myStatment, nil) == SQLITE_OK){
+            if (sqlite3_prepare(db, query_sql, -1, &myStatment, NULL)==SQLITE_OK) {
                 while (sqlite3_step(myStatment)==SQLITE_ROW) {
-                    NSLog(@"fill day!3");
-
-                    /** [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING( ID INTEGER PRIMARY KEY AUTOINCREMENT, SESSION_ID INTEGER, SERVER_ID INTEGER)" WithName:@"attending.db"];
-                     
-                     //Events
-                     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
-                     */
-                    
                     Event * e = [[Event alloc]init];
-                    NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 4)];
-                    NSString *description = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 5)];
-                    NSString *kind = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 7)];
-                    NSString *dateBegin = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 8)];
-                    NSString *dateEnd = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 9)];
-                    NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
-                    NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 13)];
-                    NSLog(title);
-                    NSLog(dateBegin);
-                    NSLog(dateEnd);
-                    NSLog(date);
-
+                    NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
+                    NSString *description = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 2)];
+                    NSString *kind = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 4)];
+                    NSString *dateBegin = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 5)];
+                    NSString *dateEnd = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 6)];
+                    NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 7)];
+                    NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
+                    NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 3)];
+                    
                     e.title = title;
-                    e.descrption = description;
+                    e.description = description;
                     e.kind = kind;
+                    e.eventID = eventID;
                     e.begin = [date stringByAppendingString:dateBegin];
-                    NSLog(e.begin);
+                    e.date = date;
                     e.end = [date stringByAppendingString:dateEnd];
-                                        NSLog(e.end);
                     e.localID = local;
                     [events addObject:e];
+                    
                 }
-            
-            } else
-                    NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
+            }
+            sqlite3_close(db);
         }
+ 
     }
-    
     NSMutableArray *ret = [NSMutableArray array];
-
+    int i = 0;
 	for(Event *ev in events){
 
 		TKCalendarDayEventView *event = [calendarDayTimeline dequeueReusableEventView];
 		if(event == nil) event = [TKCalendarDayEventView eventView];
-        
-        event.identifier = nil;
+        event.identifier = [NSNumber numberWithInt:i];
         
 		event.titleLabel.text = ev.title;
         
@@ -155,15 +219,13 @@
         
 		
 		event.endDate = [self convertNSStringToNSDate:ev.end];
-        NSLog(@"date:");
-        NSLog(@"%@, %@, %@", event.startDate, event, ev);
         
 		[ret addObject:event];
+        i++;
+       // NSLog(@"%d", i);
 		
 	}
 	return ret;
-	
-    
 }
 
 -(NSString *)getLocal:(NSString*)localID{
@@ -194,19 +256,21 @@
     NSString *beginDateDB = date;
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd HH:mm"];
-  //  dateFormatter1.timeZone = [NSTimeZone defaultTimeZone ];
     return  [dateFormatter1 dateFromString:beginDateDB];
 }
 
 - (void) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventViewWasSelected:(TKCalendarDayEventView *)eventView{
     NSLog(@"selected event from program!");
+    eventSelected = eventView.identifier.intValue;
+    [self performSegueWithIdentifier:@"segue6" sender:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{    EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
+    second.event = [events objectAtIndex:eventSelected];
 }
 
 
 
 
-- (IBAction)goHome:(UIBarButtonItem *)sender {
-    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-    [self presentViewController:second animated:YES completion:nil];
-}
 @end

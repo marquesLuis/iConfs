@@ -16,7 +16,7 @@
 
 @interface Event : NSObject
 @property (strong, nonatomic) NSString * title;
-@property (strong, nonatomic) NSString * descrption;
+@property (strong, nonatomic) NSString * description;
 @property (strong, nonatomic) NSString * kind;
 @property (strong, nonatomic) NSString * begin;
 @property (strong, nonatomic) NSString * end;
@@ -25,4 +25,5 @@
 @property (strong, nonatomic) NSString * keynote;
 @property (strong, nonatomic) NSString * speakerID;
 @property (strong, nonatomic) NSString * localID;
+@property (strong, nonatomic) NSString * eventID;
 @end

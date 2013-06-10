@@ -31,7 +31,7 @@
     
     self.title = netTitle;
     networkingTitle.text = netTitle;
-    self.navigationBar.topItem.title = netTitle;
+    self.navigationItem.backBarButtonItem.title = @"Back";
 
     [personName setTitle: namePerson forState: UIControlStateNormal];
     [self.networkingDescription setEditable:NO];
@@ -47,11 +47,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)goToPersonProfile:(UIButton *)sender {
+/*- (IBAction)goToPersonProfile:(UIButton *)sender {
     
     PersonProfileViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
     network.personID = personId;
     [self presentViewController:network animated:YES completion:nil];
+}*/
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"networing prepare for segue");
+    PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
+    NSLog(@"%@", personId);
+    
+    person.personID = personId;
+    
+    
 }
 
 @end
