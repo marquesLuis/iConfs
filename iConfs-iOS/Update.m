@@ -396,7 +396,12 @@
 
 - (NSString *)readAuthor:(NSMutableArray *)author{
     
-    return [@"" stringByAppendingFormat:@"'%d','%d','%@','%d'", [[author objectAtIndex:0] integerValue], [[author objectAtIndex:1] integerValue], [author objectAtIndex:2], [[author objectAtIndex:3] integerValue]  ];
+    NSString * auth_id = [author objectAtIndex:3];
+    int auth_id_int = 0;
+    if ([auth_id length])
+        auth_id_int = [auth_id integerValue];
+    
+    return [@"" stringByAppendingFormat:@"'%d','%d','%@','%d'", [[author objectAtIndex:0] integerValue], [[author objectAtIndex:1] integerValue], [author objectAtIndex:2],  auth_id_int ];
 }
 
 - (void)handleEvents:(NSMutableDictionary *) events{
@@ -422,8 +427,8 @@
             NSMutableDictionary * authors = [event objectForKey:@"authors"];
             for(NSString * auth_key in authors.allKeys){
                 NSMutableArray * author = [authors objectForKey:auth_key];
-                NSString *auth_values = [self readAuthor:author];
-                [self insertTo:@"author.db" table:@"AUTHOR" definition:auth_defitintion values:auth_values];
+                NSString *auth_values_string = [self readAuthor:author];
+                [self insertTo:@"author.db" table:@"AUTHOR" definition:auth_defitintion values:auth_values_string];
             }
 
         }
