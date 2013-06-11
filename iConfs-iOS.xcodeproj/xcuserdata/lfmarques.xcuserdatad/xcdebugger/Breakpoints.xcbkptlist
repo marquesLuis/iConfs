@@ -8,7 +8,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "392134740.162644"
+         timestampString = "392552055.702601"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "267"
@@ -27,6 +27,19 @@
          startingLineNumber = "155"
          endingLineNumber = "155"
          landmarkName = "-buildMessages"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "iConfs-iOS/Update.m"
+         timestampString = "392556894.425108"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
+         landmarkName = "-readEvent:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

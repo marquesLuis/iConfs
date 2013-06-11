@@ -287,7 +287,7 @@
     NSMutableDictionary *attending = [self buildAttending];
     if (attending && [attending count])
         [request setObject:attending forKey:@"attending"];
-    return request;
+   return request;
 }
 
 /*
@@ -394,6 +394,11 @@
     return [@"" stringByAppendingFormat:@"'%@', '%@', '%d','%@','%@','%@','%@','%d','%d','%d'",title, description, server_id, kind, begin, end, date, speaker_id, keynote, local_id];
 }
 
+- (NSString *)readAuthor:(NSMutableArray *)author{
+    
+    return [@"" stringByAppendingFormat:@"'%d','%d','%@','%d'", [[author objectAtIndex:0] integerValue], [[author objectAtIndex:1] integerValue], [author objectAtIndex:2], [[author objectAtIndex:3] integerValue]  ];
+}
+
 - (void)handleEvents:(NSMutableDictionary *) events{
     NSLog(@"Handling Events");
     NSString * db_file = @"events.db";
@@ -406,6 +411,7 @@
     [self updateStatus:events status_table_name:status_table_name status_db_file:status_db_file];
     
     NSString * definition = @"TITLE, DESCRIPTION, SERVER_ID, KIND, BEGIN, END, DATE, SPEAKER_ID, KEYNOTE, LOCAL_ID";
+    NSString * auth_defitintion = @"SERVER_ID, EVENT_ID, NAME, PERSON_ID";
     
     NSMutableDictionary *news = [events objectForKey:@"news"];
     if(news){
@@ -413,6 +419,13 @@
             NSMutableDictionary *event = [news objectForKey:key];
             NSString * values = [self readEvent:event];
             [self insertTo:db_file table:table_name definition:definition values:values];
+            NSMutableDictionary * authors = [event objectForKey:@"authors"];
+            for(NSString * auth_key in authors.allKeys){
+                NSMutableArray * author = [authors objectForKey:auth_key];
+                NSString *auth_values = [self readAuthor:author];
+                [self insertTo:@"author.db" table:@"AUTHOR" definition:auth_defitintion values:auth_values];
+            }
+
         }
     }
     
@@ -422,6 +435,13 @@
             NSMutableDictionary *event = [updated objectForKey:key];
             NSString * values = [self readEvent:event];
             [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[event objectForKey:@"id"] integerValue] definition:definition values:values];
+            [self removeFrom:@"author.db" table:@"AUTHOR" attribute:@"EVENT_ID" withID:[[event objectForKey:@"id"] integerValue]];
+            NSMutableDictionary * authors = [event objectForKey:@"authors"];
+            for(NSString * auth_key in authors.allKeys){
+                NSMutableArray * author = [authors objectForKey:auth_key];
+                NSString *auth_values = [self readAuthor:author];
+                [self insertTo:@"author.db" table:@"AUTHOR" definition:auth_defitintion values:auth_values];
+            }
         }
     }
     
