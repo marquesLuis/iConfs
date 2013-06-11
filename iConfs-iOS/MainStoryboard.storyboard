@@ -248,15 +248,18 @@
                             <constraint firstItem="MFh-CY-QnT" firstAttribute="leading" secondItem="qAQ-Vj-hDn" secondAttribute="leading" constant="144" id="r65-fO-8H2"/>
                             <constraint firstAttribute="trailing" secondItem="cXx-mh-isf" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rmc-2s-t11"/>
                             <constraint firstItem="Jjm-gF-B4D" firstAttribute="trailing" secondItem="nSP-t5-Er5" secondAttribute="trailing" type="default" id="sh0-qA-d5j"/>
-                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="baseline" secondItem="UFn-7s-Y4L" secondAttribute="baseline" type="default" id="v51-Hm-9VC"/>
                             <constraint firstItem="cXx-mh-isf" firstAttribute="top" secondItem="Xnm-P4-fzq" secondAttribute="top" type="default" id="wfZ-zP-1Jp"/>
                             <constraint firstItem="UFn-7s-Y4L" firstAttribute="bottom" secondItem="MhJ-BT-VIX" secondAttribute="bottom" type="default" id="yNX-F9-Jdc"/>
                             <constraint firstItem="NxF-Kn-QJF" firstAttribute="top" secondItem="Jjm-gF-B4D" secondAttribute="top" type="default" id="z3Z-ez-I5b"/>
-                            <constraint firstItem="MhJ-BT-VIX" firstAttribute="baseline" secondItem="nSP-t5-Er5" secondAttribute="baseline" type="default" id="zwn-bm-4a1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="iConfs" id="IIK-dc-mJ7">
                         <barButtonItem key="backBarButtonItem" title="Back" id="sFZ-tJ-HeH"/>
+                        <barButtonItem key="leftBarButtonItem" title="Update" id="ObG-PV-ABG">
+                            <connections>
+                                <action selector="updateButton:" destination="9qT-Qf-qzL" id="lZt-Ip-svx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdX-JP-ijD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -744,12 +747,12 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addNote:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="HomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="networkingButton:" candidateClass="UIButton"/>
                 <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>

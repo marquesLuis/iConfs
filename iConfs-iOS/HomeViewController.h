@@ -13,8 +13,9 @@
 
 @interface HomeViewController : UIViewController
 
-- (IBAction)updateButton:(UIBarButtonItem *)sender;
+//- (IBAction)updateButton:(UIBarButtonItem *)sender;
 //- (IBAction)networkingButton:(UIButton *)sender;
+- (IBAction)updateButton:(UIBarButtonItem *)sender;
 
 @property  (strong, nonatomic) Update * update;
 @end
