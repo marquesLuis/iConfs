@@ -34,6 +34,8 @@
     [self initBDFile:@"networkings_status.db" table:@"networkings_status"];
     [self initBDFile:@"people_status.db" table:@"PEOPLE_STATUS"];
     [self initBDFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
+    [self initBDFile:@"areas_status.db" table:@"AREAS_STATUS"];
+    [self initBDFile:@"location_status.db" table:@"LOCATION_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -179,11 +181,7 @@
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"people_status.db"];
     
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MY_SELF_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, INFO_LAST_DATE TEXT)" WithName:@"my_self_status.db"];
-    
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS INFO( ID INTEGER PRIMARY KEY AUTOINCREMENT, TYPE TEXT, VALUE TEXT, PERSON_ID INTEGER)" WithName:@"info.db"];
-    
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS INFO_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT,  LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"info_status.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS INFO( SERVER_ID INTEGER PRIMARY KEY, TYPE TEXT, VALUE TEXT, PERSON_ID INTEGER)" WithName:@"info.db"];
     
     //networkings
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NETWORKINGS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NETWORKING TEXT, DATE TEXT, PERSON_ID INTEGER, SERVER_ID INTEGER)" WithName:@"networkings.db"];

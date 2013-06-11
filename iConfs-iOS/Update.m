@@ -264,6 +264,14 @@
     return [self buildStatus:@"attending_status.db" fromTable:@"ATTENDING_STATUS"];
 }
 
+- (NSMutableDictionary *) buildAreas{
+    return [self buildStatus:@"areas_status.db" fromTable:@"AREAS_STATUS"];
+}
+
+- (NSMutableDictionary *) buildLocations{
+    return [self buildStatus:@"location_status.db" fromTable:@"LOCATION_STATUS"];
+}
+
 -(NSMutableDictionary *) buildRequest{
     NSMutableDictionary *request = [NSMutableDictionary dictionary];
     NSMutableArray *feedbacks = [self buildFeedback];
@@ -287,7 +295,13 @@
     NSMutableDictionary *attending = [self buildAttending];
     if (attending && [attending count])
         [request setObject:attending forKey:@"attending"];
-   return request;
+    NSMutableDictionary *areas = [self buildAreas];
+    if(areas && [areas count])
+        [request setObject:areas forKey:@"areas"];
+    NSMutableDictionary *locations = [self buildLocations];
+    if (locations && [locations count])
+        [request setObject:locations forKey:@"locations"];
+    return request;
 }
 
 /*
@@ -430,7 +444,7 @@
                 NSString *auth_values_string = [self readAuthor:author];
                 [self insertTo:@"author.db" table:@"AUTHOR" definition:auth_defitintion values:auth_values_string];
             }
-
+            
         }
     }
     
@@ -550,6 +564,15 @@
     return [@"" stringByAppendingFormat:@"'%@','%@','%@','%@','%@','%@','%@','%d','%@'", first, last, pre, aff, email, photo, bio, server_id, date];
 }
 
+- (NSString *) readInfo: (NSMutableDictionary *)info{
+    int server_id = [[info objectForKey:@"server_id"] integerValue];
+    NSString * type = [info objectForKey:@"type"];
+    NSString * value = [info objectForKey:@"value"];
+    int person_id = [[info objectForKey:@"person_id"] integerValue];
+    
+    return [@"" stringByAppendingFormat:@"'%d', '%@', '%@', '%d'", server_id, type, value, person_id];
+}
+
 - (void) handlePeople:(NSMutableDictionary *)people{
     NSLog(@"Handling People");
     NSString * db_file = @"people.db";
@@ -558,9 +581,18 @@
     NSString * status_db_file =@"people_status.db";
     NSString * status_table_name = @"PEOPLE_STATUS";
     
+    NSString * info_db_file = @"info.db";
+    NSString * info_table_name = @"INFO";
+    NSString * info_definition = @"SERVER_ID, TYPE, VALUE, PERSON_ID";
+    
     [self updateStatus:people status_table_name:status_table_name status_db_file:status_db_file];
     
     NSString * definition = @"FIRSTNAME, LASTNAME, PREFIX, AFFILIATION, EMAIL, PHOTO, BIOGRAPHY, SERVER_ID, LAST_DATE";
+    
+    
+    NSString * areas_db_file = @"people_area.db";
+    NSString * areas_table_file = @"PEOPLE_AREA";
+    NSString * areas_definition = @"PERSON_ID, AREA_ID";
     
     NSMutableDictionary *news = [people objectForKey:@"news"];
     if(news){
@@ -568,16 +600,52 @@
             NSMutableDictionary *event = [news objectForKey:key];
             NSString * values = [self readPerson:event];
             [self insertTo:db_file table:table_name definition:definition values:values];
+            NSMutableDictionary * new_infos = [event objectForKey:@"infos"];
+            if (new_infos && [new_infos count]){
+                for (NSString * info_key in new_infos){
+                    NSMutableDictionary * info = [new_infos objectForKey:info_key];
+                    NSString * info_values = [self readInfo:info];
+                    [self insertTo:info_db_file table:info_table_name definition:info_definition values:info_values];
+                }
+            }
+            NSMutableArray *areas = [event objectForKey:@"areas"];
+            if (areas && [areas count]){
+                int server_id = [[event objectForKey:@"server_id"] integerValue];
+                NSString * person_area_values = [@"" stringByAppendingFormat:@"'%d', '", server_id];
+                for(NSNumber * n in areas){
+                    [self insertTo:areas_db_file table:areas_table_file definition:areas_definition values:[person_area_values stringByAppendingFormat:@"%d'",[n integerValue]]];
+                }
+            }
         }
+        
     }
     
     NSMutableDictionary *updated = [people objectForKey:@"updated"];
     if(updated){
         for(NSString *key in updated.allKeys){
-            NSMutableDictionary *event = [updated objectForKey:key];
-            NSString * values = [self readPerson:event];
-            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[event objectForKey:@"id"] integerValue] definition:definition values:values];
+            NSMutableDictionary *person = [updated objectForKey:key];
+            NSString * values = [self readPerson:person];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[person objectForKey:@"id"] integerValue] definition:definition values:values];
+            [self removeFrom:info_db_file table:info_table_name attribute:@"PERSON_ID" withID:[[person objectForKey:@"id"] integerValue]];
+            NSMutableDictionary * new_infos = [person objectForKey:@"infos"];
+            if (new_infos && [new_infos count]){
+                for (NSString * info_key in new_infos){
+                    NSMutableDictionary * info = [new_infos objectForKey:info_key];
+                    NSString * info_values = [self readInfo:info];
+                    [self insertTo:info_db_file table:info_table_name definition:info_definition values:info_values];
+                }
+            }
+            int server_id = [[person objectForKey:@"server_id"] integerValue];
+            [self removeFrom:areas_db_file table:areas_table_file attribute:@"PERSON_ID" withID:server_id];
+            NSMutableArray *areas = [person objectForKey:@"areas"];
+            if (areas && [areas count]){
+                NSString * person_area_values = [@"" stringByAppendingFormat:@"'%d', '", server_id];
+                for(NSNumber * n in areas){
+                    [self insertTo:areas_db_file table:areas_table_file definition:areas_definition values:[person_area_values stringByAppendingFormat:@"%d'",[n integerValue]]];
+                }
+            }
         }
+        
     }
 }
 
@@ -614,7 +682,53 @@
         [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     
     
+    
+}
 
+- (NSString *) readAreas:(NSMutableDictionary *)area{
+    
+    NSString * name = [area objectForKey:@"name"];
+    int server_id = [[area objectForKey:@"server_id"] integerValue];
+    
+    return [@"" stringByAppendingFormat:@"'%@', '%d'", name, server_id];
+}
+
+- (void) handleAreas:(NSMutableDictionary *)areas{
+    NSLog(@"Handling Areas");
+    NSString * db_file = @"areas.db";
+    NSString * table_name = @"AREAS";
+    
+    NSString * status_db_file =@"areas_status.db";
+    NSString * status_table_name = @"AREAS_STATUS";
+    
+    [self updateStatus:areas status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSString * definition = @" NAME, SERVER_ID";
+    
+    NSMutableDictionary *news = [areas objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *area = [news objectForKey:key];
+            NSString * values = [self readAreas:area];
+            [self insertTo:db_file table:table_name definition:definition values:values];            
+        }
+    }
+    
+    NSMutableDictionary *updated = [areas objectForKey:@"updated"];
+    if(updated){
+        for(NSString *key in updated.allKeys){
+            NSMutableDictionary *area = [updated objectForKey:key];
+            NSString * values = [self readAreas:area];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[area objectForKey:@"server_id"] integerValue] definition:definition values:values];
+        }
+    }
+    
+    NSMutableArray *deleted = [areas objectForKey:@"deleted"];
+    if(deleted && [deleted count]){
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+    }
+    
+    
 }
 
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
@@ -656,6 +770,11 @@
     NSMutableDictionary *attending = [request objectForKey:@"attendings"];
     if (attending){
         [self handleAttending:attending];
+    }
+    
+    NSMutableDictionary *areas = [request objectForKey:@"areas"];
+    if (areas){
+        [self handleAreas:areas];
     }
     
     return nil;
