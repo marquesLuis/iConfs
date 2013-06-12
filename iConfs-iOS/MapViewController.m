@@ -36,8 +36,6 @@
 {
     [super viewDidLoad];
     locals = [self getLocal];
-    NSLog(@"%f", self.view.frame.size.height);
-    NSLog(@"%f", self.view.frame.size.width);
     picker = [[UIPickerView alloc] initWithFrame:CGRectZero];
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
@@ -54,7 +52,6 @@
 }
 
 -(NSMutableArray *)getLocal{
-    NSLog(@"getlocal");
     sqlite3_stmt *statement;
     sqlite3 *db;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -75,7 +72,6 @@
                 Local * local = [[Local alloc]init];
                 [local setTitle:title];
                 [local setPath:path];
-                NSLog(@"%@", title);
                 [locations addObject:local];
             }
         }
@@ -105,7 +101,7 @@
     if([locals count] == 0){
         pickerView.hidden = YES;
         map.hidden = YES;
-        
+        [self alertMessages:@"There's no maps available" withMessage:@""];
         return nil;
     }
     
@@ -119,6 +115,15 @@
     }
 
     return l.title;
+}
+
+-(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
