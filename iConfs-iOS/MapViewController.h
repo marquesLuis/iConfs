@@ -14,5 +14,6 @@
 
 //@property (strong, nonatomic) IBOutlet UIPickerView *picker;
 @property (strong, nonatomic) IBOutlet UIImageView *map;
+-(IBAction)zoomIn:(UIPinchGestureRecognizer *)reconizer;
 
 @end

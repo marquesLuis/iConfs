@@ -27,6 +27,11 @@
     return self;
 }
 
+-(IBAction)zoomIn:(UIPinchGestureRecognizer *)reconizer{
+    reconizer.view.transform = CGAffineTransformScale(reconizer.view.transform, reconizer.scale, reconizer.scale);
+    reconizer.scale = 1;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
