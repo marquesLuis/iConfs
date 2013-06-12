@@ -101,7 +101,16 @@
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
+   
+    if([locals count] == 0){
+        pickerView.hidden = YES;
+        map.hidden = YES;
+        
+        return nil;
+    }
+    
     Local * l = [locals objectAtIndex:row];
+    pickerView.hidden = NO;
 
     if(row == 0){
         NSString * path = l.path;
