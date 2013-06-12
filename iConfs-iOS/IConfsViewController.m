@@ -104,17 +104,9 @@
         NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
         
         NSMutableDictionary * person = [json objectForKey:@"person"];
-        NSString * first = [person objectForKey:@"first"];
-        NSString * last = [person objectForKey:@"last"];
-        NSString * pre = [person objectForKey:@"pre"];
-        NSString * aff = [person objectForKey:@"affiliation"];
-        NSString * photo = [person objectForKey:@"photo"];
-        NSString * bio = [person objectForKey:@"bio"];
         int server_id = [[person objectForKey:@"server_id"] integerValue];
-        NSString * last_date = [person objectForKey:@"last_date"];
-        NSString * info_update = [person objectForKey:@"info_update"];
-        NSString * values = [@"" stringByAppendingFormat:@"'%@', '%@','%@','%@','%@','%@','%@','%d','%@','%@','%@'", first, last, pre, aff, email, photo, bio, server_id, last_date, info_update, password];
-        [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"FIRSTNAME, LASTNAME, PREFIX, AFFILIATION, EMAIL, PHOTO, BIOGRAPHY, SERVER_ID, LAST_DATE, INFO_LAST_DATE, PASSWORD" values:values];
+        NSString * values = [@"" stringByAppendingFormat:@"'%d', '%@','%@'",server_id, email, password];
+        [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"SERVER_ID, EMAIL, PASSWORD" values:values];
         
         NSMutableDictionary * dates = [json objectForKey:@"dates"];
         [self insertTo:@"calendar.db" table:@"CALENDAR" definition:@"FIRST, LAST" values:[@"" stringByAppendingFormat:@"'%@', '%@'", [dates objectForKey:@"begin"], [dates objectForKey:@"end"]]];
@@ -177,7 +169,7 @@
     //people
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
     
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MY_SELF( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT, INFO_LAST_DATE TEXT, PASSWORD TEXT)" WithName:@"my_self.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MY_SELF( SERVER_ID INTEGER PRIMARY KEY, EMAIL TEXT, PASSWORD TEXT)" WithName:@"my_self.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"people_status.db"];
     
@@ -306,7 +298,7 @@
     NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
-        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], [values uppercaseString]];
+        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);

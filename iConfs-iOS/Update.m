@@ -33,7 +33,7 @@
         if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
             
             int last_row = 0;
-            NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM %@",table_name];
+            NSString *querySql = [NSString stringWithFormat:@"SELECT MAX(SERVER_ID) FROM %@",table_name];
             const char* query_sql = [querySql UTF8String];
             
             @try{
@@ -51,13 +51,13 @@
                 
             }
             if(last_row){
-                querySql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE ID = %d",table_name, last_row];
+                querySql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE SERVER_ID = %d",table_name, last_row];
                 query_sql = [querySql UTF8String];
                 
                 if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
                     while (sqlite3_step(statement)==SQLITE_ROW) {
-                        email = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
-                        password = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 11)];
+                        email = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                        password = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                     }
                     sqlite3_finalize(statement);
                 }
@@ -65,7 +65,7 @@
             sqlite3_close(notificationDB);
         }
         
-        NSString *initialArgs = @"?registry[email]=";
+        NSString *initialArgs = @"registry[email]=";
         NSString *withEmail = [initialArgs stringByAppendingString:email];
         NSString *passStart = [withEmail stringByAppendingString:@"&registry[password]="];
         NSString *completeArgs = [passStart stringByAppendingString:password];
@@ -83,7 +83,7 @@
 {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
-    NSString *postURL = [@"http://0.0.0.0:3000/update/update" stringByAppendingString:[self auth_params]];
+    NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
     
     //  NSLog(postURL);
     
@@ -555,10 +555,16 @@
     NSString * last = [person objectForKey:@"last"];
     NSString * pre = [person objectForKey:@"pre"];
     NSString * aff = [person objectForKey:@"affiliation"];
-    NSString * email =[person objectForKey:@"email"];
-    NSString * photo = [person objectForKey:@"photo"];
-    NSString * bio = [person objectForKey:@"bio"];
     int server_id = [[person objectForKey:@"server_id"] integerValue];
+    NSString * email =[person objectForKey:@"email"];
+    NSString *tmp = [person objectForKey:@"photo"];
+    NSString *photo = @"";
+    if (tmp){
+        photo = [self downloadFile:tmp personID:server_id];
+        NSLog(@"Photo at %@", photo);
+    }
+    
+    NSString * bio = [person objectForKey:@"bio"];
     NSString * date = [person objectForKey:@"last_date"];
     
     return [@"" stringByAppendingFormat:@"'%@','%@','%@','%@','%@','%@','%@','%d','%@'", first, last, pre, aff, email, photo, bio, server_id, date];
@@ -783,6 +789,53 @@
 /*
  -----------------------------------------------------End Handling Zone-----------------------------------------------------
  */
+/*
+ -----------------------------------------------------Images Zone-----------------------------------------------------
+ */
+
+- (NSString *) downloadFile:(NSString *)url personID:(int)server_id{
+    NSString * pic = [@"person" stringByAppendingFormat:@"_%d",server_id];
+    NSRange range = [url rangeOfString:@"." options:NSBackwardsSearch];
+    NSString * type = [url substringFromIndex:range.location];
+    NSLog(@"%@", type);
+    url = [url stringByAppendingFormat:@"&%@",_auth_params];
+    //Definitions
+    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    //Get Image From URL
+    UIImage * imageFromURL = [self getImageFromURL:url];
+    
+    //Save Image to Directory
+    [self saveImage:imageFromURL withFileName:pic ofType:type inDirectory:documentsDirectoryPath];
+    
+    return [documentsDirectoryPath stringByAppendingFormat:@"/%@%@", pic,type];
+}
+
+-(UIImage *) getImageFromURL:(NSString *)fileURL {
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
+-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    NSString *low_extension = [extension lowercaseString];
+    if ([low_extension isEqualToString:@".png"]) {
+        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
+    } else if ([low_extension isEqualToString:@".jpg"] || [low_extension isEqualToString:@".jpeg"]) {
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
+    } else {
+        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+    }
+}
+
+/*
+ -----------------------------------------------------End images Zone-----------------------------------------------------
+ */
+
+
 /*
  -----------------------------------------------------DB Zone-----------------------------------------------------
  */
