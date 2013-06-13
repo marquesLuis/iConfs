@@ -19,7 +19,14 @@
 
 @synthesize imageView;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
 
+    }
+    return self;
+}
 
 //
 //  MapViewController.m
@@ -98,14 +105,6 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     
-    /*if([locals count] == 0){
-     pickerView.hidden = YES;
-     map.hidden = YES;
-     [self alertMessages:@"There's no maps available" withMessage:@""];
-     //[[self navigationController] popViewControllerAnimated:YES];
-     return nil;
-     }*/
-    
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
     
@@ -120,7 +119,7 @@
         imageView.contentMode  = UIViewContentModeScaleAspectFit;
         [self.scrollView addSubview:imageView];
         [self.scrollView setContentSize:[image size]];
-        [self.scrollView setMaximumZoomScale:5.0];
+        [self.scrollView setMaximumZoomScale:500.0];
         [self.scrollView setShowsHorizontalScrollIndicator:NO];
         [self.scrollView setShowsVerticalScrollIndicator:NO];
     }
@@ -139,19 +138,20 @@
     imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
     imageView.contentMode  = UIViewContentModeScaleAspectFit;
     for (UIView *subview in self.scrollView.subviews) {
-        NSLog(@"remove view");
         [subview removeFromSuperview];
+
     }
+    [self.scrollView setZoomScale:1];
     [self.scrollView addSubview:imageView];
     [self.scrollView setContentSize:[image size]];
-    [self.scrollView setMaximumZoomScale:5.0];
+    [self.scrollView setMaximumZoomScale:500.0];
 }
 
 
--(UIView*) viewForZoomingInScrollView:(UIScrollView*)scrollView{
-    NSLog(@"zoom");
+-(UIView*) viewForZoomingInScrollView:(UIScrollView*)scrollView{    
     return imageView;
 }
+
 
 
 @end
