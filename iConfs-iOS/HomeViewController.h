@@ -10,6 +10,7 @@
 #import "sqlite3.h"
 #import "Update.h"
 #import "NetworkingTableViewController.h"
+#import "MapViewController.h"
 
 @interface HomeViewController : UIViewController
 

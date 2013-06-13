@@ -90,6 +90,7 @@
     //if (cell == nil) {
      UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     //}
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     Networking *networking;
     
@@ -178,11 +179,23 @@
     
     //get index position for the selected control
     NSInteger selectedIndex = [segment selectedSegmentIndex];
-    
+    NSLog(@"valueChanged");
     if(selectedIndex == 0) {
-        if([_privateNetworking count]== 0)
-            [self displayNetworkingPersonal];
-            
+        if([_privateNetworking count]== 0){
+            NSLog(@"Go to personal networking");
+            NSMutableArray *net = [self displayNetworkingPersonal];
+            NSLog(@"Go to personal networking");
+
+            if([net count] == 0){
+                NSLog(@"There's no personal networking");
+                _typeNet.selectedSegmentIndex = 1;
+
+                [self alertMessages:@"There's no personal networking to show" withMessage:@""];
+                return;
+            }
+                
+        }
+        
     }else if (selectedIndex == 1){
         if([_arrayOfNetworking count]==0)
             [self displayNetworking];
@@ -191,6 +204,14 @@
     [tableNetworking reloadData];
 }
 
+-(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
 
 -(void) displayNetworking{
 
@@ -264,60 +285,6 @@
     return person;
 }
 
-/*-(NSMutableArray*)getIdAreasOfPerson:(NSString*)personID{
-    sqlite3_stmt *statement;
-    sqlite3 *db;
-    NSMutableArray *areas = [[NSMutableArray alloc]init];
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docPath = [path objectAtIndex:0];
-    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people_area.db"];
-    
-    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
-        
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE_AREA WHERE PERSON_ID = %@", personID];
-        const char* query_sql = [querySql UTF8String];
-        
-        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
-                [areas addObject:area];
-                
-            }
-        }
-        sqlite3_close(db);
-    }
-    return areas;
-}
-
--(NSString*)getAreas:(NSString*)personID{
-    sqlite3_stmt *statement;
-    sqlite3 *db;
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docPath = [path objectAtIndex:0];
-    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"areas.db"];
-    NSString * personInterests = @"";
-    NSMutableArray *areas = [self getIdAreasOfPerson:personID];
-    
-    
-    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
-        
-        for (NSString *areaId in areas){
-            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE SERVER_ID = %@", areaId];
-            const char* query_sql = [querySql UTF8String];
-            
-            if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-                while (sqlite3_step(statement)==SQLITE_ROW) {
-                    NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
-                    personInterests = [personInterests stringByAppendingString:area];
-                }
-            }
-        }
-        sqlite3_close(db);
-    }
-    return personInterests;
-}*/
-
-
 -(NSString*)getPersonID{
         sqlite3_stmt *statement;
         sqlite3 *db;
@@ -332,8 +299,7 @@
             
             if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
                 while (sqlite3_step(statement)==SQLITE_ROW) {
-                    #warning sitio irá passar para 0
-                     return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
+                     return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     
                 }
             }
@@ -354,20 +320,17 @@
     NSString *dbPathNet_area = [docPath stringByAppendingPathComponent:@"networking_area.db"];
     NSString * dbNetworking = [docPath stringByAppendingPathComponent:@"networkings.db"];
     NSMutableArray* personalNetworking = [[NSMutableArray alloc]init];
-    [_privateNetworking removeAllObjects];
+        [_privateNetworking removeAllObjects];
     if (sqlite3_open([dbPathPeople_area UTF8String], &db) == SQLITE_OK)
     {
         NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathNet_area UTF8String]];
-        
         char *errorMessage;
         
         if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
         {
             NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS THIRD", [dbNetworking UTF8String] ];
-            
             if(sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK){
                 sqlite3_stmt *myStatment;
-            
                 NSString *strSQL = [@"select * from main.PEOPLE_AREA people_area inner join SECOND.NET_AREA net_area inner join THIRD.NETWORKINGS networkings on people_area.AREA_ID = net_area.AREA_ID AND networkings.SERVER_ID = net_area.NETWORKING_ID AND people_area.PERSON_ID = "stringByAppendingString:personID];
             
                 if (sqlite3_prepare_v2(db, [strSQL UTF8String], -1, &myStatment, nil) == SQLITE_OK){
@@ -390,5 +353,7 @@
     }
     return personalNetworking;
 }
+
+
 
 @end

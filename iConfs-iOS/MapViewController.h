@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 #import "Local.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MapViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 

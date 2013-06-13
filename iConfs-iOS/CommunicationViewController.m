@@ -92,8 +92,7 @@
     }
     
     //change view
-    HomeViewController *second= [self.storyboard instantiateViewControllerWithIdentifier:@"HomeViewController"];
-    [self presentViewController:second animated:YES completion:nil];
+    [[self navigationController] popViewControllerAnimated:YES];
     
     
 }

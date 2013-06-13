@@ -1,4 +1,27 @@
 //
+//  ImageViewController.m
+//  iConfs-iOS
+//
+//  Created by Marta Lidon on 13/06/13.
+//  Copyright (c) 2013 FCTUNL. All rights reserved.
+//
+
+#import "ImageViewController.h"
+
+@interface ImageViewController () <UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate>{
+    NSMutableArray * locals;
+    UIPickerView * picker;
+}
+
+@end
+
+@implementation ImageViewController
+
+@synthesize imageView;
+
+
+
+//
 //  MapViewController.m
 //  iConfs-iOS
 //
@@ -6,38 +29,7 @@
 //  Copyright (c) 2013 FCTUNL. All rights reserved.
 //
 
-#import "MapViewController.h"
 
-@interface MapViewController () <UIPickerViewDelegate, UIPickerViewDataSource>{
-    NSMutableArray * locals;
-    UIPickerView * picker;
-}
-
-@end
-
-@implementation MapViewController
-@synthesize map;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
--(IBAction)zoomIn:(UIPinchGestureRecognizer *)reconizer{
-    
-    reconizer.view.transform = CGAffineTransformScale(reconizer.view.transform, reconizer.scale, reconizer.scale);
-    
-    reconizer.scale = 1;
-    
-    
-    
-    
-  
-}
 
 - (void)viewDidLoad
 {
@@ -47,9 +39,10 @@
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
     picker.autoresizingMask = UIAlertViewStyleDefault;
-    picker.frame = CGRectMake(35, 342, 250, 162);
+    picker.frame = CGRectMake(0, 342, self.view.frame.size.width, 162);
     picker.dataSource = self;
 	[self.view addSubview:picker];
+    self.scrollView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,24 +97,32 @@
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-   
+    
     /*if([locals count] == 0){
-        pickerView.hidden = YES;
-        map.hidden = YES;
-        [self alertMessages:@"There's no maps available" withMessage:@""];
-        //[[self navigationController] popViewControllerAnimated:YES];
-        return nil;
-    }*/
+     pickerView.hidden = YES;
+     map.hidden = YES;
+     [self alertMessages:@"There's no maps available" withMessage:@""];
+     //[[self navigationController] popViewControllerAnimated:YES];
+     return nil;
+     }*/
     
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
-
+    
     if(row == 0){
         NSString * path = l.path;
-        UIImage * imageFromURL = [UIImage imageWithContentsOfFile:path];
-        [self.map setImage:imageFromURL];
+        UIImage * image = [UIImage imageWithContentsOfFile:path];
+        //[self.map setImage:imageFromURL];
+        imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+        imageView.contentMode  = UIViewContentModeScaleAspectFit;
+        [self.scrollView addSubview:imageView];
+        [self.scrollView setContentSize:[image size]];
+        [self.scrollView setMaximumZoomScale:5.0];
+        [self.scrollView setShowsHorizontalScrollIndicator:NO];
+        [self.scrollView setShowsVerticalScrollIndicator:NO];
     }
-
+    
     return l.title;
 }
 
@@ -130,10 +131,22 @@
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     Local * l = [locals objectAtIndex:row];
     NSString * path = l.path;
-    UIImage * imageFromURL = [UIImage imageWithContentsOfFile:path];
-    [self.map setImage:imageFromURL];
+    
+    UIImage * image = [UIImage imageWithContentsOfFile:path];
+    imageView = [[UIImageView alloc] initWithImage:image ];
+    imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+    imageView.contentMode  = UIViewContentModeScaleAspectFit;
+
+    [self.scrollView addSubview:imageView];
+    [self.scrollView setContentSize:[image size]];
+    [self.scrollView setMaximumZoomScale:5.0];
 }
 
+
+-(UIView*) viewForZoomingInScrollView:(UIScrollView*)scrollView{
+    NSLog(@"zoom");
+    return imageView;
+}
 
 
 @end

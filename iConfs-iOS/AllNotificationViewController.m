@@ -103,7 +103,8 @@
     }
     //subtitle alloc
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     Notification *notification = [_arrayOfNotifications objectAtIndex:indexPath.row];
     
     cell.textLabel.text = notification.title;
@@ -112,7 +113,7 @@
     //change colors
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
