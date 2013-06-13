@@ -518,25 +518,6 @@
         }
     }
     
-    NSMutableDictionary *updated = [networkings objectForKey:@"updated"];
-    if(updated){
-        for(NSString *key in updated.allKeys){
-            NSMutableDictionary *network = [updated objectForKey:key];
-            NSString * values = [self readEvent:network];
-            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[network objectForKey:@"server_id"] integerValue] definition:definition values:values];
-            NSMutableArray *areas = [network objectForKey:@"areas"];
-            if (areas && [areas count]){
-                [self removeFrom:net_area_db_file table:net_area_table_name attribute:@"NETWORKING_ID" withID:[[network objectForKey:@"server_id"] integerValue]];
-                int server_id = [[network objectForKey:@"server_id"] integerValue];
-                NSString * n_values = [@"" stringByAppendingFormat:@"', '%d'",server_id];
-                for(NSNumber * n in areas){
-                    NSString * the_value = [[@""stringByAppendingFormat:@"'%d", [n integerValue]] stringByAppendingString:n_values];
-                    [self insertTo:net_area_db_file table:net_area_table_name definition:@"AREA_ID, NETWORKING_ID" values:the_value];
-                }
-            }
-        }
-    }
-    
     NSMutableArray *deleted = [networkings objectForKey:@"deleted"];
     if(deleted && [deleted count]){
         for(NSNumber * n in deleted)
