@@ -98,7 +98,8 @@
         NSData * returnData = [NSURLConnection sendSynchronousRequest:request
                                                     returningResponse:&response
                                                                 error:&error];
-        NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
+        NSString *newStr = [[NSString alloc]  initWithBytes:[returnData bytes]
+                                                     length:[returnData length] encoding: NSUTF8StringEncoding];
         
         NSError *jsonParsingError = nil;
         NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
@@ -132,7 +133,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
         Update *update = [[Update alloc] initDB];
-        [update update];
+        [update updateWithoutMessage];
         HomeViewController * home = (HomeViewController*)segue.destinationViewController;
         home.update = update;
 }

@@ -14,6 +14,7 @@
 
 -(id) initDB;
 -(void) update;
+-(void) updateWithoutMessage;
 -(NSMutableDictionary *) postRequest:(NSMutableDictionary *)request;
 -(NSMutableDictionary *) buildRequest;
 -(NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request;

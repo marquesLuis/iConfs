@@ -77,6 +77,11 @@
 
 -(void) update{
     [self handleResponse:[self postRequest:[self buildRequest]]];
+    [self alertMessages:@"Success" withMessage:@"Everything is now up to date :)"];
+}
+
+- (void) updateWithoutMessage{
+    [self handleResponse:[self postRequest:[self buildRequest]]];
 }
 
 -(NSMutableDictionary *) postRequest:(NSMutableDictionary *)jsonRequest
@@ -93,13 +98,14 @@
     [urlRequest setHTTPBody:data];
     
     @try {
+        NSData * returnData = nil;
         // Send a synchronous request
         NSURLResponse * response = nil;
-        NSData * returnData = [NSURLConnection sendSynchronousRequest:urlRequest
+        returnData = [NSURLConnection sendSynchronousRequest:urlRequest
                                                     returningResponse:&response
                                                                 error:&error];
-        //TODO ERASE THIS
-        NSString* newStr = [NSString stringWithUTF8String:[returnData bytes]];
+            NSString *newStr = [[NSString alloc]  initWithBytes:[returnData bytes]
+                                                          length:[returnData length] encoding: NSUTF8StringEncoding];
         NSLog(@"String received:");
         NSLog(@"%@", newStr);
         
@@ -111,10 +117,19 @@
         
     }
     @catch (NSException * e) {
+        [self alertMessages:@"Error" withMessage:@"Error on login, try again later."];
         return nil;
     }
     
-    return nil;
+}
+
+-(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 /*
@@ -368,19 +383,9 @@
             [self updateRowFrom:notif_db_file table:notif_table_name whereAttribute:@"SERVER_ID" equalsID:[[notif objectForKey:@"id"] integerValue] definition:@"TITLE, NOTIFICATION, DATE, SERVER_ID" values:values];
         }
     }
-    NSMutableDictionary *deleted = [notifications objectForKey:@"deleted"];
+    NSMutableArray *deleted = [notifications objectForKey:@"deleted"];
     if(deleted){
-        NSUInteger size = [[deleted objectForKey:@"size"] integerValue];
-        NSMutableArray *notifs_delete = [NSMutableArray arrayWithCapacity:size];
-        
-        for(NSString *key in deleted.allKeys){
-            if(![key isEqual:@"size"]){
-                NSUInteger old_notif = [[deleted objectForKey:key] integerValue];
-                [notifs_delete addObject:[NSNumber numberWithInt:old_notif]];
-            }
-        }
-        
-        [self deleteAllFrom:notif_db_file table:notif_table_name where:@"SERVER_ID" equalsIntegerArray:notifs_delete];
+        [self deleteAllFrom:notif_db_file table:notif_table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     }
 }
 
@@ -464,19 +469,9 @@
         }
     }
     
-    NSMutableDictionary *deleted = [events objectForKey:@"deleted"];
+    NSMutableArray *deleted = [events objectForKey:@"deleted"];
     if(deleted){
-        NSUInteger size = [[deleted objectForKey:@"size"] integerValue];
-        NSMutableArray *events_delete = [NSMutableArray arrayWithCapacity:size];
-        
-        for(NSString *key in deleted.allKeys){
-            if(![key isEqual:@"size"]){
-                NSUInteger old_event = [[deleted objectForKey:key] integerValue];
-                [events_delete addObject:[NSNumber numberWithInt:old_event]];
-            }
-        }
-        
-        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:events_delete];
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     }
 }
 
@@ -560,7 +555,8 @@
     NSString *tmp = [person objectForKey:@"photo"];
     NSString *photo = @"";
     if (tmp){
-        photo = [self downloadFile:tmp personID:server_id];
+        NSString * pic = [@"person" stringByAppendingFormat:@"_%d",server_id];
+        photo = [self downloadFile:tmp withName:pic];
         NSLog(@"Photo at %@", photo);
     }
     
@@ -737,11 +733,48 @@
     
 }
 
+- (NSString *) readLocal:(NSMutableDictionary *)local{
+    NSString * title = [local objectForKey:@"title"];
+    int server_id = [[local objectForKey:@"server_id"] integerValue];
+    NSString *tmp = [local objectForKey:@"image"];
+    NSString *photo = @"";
+    if (tmp){
+        NSString * pic = [@"local" stringByAppendingFormat:@"_%d",server_id];
+        photo = [self downloadFile:tmp withName:pic];
+        NSLog(@"Photo at %@", photo);
+    }
+    
+    return [@"" stringByAppendingFormat:@"'%@','%@','%d'", title, photo, server_id];
+}
+
+- (void) handleLocations:(NSMutableDictionary *)locations{
+    NSLog(@"Handling Locations");
+    NSString * db_file = @"location.db";
+    NSString * table_name = @"LOCATION";
+    
+    NSString * status_db_file =@"location_status.db";
+    NSString * status_table_name = @"LOCATION_STATUS";
+    
+    [self updateStatus:locations status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSString * definition = @"TITLE, IMG, SERVER_ID";
+    
+    NSMutableDictionary *news = [locations objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *local = [news objectForKey:key];
+            NSString * values = [self readLocal:local];
+            [self insertTo:db_file table:table_name definition:definition values:values];
+        }
+    }
+    
+    NSMutableArray * deleted = [locations objectForKey:@"deleted"];
+    if(deleted && [deleted count])
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+}
+
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
     NSLog(@"Handling");
-    for(NSString *key in request.allKeys){
-        NSLog(@"%@", key);
-    }
     
     NSMutableDictionary *feedbacks = [request objectForKey:@"feedbacks"];
     if(feedbacks){
@@ -783,6 +816,11 @@
         [self handleAreas:areas];
     }
     
+    NSMutableDictionary *locations = [request objectForKey:@"locals"];
+    if (locations){
+        [self handleLocations:locations];
+    }
+    
     return nil;
 }
 
@@ -793,11 +831,9 @@
  -----------------------------------------------------Images Zone-----------------------------------------------------
  */
 
-- (NSString *) downloadFile:(NSString *)url personID:(int)server_id{
-    NSString * pic = [@"person" stringByAppendingFormat:@"_%d",server_id];
+- (NSString *) downloadFile:(NSString *)url withName:(NSString *) pic{
     NSRange range = [url rangeOfString:@"." options:NSBackwardsSearch];
     NSString * type = [url substringFromIndex:range.location];
-    NSLog(@"%@", type);
     url = [url stringByAppendingFormat:@"&%@",_auth_params];
     //Definitions
     NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
