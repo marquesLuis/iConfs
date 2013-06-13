@@ -287,6 +287,10 @@
     return [self buildStatus:@"location_status.db" fromTable:@"LOCATION_STATUS"];
 }
 
+- (NSMutableDictionary *) buildNotes{
+    return [self buildStatus:@"notes_status.db" fromTable:@"NOTES_STATUS"];
+}
+
 -(NSMutableDictionary *) buildRequest{
     NSMutableDictionary *request = [NSMutableDictionary dictionary];
     NSMutableArray *feedbacks = [self buildFeedback];
@@ -316,6 +320,9 @@
     NSMutableDictionary *locations = [self buildLocations];
     if (locations && [locations count])
         [request setObject:locations forKey:@"locations"];
+    NSMutableDictionary *notes = [self buildNotes];
+    if (notes && [notes count])
+        [request setObject:notes forKey:@"notes"];
     return request;
 }
 
@@ -752,6 +759,61 @@
     NSMutableArray * deleted = [locations objectForKey:@"deleted"];
     if(deleted && [deleted count])
         [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+}
+
+- (NSString *) readNote:(NSMutableDictionary *)note{
+    int server_id = [[note objectForKey:@"server_id"] integerValue];
+    int owner_id = [[note objectForKey:@"person_id"] integerValue];
+    NSString * content = [note objectForKey:@"content"];
+    NSString * ap = [note objectForKey:@"about_person"];
+    int about_person = 0;
+    if (ap)
+        about_person = [ap integerValue];
+    NSString * ae = [note objectForKey:@"about_event"];
+    int about_event = 0;
+    if (ae) {
+        about_event = [ae integerValue];
+    }
+    NSString * updated_at = [note objectForKey:@"updated_at"];
+    
+    return [@"" stringByAppendingFormat:@"'%d','%d','%@','%d','%d', '%@'", server_id, owner_id, content, about_person, about_event, updated_at];
+}
+
+-(void) handleNotes: (NSMutableDictionary *)notes{
+    NSLog(@"Handling Notes");
+    NSString * db_file = @"notes.db";
+    NSString * table_name = @"NOTES";
+    
+    NSString * status_db_file =@"notes_status.db";
+    NSString * status_table_name = @"NOTES_STATUS";
+    
+    [self updateStatus:notes status_table_name:status_table_name status_db_file:status_db_file];
+    
+    NSString * definition = @"SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE";
+    
+    NSMutableDictionary *news = [notes objectForKey:@"news"];
+    if(news){
+        for(NSString *key in news.allKeys){
+            NSMutableDictionary *note = [news objectForKey:key];
+            NSString * values = [self readNote:note];
+            [self insertTo:db_file table:table_name definition:definition values:values];
+        }
+    }
+    
+    NSMutableDictionary *updated = [notes objectForKey:@"updated"];
+    if(updated){
+        for(NSString *key in updated.allKeys){
+            NSMutableDictionary *area = [updated objectForKey:key];
+            NSString * values = [self readAreas:area];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[area objectForKey:@"server_id"] integerValue] definition:definition values:values];
+        }
+    }
+    
+    NSMutableArray *deleted = [notes objectForKey:@"deleted"];
+    if(deleted && [deleted count]){
+        [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
+    }
+    
 }
 
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
