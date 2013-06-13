@@ -196,7 +196,6 @@
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS DELETED_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER)" WithName:@"deleted_local.db"];
     
-    
     //calendar
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CALENDAR( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRST TEXT, LAST TEXT)" WithName:@"calendar.db"];
     
