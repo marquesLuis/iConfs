@@ -110,6 +110,8 @@
     pickerView.hidden = NO;
     
     if(row == 0){
+        
+        
         NSString * path = l.path;
         UIImage * image = [UIImage imageWithContentsOfFile:path];
         //[self.map setImage:imageFromURL];
@@ -136,7 +138,10 @@
     imageView = [[UIImageView alloc] initWithImage:image ];
     imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
     imageView.contentMode  = UIViewContentModeScaleAspectFit;
-
+    for (UIView *subview in self.scrollView.subviews) {
+        NSLog(@"remove view");
+        [subview removeFromSuperview];
+    }
     [self.scrollView addSubview:imageView];
     [self.scrollView setContentSize:[image size]];
     [self.scrollView setMaximumZoomScale:5.0];

@@ -665,56 +665,6 @@
             </objects>
             <point key="canvasLocation" x="1021" y="547"/>
         </scene>
-        <!--Map View Controller - Maps-->
-        <scene sceneID="TSI-qh-PDV">
-            <objects>
-                <viewController storyboardIdentifier="MapViewController" id="4pJ-1g-7gL" customClass="MapViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="DcG-5W-bqb">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vw9-G5-b8E">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="BKW-Eu-DBh"/>
-                                </constraints>
-                            </pickerView>
-                            <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="MIs-2v-SXW">
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="344" id="QKS-9X-DWu"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="uRk-ha-n7Z" appends="YES" id="Anr-Bm-IWr"/>
-                                </connections>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="MIs-2v-SXW" firstAttribute="trailing" secondItem="DcG-5W-bqb" secondAttribute="trailing" type="default" id="4I2-KP-MZW"/>
-                            <constraint firstItem="Vw9-G5-b8E" firstAttribute="leading" secondItem="DcG-5W-bqb" secondAttribute="leading" type="default" id="Qjc-M8-Ava"/>
-                            <constraint firstItem="MIs-2v-SXW" firstAttribute="leading" secondItem="DcG-5W-bqb" secondAttribute="leading" type="default" id="RqP-gE-Huo"/>
-                            <constraint firstItem="Vw9-G5-b8E" firstAttribute="bottom" secondItem="DcG-5W-bqb" secondAttribute="bottom" type="default" id="f6U-s7-aXB"/>
-                            <constraint firstItem="MIs-2v-SXW" firstAttribute="top" secondItem="DcG-5W-bqb" secondAttribute="top" type="default" id="ibB-t9-8kZ"/>
-                            <constraint firstItem="Vw9-G5-b8E" firstAttribute="trailing" secondItem="DcG-5W-bqb" secondAttribute="trailing" type="default" id="qhJ-gH-94C"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Maps" id="1AE-oB-s9d">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="K7b-Ep-joF"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="map" destination="MIs-2v-SXW" id="QhY-It-jXg"/>
-                        <outlet property="picker" destination="Vw9-G5-b8E" id="7MN-z1-RdG"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WBx-Z1-Avo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="uRk-ha-n7Z">
-                    <connections>
-                        <action selector="zoomIn:" destination="4pJ-1g-7gL" id="5mn-PA-wJN"/>
-                    </connections>
-                </pinchGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1524" y="431"/>
-        </scene>
         <!--Image View Controller-->
         <scene sceneID="D63-QF-twy">
             <objects>
@@ -875,13 +825,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="zoomIn:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="outlet" name="map" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
