@@ -332,6 +332,7 @@
             
             if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
                 while (sqlite3_step(statement)==SQLITE_ROW) {
+                    #warning sitio irá passar para 0
                      return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
                     
                 }

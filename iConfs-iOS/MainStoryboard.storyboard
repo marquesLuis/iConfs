@@ -730,18 +730,43 @@
             </objects>
             <point key="canvasLocation" x="1418" y="-938"/>
         </scene>
-        <!--View Controller - Notes-->
+        <!--Note View Controller - Notes-->
         <scene sceneID="sft-KW-qw5">
             <objects>
-                <viewController id="1GJ-Uz-eL2" sceneMemberID="viewController">
+                <viewController id="1GJ-Uz-eL2" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WfL-Pm-VTy">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="8PX-xz-DNH">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4Ks-YZ-57I">
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="top" secondItem="WfL-Pm-VTy" secondAttribute="top" type="default" id="0f5-Um-T34"/>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="trailing" secondItem="WfL-Pm-VTy" secondAttribute="trailing" type="default" id="CQo-aP-jKI"/>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="bottom" secondItem="WfL-Pm-VTy" secondAttribute="bottom" type="default" id="ZsW-yf-967"/>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="leading" secondItem="WfL-Pm-VTy" secondAttribute="leading" type="default" id="qqv-3U-vCK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notes" id="PZS-hm-9Wb">
                         <barButtonItem key="backBarButtonItem" title="Back" id="gWo-SW-8rG"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableNotes" destination="8PX-xz-DNH" id="Je3-V2-m4V"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hkr-Je-f6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -774,91 +799,6 @@
         <image name="Schedule.jpg" width="50" height="50"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
-    <classes>
-        <class className="AllNetworkingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="AllNotificationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CommunicationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
-                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="sendButton:"/>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="EventUIViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="HomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="IConfsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="zoomIn:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="outlet" name="map" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="NetworkingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="NotificationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="PersonProfileViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
-        </class>
-        <class className="TKCalendarDayViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

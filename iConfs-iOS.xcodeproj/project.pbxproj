@@ -31,6 +31,7 @@
 		62F3AF751760E68F00E4BA8F /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF741760E68F00E4BA8F /* Author.m */; };
 		62F3AFCD1764D34A00E4BA8F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFCC1764D34900E4BA8F /* MapViewController.m */; };
 		62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFCF1764DF2A00E4BA8F /* Local.m */; };
+		62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFD31768D56800E4BA8F /* NoteViewController.m */; };
 		62FC9A56175F721900A22AAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */; };
 		62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */; };
 		62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */; };
@@ -129,6 +130,8 @@
 		62F3AFCC1764D34900E4BA8F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		62F3AFCE1764DF2A00E4BA8F /* Local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Local.h; sourceTree = "<group>"; };
 		62F3AFCF1764DF2A00E4BA8F /* Local.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Local.m; sourceTree = "<group>"; };
+		62F3AFD21768D56700E4BA8F /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
+		62F3AFD31768D56800E4BA8F /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		62FC9A58175F81B100A22AAD /* AllNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotificationViewController.h; sourceTree = "<group>"; };
 		62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotificationViewController.m; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				62F3AFCF1764DF2A00E4BA8F /* Local.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
+				62F3AFD21768D56700E4BA8F /* NoteViewController.h */,
+				62F3AFD31768D56800E4BA8F /* NoteViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -500,6 +505,7 @@
 				62F3AF751760E68F00E4BA8F /* Author.m in Sources */,
 				62F3AFCD1764D34A00E4BA8F /* MapViewController.m in Sources */,
 				62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */,
+				62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
