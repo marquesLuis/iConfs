@@ -39,8 +39,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "634"
          endingLineNumber = "634"
-         landmarkName = "-handlePeople:"
-         landmarkType = "5">
+         landmarkName = "@implementation Update"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -52,7 +52,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "635"
          endingLineNumber = "635"
-         landmarkName = "-handlePeople:"
+         landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -65,7 +65,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "636"
          endingLineNumber = "636"
-         landmarkName = "-handlePeople:"
+         landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -78,7 +78,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "637"
          endingLineNumber = "637"
-         landmarkName = "-handlePeople:"
+         landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -91,7 +91,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "638"
          endingLineNumber = "638"
-         landmarkName = "-handlePeople:"
+         landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
