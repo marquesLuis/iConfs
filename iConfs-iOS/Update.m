@@ -287,8 +287,87 @@
     return [self buildStatus:@"location_status.db" fromTable:@"LOCATION_STATUS"];
 }
 
+- (NSMutableArray *) buildNewNotes{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"notes_local.db"];
+    
+    //ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NOTES_LOCAL"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *local_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                NSString *server_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *owner_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                NSString *about_person = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                NSString *about_session = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                NSString *updated = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+                NSMutableDictionary *note = [NSMutableDictionary dictionaryWithCapacity:7];
+                [note setObject:local_id forKey:@"local_id"];
+                [note setObject:server_id forKey:@"server_id"];
+                [note setObject:owner_id forKey:@"owner_id"];
+                [note setObject:content forKey:@"content"];
+                [note setObject:about_person forKey:@"about_person"];
+                [note setObject:about_session forKey:@"about_session"];
+                [note setObject:updated forKey:@"updated"];
+                NSMutableDictionary *notes = [NSMutableDictionary dictionaryWithCapacity:1];
+                [notes setObject:note forKey:@"note"];
+                [result addObject:notes];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(notificationDB);
+    }
+    return result;
+}
+
+- (NSMutableArray *) buildDeletedNotes{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"deleted_local.db"];
+    
+    //ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM DELETED_LOCAL"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *local_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                NSString *server_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                [result addObject:local_id];
+                [result addObject:server_id];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(notificationDB);
+    }
+    return result;
+}
+
 - (NSMutableDictionary *) buildNotes{
-    return [self buildStatus:@"notes_status.db" fromTable:@"NOTES_STATUS"];
+    NSMutableDictionary * result = [self buildStatus:@"notes_status.db" fromTable:@"NOTES_STATUS"];
+    NSMutableArray * news = [self buildNewNotes];
+    if (news && [news count])
+        [result setObject:news forKey:@"news"];
+    NSMutableArray * deleted = [self buildDeletedNotes];
+    if (deleted && [deleted count])
+        [result setObject:deleted forKey:@"deleted"];
+    return result;
 }
 
 -(NSMutableDictionary *) buildRequest{
@@ -803,9 +882,9 @@
     NSMutableDictionary *updated = [notes objectForKey:@"updated"];
     if(updated){
         for(NSString *key in updated.allKeys){
-            NSMutableDictionary *area = [updated objectForKey:key];
-            NSString * values = [self readAreas:area];
-            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[area objectForKey:@"server_id"] integerValue] definition:definition values:values];
+            NSMutableDictionary *note = [updated objectForKey:key];
+            NSString * values = [self readNote:note];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[note objectForKey:@"server_id"] integerValue] definition:definition values:values];
         }
     }
     
@@ -813,6 +892,15 @@
     if(deleted && [deleted count]){
         [self deleteAllFrom:db_file table:table_name where:@"SERVER_ID" equalsIntegerArray:deleted];
     }
+    
+    NSMutableArray *news_added = [notes objectForKey:@"news_added"];
+    if (news_added && [news_added count])
+        [self deleteAllFrom:@"notes_local.db" table:@"NOTES_LOCAL" where:@"ID" equalsIntegerArray:news_added];
+    
+    NSMutableArray *deleted_local = [notes objectForKey:@"deleted_local"];
+    if (deleted_local && [deleted_local count])
+        [self deleteAllFrom:@"deleted_local.db" table:@"DELETED_LOCAL" where:@"ID" equalsIntegerArray:deleted_local];
+    
     
 }
 
@@ -863,6 +951,10 @@
     if (locations){
         [self handleLocations:locations];
     }
+    
+    NSMutableDictionary *notes = [request objectForKey:@"notes"];
+    if (notes)
+        [self handleNotes:notes];
     
     return nil;
 }
@@ -962,6 +1054,7 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
+        NSLog(@"%@",querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);

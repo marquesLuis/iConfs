@@ -9,6 +9,12 @@
 #import "IConfsViewController.h"
 #import "Update.h"
 
+//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('1','0','3','IOS MSG UM','0','0', '0');
+//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('2','2','3','Talked to him in the coffee break ALTERADO NO IOS','4','0', '2013-06-14 14:16:46.058288000');
+//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('4','1','3','(ALTERADO no iOS) Must not forget to bring my IPhone.','0','0', '2013-06-14 14:16:46.051950000');
+
+//INSERT INTO DELETED_LOCAL(ID, SERVER_ID) VALUES ('1', '2');
+
 @interface IConfsViewController (){
 } @end
 
@@ -36,6 +42,7 @@
     [self initBDFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
     [self initBDFile:@"areas_status.db" table:@"AREAS_STATUS"];
     [self initBDFile:@"location_status.db" table:@"LOCATION_STATUS"];
+    [self initBDFile:@"notes_status.db" table:@"NOTES_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
