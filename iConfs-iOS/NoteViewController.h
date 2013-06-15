@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+#import "sqlite3.h"
 
-@interface NoteViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UITableView *tableNotes;
+
+@interface NoteViewController : UIViewController  <UITextViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UITextView *noteTextView;
+- (IBAction)addNote:(UIBarButtonItem *)sender;
+
 
 @end

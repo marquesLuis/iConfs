@@ -32,6 +32,8 @@
 		62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFCF1764DF2A00E4BA8F /* Local.m */; };
 		62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFD31768D56800E4BA8F /* NoteViewController.m */; };
 		62F3AFD9176A206600E4BA8F /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFD8176A206600E4BA8F /* ImageViewController.m */; };
+		62F3AFE1176A82DE00E4BA8F /* AlertPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFE0176A82DD00E4BA8F /* AlertPrompt.m */; };
+		62F3B004176C72E600E4BA8F /* AllNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3B003176C72E600E4BA8F /* AllNotesViewController.m */; };
 		62FC9A56175F721900A22AAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */; };
 		62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */; };
 		62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */; };
@@ -132,6 +134,10 @@
 		62F3AFD31768D56800E4BA8F /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		62F3AFD7176A206500E4BA8F /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		62F3AFD8176A206600E4BA8F /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		62F3AFDF176A82DD00E4BA8F /* AlertPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertPrompt.h; sourceTree = "<group>"; };
+		62F3AFE0176A82DD00E4BA8F /* AlertPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertPrompt.m; sourceTree = "<group>"; };
+		62F3B002176C72E500E4BA8F /* AllNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotesViewController.h; sourceTree = "<group>"; };
+		62F3B003176C72E600E4BA8F /* AllNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotesViewController.m; sourceTree = "<group>"; };
 		62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		62FC9A58175F81B100A22AAD /* AllNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotificationViewController.h; sourceTree = "<group>"; };
 		62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotificationViewController.m; sourceTree = "<group>"; };
@@ -278,6 +284,10 @@
 				9DBF86991756006200845BD7 /* IConfsViewController.m */,
 				9D323B341758AD2600B2424D /* Update.h */,
 				9D323B351758AD2600B2424D /* Update.m */,
+				62F3AFDF176A82DD00E4BA8F /* AlertPrompt.h */,
+				62F3AFE0176A82DD00E4BA8F /* AlertPrompt.m */,
+				62F3AFD21768D56700E4BA8F /* NoteViewController.h */,
+				62F3AFD31768D56800E4BA8F /* NoteViewController.m */,
 				621A5A3D175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.h */,
 				621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */,
 				621A5A53175E98CB00B02EEC /* Event.h */,
@@ -288,14 +298,14 @@
 				62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */,
 				62F3AF731760E68F00E4BA8F /* Author.h */,
 				62F3AF741760E68F00E4BA8F /* Author.m */,
+				62F3AFD7176A206500E4BA8F /* ImageViewController.h */,
+				62F3AFD8176A206600E4BA8F /* ImageViewController.m */,
 				62F3AFCE1764DF2A00E4BA8F /* Local.h */,
 				62F3AFCF1764DF2A00E4BA8F /* Local.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
-				62F3AFD21768D56700E4BA8F /* NoteViewController.h */,
-				62F3AFD31768D56800E4BA8F /* NoteViewController.m */,
-				62F3AFD7176A206500E4BA8F /* ImageViewController.h */,
-				62F3AFD8176A206600E4BA8F /* ImageViewController.m */,
+				62F3B002176C72E500E4BA8F /* AllNotesViewController.h */,
+				62F3B003176C72E600E4BA8F /* AllNotesViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -506,6 +516,8 @@
 				62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */,
 				62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */,
 				62F3AFD9176A206600E4BA8F /* ImageViewController.m in Sources */,
+				62F3AFE1176A82DE00E4BA8F /* AlertPrompt.m in Sources */,
+				62F3B004176C72E600E4BA8F /* AllNotesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

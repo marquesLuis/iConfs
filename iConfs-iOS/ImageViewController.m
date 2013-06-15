@@ -28,16 +28,6 @@
     return self;
 }
 
-//
-//  MapViewController.m
-//  iConfs-iOS
-//
-//  Created by Marta Lidon on 09/06/13.
-//  Copyright (c) 2013 FCTUNL. All rights reserved.
-//
-
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
