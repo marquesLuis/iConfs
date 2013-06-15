@@ -43,46 +43,9 @@ return self;
     
     [self costumizeTextView];
     
-    UIToolbar *toolbar = [[UIToolbar alloc] init] ;
-    [toolbar setBarStyle:UIBarStyleBlackTranslucent];
-    [toolbar sizeToFit];
-    
-    UIBarButtonItem *flexButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard)];
-    
-    NSArray *itemsArray = [NSArray arrayWithObjects:flexButton, doneButton, nil];
-        [toolbar setItems:itemsArray];
-    
-    [self.noteTextView setInputAccessoryView:toolbar];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
     
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
-    NSLog(@"keyboardwillshow");
-    NSDictionary *userInfo = [notification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [aValue CGRectValue];
-    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-    
-    CGFloat keyboardTop = keyboardRect.origin.y;
-    CGRect newTextViewFrame = self.view.bounds;
-    newTextViewFrame.size.height = keyboardTop - self.view.bounds.origin.y - 10;
-    NSLog(@"%f", newTextViewFrame.size.height);
-    newTextViewFrame.size.width = self.view.frame.size.width - 10;
-    newTextViewFrame.origin.x = 5;
-    newTextViewFrame.origin.y = 5;
-    self.noteTextView.frame = newTextViewFrame;
-
-}
-
--(void)resignKeyboard {
-    [self.noteTextView resignFirstResponder];
-}
 
 -(void)costumizeTextView{
     [self.noteTextView.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
@@ -94,6 +57,7 @@ return self;
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
+    NSLog(@"textviewshouldbeginediting");
     self.noteTextView.text = @"";
     isPlaceholder = NO;
     self.noteTextView.textColor = [UIColor blackColor];
@@ -102,8 +66,8 @@ return self;
 
 -(void) textViewDidChange:(UITextView *)textView
 {
-
-    if(self.noteTextView.text.length == 0){
+    NSLog(@"textviewdidchange");
+    if(self.noteTextView.text.length == 0 || isPlaceholder){
         self.noteTextView.textColor = [UIColor lightGrayColor];
         self.noteTextView.text = @"Write your note here";
         isPlaceholder = YES;
@@ -128,6 +92,65 @@ return self;
  //svalues:<#(NSString *)#>];
     
 }
+
+
+
+-(NSMutableArray*)getAllPersons{
+    NSMutableArray * items = [NSMutableArray array];
+    
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                
+                NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+                
+                
+                NSString * letter = [firstName substringToIndex:1];
+                
+                NSString *name = [[[lastName stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
+                [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:@"appl" imageUrl:photo]];
+                
+            }
+        }
+        sqlite3_close(db);
+    }
+    return items;
+    
+}
+- (IBAction)addPerson:(UIButton *)sender {
+    NSMutableArray * items = [self getAllPersons];
+    // [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:@"Apple Seed"]];
+    
+    // You can even change the title and placeholder text for the selector
+    KNMultiItemSelector * selector = [[KNMultiItemSelector alloc] initWithItems:items
+                                                               preselectedItems:nil
+                                                                          title:@"Select friends"
+                                                                placeholderText:@"Search by name"
+                                                                       delegate:self];
+    // Again, the two optional settings
+    selector.allowSearchControl = YES;
+    selector.useTableIndex      = YES;
+    selector.useRecentItems     = YES;
+    selector.maxNumberOfRecentItems = 4;
+    selector.allowModeButtons = NO;
+    UINavigationController * uinav = [[UINavigationController alloc] initWithRootViewController:selector];
+    uinav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    uinav.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:uinav animated:YES completion:nil];
+}
+
 
 -(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
     sqlite3 *notesLocalDB;

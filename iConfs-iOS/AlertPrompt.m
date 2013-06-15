@@ -26,12 +26,12 @@
  
  - (void)show
  {
- [textView becomeFirstResponder];
- [super show];
+     [textView becomeFirstResponder];
+     [super show];
  }
  - (NSString *)enteredText
  {
- return textView.text;
+     return textView.text;
  }
 
 @end
