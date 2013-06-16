@@ -20,8 +20,8 @@ typedef enum {
 #pragma mark - MultiItemSelectorDelegate protocol
 
 @protocol KNMultiItemSelectorDelegate <NSObject>
--(void)selectorDidCancelSelection;
--(void)selector:(KNMultiItemSelector *)selector didFinishSelectionWithItems:(NSArray*)selectedItems;
+-(void)selectorDidCancelSelection:(NSString*)text;
+-(void)selector:(KNMultiItemSelector *)selector didFinishSelectionWithItems:(NSArray*)selectedItems withText:(NSString*)text;
 @optional
 -(void)selector:(KNMultiItemSelector *)selector didSelectItem:(KNSelectorItem*)selectedItem;
 -(void)selector:(KNMultiItemSelector *)selector didDeselectItem:(KNSelectorItem*)selectedItem;
@@ -80,6 +80,7 @@ typedef enum {
   preselectedItems:(NSArray*)_preselectedItems
              title:(NSString*)_title
    placeholderText:(NSString*)_placeholder
-          delegate:(id)delegateObject;
+          delegate:(id)delegateObject
+              text:(NSString*)t;
 
 @end

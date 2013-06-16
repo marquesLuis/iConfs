@@ -784,7 +784,7 @@
             </objects>
             <point key="canvasLocation" x="2004" y="-924"/>
         </scene>
-        <!--Note View Controller-->
+        <!--Note View Controller - New note-->
         <scene sceneID="EMU-aK-NoZ">
             <objects>
                 <viewController id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
@@ -830,6 +830,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addSession:" destination="Djl-U9-qqq" eventType="touchUpInside" id="JHX-bs-VZv"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -837,12 +840,13 @@
                             <constraint firstItem="jJ5-4O-OME" firstAttribute="centerX" secondItem="lXc-zi-VKq" secondAttribute="centerX" type="default" id="1XN-Zc-Kb0"/>
                             <constraint firstItem="jJ5-4O-OME" firstAttribute="top" secondItem="lXc-zi-VKq" secondAttribute="top" constant="48" id="8M0-4G-rp7"/>
                             <constraint firstItem="alV-vU-abq" firstAttribute="trailing" secondItem="lXc-zi-VKq" secondAttribute="trailing" type="default" id="Hoy-7t-h5R"/>
+                            <constraint firstItem="Kpf-u1-KBg" firstAttribute="top" secondItem="lXc-zi-VKq" secondAttribute="top" constant="2" id="XOc-GZ-raR"/>
                             <constraint firstItem="Kpf-u1-KBg" firstAttribute="leading" secondItem="lXc-zi-VKq" secondAttribute="leading" type="default" id="kyr-0m-OCD"/>
-                            <constraint firstItem="Kpf-u1-KBg" firstAttribute="top" secondItem="lXc-zi-VKq" secondAttribute="top" constant="-1" id="nwo-NS-Tcj"/>
-                            <constraint firstItem="Kpf-u1-KBg" firstAttribute="top" secondItem="alV-vU-abq" secondAttribute="top" type="default" id="rde-cj-TdN"/>
+                            <constraint firstItem="alV-vU-abq" firstAttribute="baseline" secondItem="Kpf-u1-KBg" secondAttribute="baseline" type="default" id="nb5-d2-hnD"/>
+                            <constraint firstItem="alV-vU-abq" firstAttribute="top" secondItem="Kpf-u1-KBg" secondAttribute="top" type="default" id="p9G-0b-A3k"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Q4k-PV-2Rd">
+                    <navigationItem key="navigationItem" title="New note" id="Q4k-PV-2Rd">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="4hX-eg-EXJ">
                             <connections>
                                 <action selector="addNote:" destination="Djl-U9-qqq" id="yR8-dg-09H"/>
@@ -851,6 +855,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="aboutPersonButton" destination="Kpf-u1-KBg" id="vtH-72-k99"/>
+                        <outlet property="aboutSessionButton" destination="alV-vU-abq" id="b8F-6d-TuI"/>
                         <outlet property="noteTextView" destination="jJ5-4O-OME" id="fmt-NQ-MJ4"/>
                     </connections>
                 </viewController>
@@ -917,6 +922,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addNote:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="HomeViewController" superclassName="UIViewController">
@@ -956,7 +962,9 @@
             <relationships>
                 <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
             </relationships>
         </class>

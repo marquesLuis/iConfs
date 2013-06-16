@@ -23,6 +23,7 @@
 
 @implementation KNMultiItemSelector {
   NSString * placeholderText;
+    NSString * text;
 }
 
 @synthesize tableView, useTableIndex, selectedItems, searchTextField, allowSearchControl, allowModeButtons;
@@ -34,18 +35,21 @@
             preselectedItems:nil
                        title:NSLocalizedString(@"Select items", nil)
              placeholderText:NSLocalizedString(@"Search by keywords", nil)
-                    delegate:_delegate];
+                    delegate:_delegate
+                        text:nil];
+
 }
 
 -(id)initWithItems:(NSArray*)_items
   preselectedItems:(NSArray*)_preselectedItems
              title:(NSString*)title
    placeholderText:(NSString*)_placeholder
-          delegate:(id)delegateObject {
+          delegate:(id)delegateObject
+              text:(NSString*)t {
+    text = t;
   self = [super init];
   if (self) {
     preselectedSelectedValue = @"-1";
-    NSLog(@"creation of table");
     delegate = delegateObject;
     self.title = title;
     self.maxNumberOfRecentItems = 5;
@@ -58,19 +62,11 @@
     // Initialize item arrays
     items = [_items mutableCopy];
     if (_preselectedItems) {
-        NSLog(@"init & preselected");
-    
         selectedItems = _preselectedItems;
-        
-        NSLog(@"%d", [selectedItems count]);
-
         for (KNSelectorItem * i in selectedItems) {
-            
             preselectedSelectedValue = i.selectValue;
-        
       }
     } else {
-        NSLog(@"doesn't exist preselected items");
 
       for (KNSelectorItem * i in self.selectedItems) {
         i.selected = NO;
@@ -267,14 +263,10 @@
   if (item.image) {
     [cell.imageView setImage:item.image];
   }
-    NSLog(@"fill cells");
-    NSLog(@"section : %d", indexPath.section);
     if([preselectedSelectedValue isEqualToString:item.selectValue] && indexPath.section != 0){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         item.selected = YES;
         rowselected = indexPath;
-        NSLog(@"%@", item.displayValue);
-        NSLog(@"%d", item.selected);
     } else
         cell.accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
@@ -287,9 +279,7 @@
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     //user carrega na pessoa que tinha seleccionado, mal abre a pag
-    NSLog(@"preselectedvalue : %@ indexpath : %@ rowselected : %@", preselectedSelectedValue, indexPath, rowselected);
     if([rowselected isEqual: indexPath] && ![preselectedSelectedValue isEqualToString:@"-1"]){
-        NSLog(@"first case");
         [self hideSelection:_tableView ];
         preselectedSelectedValue = @"-1";
         return;
@@ -297,23 +287,19 @@
     
     // user carrega noutra pessoa para alem da que tinha seleccionado, mal abre a pag
     else if(rowselected != indexPath && ![preselectedSelectedValue isEqualToString:@"-1"]){
-        NSLog(@"second case");
         [self hideSelection:_tableView ];
         preselectedSelectedValue = @"-1";
         //return;
     }
     
     if([rowselected isEqual: indexPath] ){
-        NSLog(@"third case");
         [self hideSelection:_tableView ];
         return;
     }
 
     // Which item?
     if(rowselected){
-        NSLog(@"forth case");
         [self hideSelection:_tableView ];
-        //return;
     } 
     
         KNSelectorItem * item = [self itemAtIndexPath:indexPath];
@@ -343,9 +329,7 @@
 }
 
 -(void)hideSelection:(UITableView*)_tableView{
-    NSLog(@"HIDE: row selected %@", rowselected);
     KNSelectorItem * item = [self itemAtIndexPath:rowselected];
-    NSLog(@"%@", item.displayValue);
     item.selected = NO;
     [_tableView deselectRowAtIndexPath:rowselected animated:YES];
     [_tableView cellForRowAtIndexPath:rowselected].accessoryType = UITableViewCellAccessoryNone;//item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -354,7 +338,6 @@
         [self.searchTextField resignFirstResponder];
     }
     rowselected = nil;
-
 }
 
 
@@ -439,27 +422,24 @@
 #pragma mark - Cancel or Done button event
 
 -(void)didCancel {
-  // Clear all selections
+
+    // Clear all selections
   for (KNSelectorItem * i in self.selectedItems) {
     i.selected = NO;
   }
   // Delegate callback
-  if ([delegate respondsToSelector:@selector(selectorDidCancelSelection)]) {
-      [delegate selectorDidCancelSelection];
+    if ([delegate respondsToSelector:@selector(selectorDidCancelSelection:)]) {
+      [delegate selectorDidCancelSelection:text];
   }
 }
 
 -(void)didFinish {
     
-    NSLog(@"done");
+    
   // Delegate callback
-  if ([delegate respondsToSelector:@selector(selectorDidFinishSelectionWithItems:)]) {
-      NSLog(@"did finish");
-      NSLog(@"%d", [self.selectedItems count]);
-      
-    [delegate selector:self didFinishSelectionWithItems:self.selectedItems];
+  if ([delegate respondsToSelector:@selector(selectorDidFinishSelectionWithItems:)]) {      
+      [delegate selector:self didFinishSelectionWithItems:self.selectedItems withText:text];
   }
-    NSLog(@"done");
 
   // Store recent items FIFO
   if (self.useRecentItems && self.maxNumberOfRecentItems < items.count) {

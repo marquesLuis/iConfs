@@ -18,9 +18,10 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
 @property (strong, nonatomic) IBOutlet UIButton *aboutPersonButton;
+@property (strong, nonatomic) IBOutlet UIButton *aboutSessionButton;
 
 - (IBAction)addNote:(UIBarButtonItem *)sender;
-
 - (IBAction)addPerson:(UIButton *)sender;
+- (IBAction)addSession:(UIButton *)sender;
 
 @end
