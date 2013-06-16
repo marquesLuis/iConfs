@@ -17,7 +17,7 @@
 @end
 
 @implementation EventUIViewController
-
+@synthesize roomButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,17 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"0");
     //title ; date; authors ; description; notes
     sections = [[NSMutableArray alloc] init];
-    NSLog(@"0");
     self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height) style:UITableViewStyleGrouped];
     self.info.dataSource = self;
     self.info.delegate = self;
     [self.view addSubview:self.info];
     
     // [self displayAuthors];
-    NSLog(@"1");
     
     
     [sections addObject:@"notes..."];
@@ -50,7 +47,6 @@
      [sections addObject:@"notes..."];
      [sections addObject:@"notes..."];
      [sections addObject:@"notes..."];
-    NSLog(@"5");
 #warning add notes...
     
     
@@ -86,11 +82,8 @@
     NSString * text = @"";
     NSMutableArray *authors = [self getAuthors];
     for(Author *author in authors){
-        NSLog(@"%@", author.name);
         text = [text stringByAppendingString: author.name];
     }
-    NSLog(@"6");
-    NSLog(@"7");
     return text;
 }
 
@@ -131,7 +124,11 @@
     return authors;
 }
 
+
 - (IBAction)goToRoom:(UIButton *)sender {
+    if([self shouldPerformSegueWithIdentifier:@"segue12" sender:sender])
+        [self performSegueWithIdentifier:@"segue12" sender:sender];
+
 }
 - (IBAction)addNote:(UIButton *)sender {
 }
@@ -139,30 +136,27 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{ NSLog(@"8");
+{ 
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{ NSLog(@"9");
+{ 
     // Return the number of rows in the section.
     return [sections  count];
 }
 
 #pragma mark - UITableViewDataSource Methods
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{ NSLog(@"10");
+{ 
     static NSString *ProductCellIdentifier = @"ProductCellIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProductCellIdentifier];
     
-    
-    NSLog(@"11");
-    
+        
     cell.textLabel.text =  [sections objectAtIndex:indexPath.section];
-    NSLog(@"16");
     
     return cell;
     
@@ -195,15 +189,19 @@
     [headerView addSubview:date];
     
     //room
-    UIButton * room = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    room.frame = LabelFrameRoom;
+    roomButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    roomButton.frame = LabelFrameRoom;
+    [roomButton setTitle: @"Local" forState:UIControlStateNormal];
     
-#warning put room name or only room?
-    [room setTitle: @"Local" forState:UIControlStateNormal];//self.event.location];
-    [room addTarget:self
+    NSLog(@"the room has id: %@", self.event.localID);
+    
+    [roomButton addTarget:self
                      action:@selector(goToRoom:)
            forControlEvents:UIControlEventTouchDown];
-    [headerView addSubview:room];
+    if(self.event.localID)
+        [headerView addSubview:roomButton];
+    else
+        roomButton.hidden = YES;
     
     //author label
     UILabel * author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
@@ -240,7 +238,7 @@
     [descriptionText setText:self.event.description];
     [headerView addSubview:descriptionText];
     NSLog(@"%f",self.view.frame.size.height);
-    
+
     return headerView;
 }
 
@@ -250,7 +248,7 @@
     //room
     UIButton * addNote = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     addNote.frame = CGRectMake(110, 15, 100, 40);
-    [addNote setTitle: @"Add note" forState:UIControlStateNormal];//self.event.location];
+    [addNote setTitle: @"Add note" forState:UIControlStateNormal];
     [addNote addTarget:self
              action:@selector(goToRoom:)
    forControlEvents:UIControlEventTouchDown];
@@ -298,6 +296,23 @@
      network.personId = networking.personID;
      [self presentViewController:network animated:YES completion:nil];*/
 }
+
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    NSLog(@"shoulpreformesegue");
+    if(self.event.localID)
+         return YES;
+    return NO;
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
+    map.localID = self.event.localID;
+}
+
+
 
 
 @end

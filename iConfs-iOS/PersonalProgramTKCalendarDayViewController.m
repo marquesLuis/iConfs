@@ -109,13 +109,8 @@
 
 #pragma mark TKCalendarDayViewDelegate
 - (NSArray *) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventsForDate:(NSDate *)eventDate{
-    NSLog(@"called!!!");
    // UIInterfaceOrientation orien = [[UIDevice currentDevice] orientation];
     UIInterfaceOrientation orien = [UIApplication sharedApplication].statusBarOrientation;
-
-    NSLog(@"%d", orien);
-
-
 
     sqlite3 *db;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -237,7 +232,7 @@
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM LOCATION WHERE ID = %@", localID];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM LOCATION WHERE SERVER_ID = %@", localID];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -260,7 +255,6 @@
 }
 
 - (void) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventViewWasSelected:(TKCalendarDayEventView *)eventView{
-    NSLog(@"selected event from program!");
     eventSelected = eventView.identifier.intValue;
     [self performSegueWithIdentifier:@"segue6" sender:nil];
 }

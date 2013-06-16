@@ -65,10 +65,12 @@
             while (sqlite3_step(statement)==SQLITE_ROW) {
                 NSString * title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 NSString * path =  [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString * localID =  [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                 
                 Local * local = [[Local alloc]init];
                 [local setTitle:title];
                 [local setPath:path];
+                [local setLocalID:localID];
                 [locations addObject:local];
             }
         }
@@ -77,6 +79,7 @@
     }
     return locations;
 }
+
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -94,16 +97,31 @@
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
     
-    if(row == 0){
-        
-        
+    
+    if([self.localID isEqualToString:l.localID]){
         NSString * path = l.path;
         UIImage * image = [UIImage imageWithContentsOfFile:path];
         //[self.map setImage:imageFromURL];
+        imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+        imageView.contentMode  = UIViewContentModeScaleAspectFit;
+        [self.scrollView addSubview:imageView];
+        [self.scrollView setContentSize:[image size]];
+        [self.scrollView setMaximumZoomScale:500.0];
+        [self.scrollView setShowsHorizontalScrollIndicator:NO];
+        [self.scrollView setShowsVerticalScrollIndicator:NO];
+        [picker selectRow:row inComponent:component animated:NO];
+        return l.title;
+
+    }
+    
+    else if(row == 0 && !self.localID){
+        
+        NSString * path = l.path;
+        UIImage * image = [UIImage imageWithContentsOfFile:path];
         imageView = [[UIImageView alloc] initWithImage:image];
         imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         imageView.contentMode  = UIViewContentModeScaleAspectFit;
@@ -138,10 +156,13 @@
 }
 
 
+
 -(UIView*) viewForZoomingInScrollView:(UIScrollView*)scrollView{    
     return imageView;
 }
 
-
+- (void) viewDidAppear:(BOOL)animated {
+    [picker reloadAllComponents];
+}
 
 @end

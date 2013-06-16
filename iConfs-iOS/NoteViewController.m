@@ -84,10 +84,6 @@ return self;
     
 }
 
-/*
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
- 
- */
 
 - (IBAction)addNote:(UIBarButtonItem *)sender {
     if(noteTextView.text.length == 0 || isPlaceholder){

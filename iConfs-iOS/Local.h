@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) NSString * title;
 @property (strong, nonatomic) NSString * path;
+@property (strong, nonatomic) NSString * localID;
 
 @end
