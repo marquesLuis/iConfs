@@ -14,6 +14,7 @@
 
 @interface KNMultiItemSelector (){
     NSIndexPath* rowselected;
+    NSString * preselectedSelectedValue;
 }
 
 @end
@@ -43,6 +44,8 @@
           delegate:(id)delegateObject {
   self = [super init];
   if (self) {
+    preselectedSelectedValue = @"-1";
+    NSLog(@"creation of table");
     delegate = delegateObject;
     self.title = title;
     self.maxNumberOfRecentItems = 5;
@@ -55,13 +58,20 @@
     // Initialize item arrays
     items = [_items mutableCopy];
     if (_preselectedItems) {
-      selectedItems = _preselectedItems;
-      for (KNSelectorItem * i in self.selectedItems) {
-        if ([items containsObject:i]) {
-          i.selected = YES;
-        }
+        NSLog(@"init & preselected");
+    
+        selectedItems = _preselectedItems;
+        
+        NSLog(@"%d", [selectedItems count]);
+
+        for (KNSelectorItem * i in selectedItems) {
+            
+            preselectedSelectedValue = i.selectValue;
+        
       }
     } else {
+        NSLog(@"doesn't exist preselected items");
+
       for (KNSelectorItem * i in self.selectedItems) {
         i.selected = NO;
       }
@@ -90,7 +100,7 @@
 
 -(void)loadView {
     rowselected = nil;
-    
+
   self.view = [[UIView alloc] initWithFrame:CGRectZero];  
   self.view.backgroundColor = [UIColor whiteColor];
   
@@ -257,8 +267,16 @@
   if (item.image) {
     [cell.imageView setImage:item.image];
   }
-    
-  cell.accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    NSLog(@"fill cells");
+    NSLog(@"section : %d", indexPath.section);
+    if([preselectedSelectedValue isEqualToString:item.selectValue] && indexPath.section != 0){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        item.selected = YES;
+        rowselected = indexPath;
+        NSLog(@"%@", item.displayValue);
+        NSLog(@"%d", item.selected);
+    } else
+        cell.accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
   return cell;
 }
@@ -267,27 +285,40 @@
 #warning modify...
 -(void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-    /*if(maximumItemsSelected > 0 && (self.selectedItems.count >= maximumItemsSelected && [self itemAtIndexPath:indexPath].selected == NO))
-    { 
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", @"")
-                                    message:NSLocalizedString(@"You've reached the maximum number of selectable items.", @"")
-                                   delegate:nil
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil, nil] show];
-    }
-    else
-    {*/
     
-    NSLog(@"%@", rowselected);
-        // Which item?
-    if(rowselected){
-        NSLog(@"not nil");
+    //user carrega na pessoa que tinha seleccionado, mal abre a pag
+    NSLog(@"preselectedvalue : %@ indexpath : %@ rowselected : %@", preselectedSelectedValue, indexPath, rowselected);
+    if([rowselected isEqual: indexPath] && ![preselectedSelectedValue isEqualToString:@"-1"]){
+        NSLog(@"first case");
         [self hideSelection:_tableView ];
+        preselectedSelectedValue = @"-1";
+        return;
     }
+    
+    // user carrega noutra pessoa para alem da que tinha seleccionado, mal abre a pag
+    else if(rowselected != indexPath && ![preselectedSelectedValue isEqualToString:@"-1"]){
+        NSLog(@"second case");
+        [self hideSelection:_tableView ];
+        preselectedSelectedValue = @"-1";
+        //return;
+    }
+    
+    if([rowselected isEqual: indexPath] ){
+        NSLog(@"third case");
+        [self hideSelection:_tableView ];
+        return;
+    }
+
+    // Which item?
+    if(rowselected){
+        NSLog(@"forth case");
+        [self hideSelection:_tableView ];
+        //return;
+    } 
     
         KNSelectorItem * item = [self itemAtIndexPath:indexPath];
         item.selected = !item.selected;
-    rowselected = indexPath;
+        rowselected = indexPath;
         // Recount selected items
         [self updateSelectedCount];
         
@@ -312,17 +343,21 @@
 }
 
 -(void)hideSelection:(UITableView*)_tableView{
+    NSLog(@"HIDE: row selected %@", rowselected);
     KNSelectorItem * item = [self itemAtIndexPath:rowselected];
-    item.selected = !item.selected;
+    NSLog(@"%@", item.displayValue);
+    item.selected = NO;
     [_tableView deselectRowAtIndexPath:rowselected animated:YES];
-    [_tableView cellForRowAtIndexPath:rowselected].accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    [_tableView cellForRowAtIndexPath:rowselected].accessoryType = UITableViewCellAccessoryNone;//item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     if ([self.searchTextField isFirstResponder]) {
         self.searchTextField.tag = 1;
         [self.searchTextField resignFirstResponder];
     }
-
+    rowselected = nil;
 
 }
+
+
 
 
 #pragma mark - UITextfield Delegate & Filtering
@@ -410,9 +445,8 @@
   }
   // Delegate callback
   if ([delegate respondsToSelector:@selector(selectorDidCancelSelection)]) {
-    [delegate selectorDidCancelSelection];
+      [delegate selectorDidCancelSelection];
   }
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)didFinish {
@@ -420,8 +454,12 @@
     NSLog(@"done");
   // Delegate callback
   if ([delegate respondsToSelector:@selector(selectorDidFinishSelectionWithItems:)]) {
+      NSLog(@"did finish");
+      NSLog(@"%d", [self.selectedItems count]);
+      
     [delegate selector:self didFinishSelectionWithItems:self.selectedItems];
   }
+    NSLog(@"done");
 
   // Store recent items FIFO
   if (self.useRecentItems && self.maxNumberOfRecentItems < items.count) {
@@ -437,20 +475,7 @@
     [defaults setObject:array forKey:self.recentItemStorageKey];
     [defaults synchronize];
   }
-    if(!rowselected){
-        [self alertMessages:@"Please select a person" withMessage:@""];
-    } else{
-        
-    }
-}
-
--(void) alertMessages:(NSString*)initWithTitle withMessage:(NSString*)message{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:initWithTitle
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    
 }
 
 #pragma mark - Handle mode switching UI

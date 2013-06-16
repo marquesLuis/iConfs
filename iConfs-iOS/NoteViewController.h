@@ -14,9 +14,10 @@
 
 
 
-@interface NoteViewController : UIViewController  <UITextViewDelegate>
+@interface NoteViewController : UIViewController  <UITextViewDelegate, KNMultiItemSelectorDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
+@property (strong, nonatomic) IBOutlet UIButton *aboutPersonButton;
 
 - (IBAction)addNote:(UIBarButtonItem *)sender;
 

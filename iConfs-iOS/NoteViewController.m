@@ -8,19 +8,21 @@
 
 #import "NoteViewController.h"
 
-@interface NoteViewController () <UITextViewDelegate> {
+@interface NoteViewController () <UITextViewDelegate, KNMultiItemSelectorDelegate> {
     BOOL isPlaceholder;
 }
-
+@property (nonatomic, strong)  KNSelectorItem * personChosen;
 @end
 
 @implementation NoteViewController
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 if (self) {
     // Custom initialization
+
 }
 return self;
 }
@@ -36,14 +38,15 @@ return self;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    [self.aboutPersonButton setTitle:@"About person" forState:UIControlStateNormal];
+
     self.noteTextView.text = @"Write your note here";
     isPlaceholder = YES;
     self.noteTextView.textColor = [UIColor lightGrayColor];
     self.noteTextView.delegate = self;
     
     [self costumizeTextView];
-    
-    
 }
 
 
@@ -94,7 +97,6 @@ return self;
 }
 
 
-
 -(NSMutableArray*)getAllPersons{
     NSMutableArray * items = [NSMutableArray array];
     
@@ -116,29 +118,46 @@ return self;
                 NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
                 
+                NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
                 
                 NSString * letter = [firstName substringToIndex:1];
                 
                 NSString *name = [[[lastName stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
-                [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:@"appl" imageUrl:photo]];
+                [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:personID imageUrl:photo]];
                 
             }
         }
         sqlite3_close(db);
     }
     return items;
-    
 }
+
 - (IBAction)addPerson:(UIButton *)sender {
     NSMutableArray * items = [self getAllPersons];
-    // [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:@"Apple Seed"]];
+    
+    KNMultiItemSelector * selector;
+    if(_personChosen){
+        NSLog(@"preselected items");
+        NSMutableArray * prec = [NSMutableArray array];
+        [prec addObject:[[KNSelectorItem alloc] initWithDisplayValue:_personChosen.displayValue selectValue:_personChosen.selectValue imageUrl:_personChosen.imageUrl]];
+        
+        for (KNSelectorItem * o in prec)
+            NSLog(@"%@", o.displayValue);
+        selector = [[KNMultiItemSelector alloc] initWithItems:items
+                                             preselectedItems:prec
+                                                        title:@"Select a Person"
+                                              placeholderText:@"Search by name"
+                                                     delegate:self];
+    }
     
     // You can even change the title and placeholder text for the selector
-    KNMultiItemSelector * selector = [[KNMultiItemSelector alloc] initWithItems:items
+    else {
+        selector = [[KNMultiItemSelector alloc] initWithItems:items
                                                                preselectedItems:nil
-                                                                          title:@"Select friends"
+                                                                          title:@"Select a Person"
                                                                 placeholderText:@"Search by name"
                                                                        delegate:self];
+    }
     // Again, the two optional settings
     selector.allowSearchControl = YES;
     selector.useTableIndex      = YES;
@@ -180,6 +199,44 @@ return self;
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+}
+
+#pragma mark - Handle delegate callback
+
+-(void)selectorDidCancelSelection {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"cancel");
+
+    if(_personChosen){
+        [self.aboutPersonButton setTitle:_personChosen.displayValue forState:UIControlStateNormal];
+    } else {
+        [self.aboutPersonButton setTitle:@"About Person" forState:UIControlStateNormal];
+    }
+
+}
+
+-(void)selector:(KNMultiItemSelector *)selector didFinishSelectionWithItems:(NSArray*)selectedItems{
+    NSLog(@"didFinishSelectionWithItems");
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    for (KNSelectorItem * o in selectedItems) 
+        _personChosen = o;
+    
+    if([selectedItems count] != 0)
+        [self.aboutPersonButton setTitle:_personChosen.displayValue forState:UIControlStateNormal];
+    else {
+        [self.aboutPersonButton setTitle:@"About Person" forState:UIControlStateNormal];
+        _personChosen = nil;
+    }
+
+}
+
+-(void)selector:(KNMultiItemSelector *)selector didSelectItem:(KNSelectorItem*)selectedItem{
+    
+}
+
+-(void)selectorDidFinishSelectionWithItems:(NSArray *)selectedItems {
+   
 }
 
 @end
