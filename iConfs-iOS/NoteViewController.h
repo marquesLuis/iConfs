@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "sqlite3.h"
 #import "KNMultiItemSelector.h"
+#import "Note.h"
 
 
 
@@ -19,6 +20,16 @@
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
 @property (strong, nonatomic) IBOutlet UIButton *aboutPersonButton;
 @property (strong, nonatomic) IBOutlet UIButton *aboutSessionButton;
+@property BOOL hidePersonButton;
+@property BOOL hideSessionButton;
+@property (strong, nonatomic) NSString * eventID;
+@property (strong, nonatomic) NSString * personID;
+@property (strong, nonatomic) NSString * content;
+
+@property (strong, nonatomic) NSString * noteID;
+
+@property BOOL isLocal;
+
 
 - (IBAction)addNote:(UIBarButtonItem *)sender;
 - (IBAction)addPerson:(UIButton *)sender;

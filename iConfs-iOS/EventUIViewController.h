@@ -12,10 +12,16 @@
 #import "sqlite3.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ImageViewController.h"
+#import "NoteViewController.h"
+#import "Note.h"
 
 @interface EventUIViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) Event * event;
-- (IBAction)addNote:(UIButton *)sender;
+//- (IBAction)addNote:(UIButton *)sender;
 @property (strong, nonatomic) IBOutlet UIButton *roomButton;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navigationBar;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addNoteButton;
+@property (strong, nonatomic) IBOutlet UITableView *info;
 
 @end

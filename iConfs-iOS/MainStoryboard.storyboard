@@ -740,18 +740,57 @@
                                     <segue destination="6AR-Am-Pii" kind="push" identifier="segue12" id="XYc-KS-Og4"/>
                                 </connections>
                             </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wX-wE-vT0">
+                                <items>
+                                    <barButtonItem title="Add note" id="LKz-8v-671">
+                                        <connections>
+                                            <segue destination="Djl-U9-qqq" kind="push" identifier="segue14" id="eJJ-Tb-A8d"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9Wg-L1-0Di">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="252" id="ApB-Yo-hu6"/>
+                                    <constraint firstAttribute="width" constant="160" id="oR2-sp-3Bt"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ZRm-Xb-GD8">
+                                        <rect key="frame" x="0.0" y="22" width="160" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="140" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="Djl-U9-qqq" kind="push" identifier="segue15" id="6VH-20-vTN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="aPc-Sj-Njm" secondAttribute="trailing" constant="43" id="98C-A8-Pde"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="leading" secondItem="Ljv-Zl-qK0" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="GCf-jy-Uvc"/>
                             <constraint firstItem="aPc-Sj-Njm" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" constant="69" id="PEt-8L-Qda"/>
+                            <constraint firstItem="4wX-wE-vT0" firstAttribute="bottom" secondItem="Ljv-Zl-qK0" secondAttribute="bottom" type="default" id="POv-wn-S7n"/>
+                            <constraint firstItem="4wX-wE-vT0" firstAttribute="trailing" secondItem="Ljv-Zl-qK0" secondAttribute="trailing" type="default" id="PUZ-ar-E8u"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" constant="15" id="gAY-BL-HAA"/>
+                            <constraint firstItem="4wX-wE-vT0" firstAttribute="leading" secondItem="Ljv-Zl-qK0" secondAttribute="leading" type="default" id="lov-rS-Q86"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nBS-qc-b5p">
                         <barButtonItem key="backBarButtonItem" title="Back" id="p7K-Nl-pNl"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="addNoteButton" destination="LKz-8v-671" id="vDB-St-gzF"/>
+                        <outlet property="info" destination="9Wg-L1-0Di" id="rKS-Sb-yNX"/>
+                        <outlet property="navigationBar" destination="nBS-qc-b5p" id="h57-gY-TFu"/>
                         <outlet property="roomButton" destination="aPc-Sj-Njm" id="Gqo-uS-0kz"/>
+                        <outlet property="toolbar" destination="4wX-wE-vT0" id="KBB-9W-pCL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIm-rk-VWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -811,7 +850,7 @@
             <objects>
                 <viewController id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -865,7 +904,6 @@
                             <constraint firstItem="Kpf-u1-KBg" firstAttribute="top" secondItem="lXc-zi-VKq" secondAttribute="top" constant="2" id="XOc-GZ-raR"/>
                             <constraint firstItem="Kpf-u1-KBg" firstAttribute="leading" secondItem="lXc-zi-VKq" secondAttribute="leading" type="default" id="kyr-0m-OCD"/>
                             <constraint firstItem="alV-vU-abq" firstAttribute="baseline" secondItem="Kpf-u1-KBg" secondAttribute="baseline" type="default" id="nb5-d2-hnD"/>
-                            <constraint firstItem="alV-vU-abq" firstAttribute="top" secondItem="Kpf-u1-KBg" secondAttribute="top" type="default" id="p9G-0b-A3k"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New note" id="Q4k-PV-2Rd">
@@ -883,7 +921,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TI6-Ei-FWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2496" y="-924"/>
+            <point key="canvasLocation" x="1189" y="-1611"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DqG-af-atm">
@@ -913,6 +951,110 @@
         <image name="Schedule.jpg" width="50" height="50"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
+    <classes>
+        <class className="AllNetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="AllNotesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
+        </class>
+        <class className="AllNotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CommunicationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="sendButton:"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="EventUIViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="info" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="roomButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="IConfsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NoteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="PersonProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
+        </class>
+        <class className="TKCalendarDayViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -921,5 +1063,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="ukM-KT-DGy"/>
         <segue reference="XYc-KS-Og4"/>
+        <segue reference="6VH-20-vTN"/>
     </inferredMetricsTieBreakers>
 </document>

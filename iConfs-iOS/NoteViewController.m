@@ -15,11 +15,10 @@
 }
 @property (nonatomic, strong)  KNSelectorItem * personChosen;
 @property (nonatomic, strong)  KNSelectorItem * sessionChosen;
-//@property (nonatomic, strong) NSString * content;
 @end
 
 @implementation NoteViewController
-@synthesize noteTextView;
+@synthesize noteTextView, aboutPersonButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,6 +42,16 @@ return self;
 - (void)viewDidLoad{
     [super viewDidLoad];
     isAboutPerson = false;
+    
+    
+    
+    if(self.hidePersonButton){
+        self.aboutPersonButton.hidden = YES;
+        NSLog(@"hide person button");
+    }
+    if(self.hideSessionButton)
+        self.aboutSessionButton.hidden = YES;
+    
     [self.aboutPersonButton setTitle:@"About person" forState:UIControlStateNormal];
     noteTextView.text = @"Write your note here";
     isPlaceholder = YES;
@@ -50,6 +59,13 @@ return self;
     noteTextView.delegate = self;
     
     [self costumizeTextView];
+    
+    if(self.content){
+        noteTextView.textColor = [UIColor blackColor];
+        self.noteTextView.text = self.content;
+        
+        
+    }
 }
 
 
@@ -96,17 +112,28 @@ return self;
 
     if(_personChosen)
         values = [values stringByAppendingFormat:@" '%@',  ", _personChosen.selectValue];
-    else
+    else if(self.personID)
+        values = [values stringByAppendingFormat:@" '%@',  ", self.personID];
+    else 
         values = [values stringByAppendingFormat:@" '0', "];
     
     if(_sessionChosen)
         values = [values stringByAppendingFormat:@" '%@', '0'", _sessionChosen.selectValue];
+    else if(self.eventID)
+        values = [values stringByAppendingFormat:@" '%@', '0'", self.eventID];
     else
         values = [values stringByAppendingFormat:@" '0' , '0' "];
     
     
     [self insertTo:@"notes_local.db" table:@"NOTES_LOCAL" definition: @"SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE"
  values:values];
+    
+    //remove old note
+    if(self.isLocal){
+        [self removeNote:YES withId:self.noteID];
+    } else {
+        [self removeNote:NO withId:self.noteID];
+    }
     
     [[self navigationController] popViewControllerAnimated:YES];
 }
@@ -360,5 +387,39 @@ return self;
 
 -(void)selector:(KNMultiItemSelector *)selector didSelectItem:(KNSelectorItem*)selectedItem{}
 -(void)selectorDidFinishSelectionWithItems:(NSArray *)selectedItems {}
+
+-(void) removeNote:(BOOL)isLocal withId:(NSString*)noteID{
+    
+    if(isLocal){
+        [self removeFrom:@"notes_local.db" table:@"NOTES_LOCAL" attribute:@"ID" withID:[noteID intValue]];
+    } else {
+        [self removeFrom:@"notes.db" table:@"NOTES" attribute:@"SERVER_ID" withID:[noteID intValue]];
+
+    }
+    
+}
+
+-(void) removeFrom: (NSString *) db_file table: (NSString *) table_name attribute: (NSString *) attribute withID: (int) server_id{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
+        const char* query_sql = [querySql UTF8String];
+        
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
+    }
+}
+
 
 @end

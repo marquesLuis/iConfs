@@ -146,11 +146,12 @@
                         NSString *dateEnd = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 9)];
                         NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
                         NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 13)];
-                        NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 3)];
+                        NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
                         e.title = title;
                         e.description = description;
                         e.kind = kind;
                         e.eventID = eventID;
+                        NSLog(@"--------------------------event ID ----------------------- %@", eventID);
                         e.begin = [date stringByAppendingString:dateBegin];
                         e.date = date;
                         e.end = [date stringByAppendingString:dateEnd];

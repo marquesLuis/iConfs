@@ -27,6 +27,7 @@
 		621A5A33175E499300B02EEC /* libTapkuLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 621A5A2E175E494000B02EEC /* libTapkuLibrary.a */; };
 		621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */; };
 		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
+		62C37301176F5B2800557724 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C37300176F5B2800557724 /* Note.m */; };
 		62F3AF6F1760CE3E00E4BA8F /* EventUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */; };
 		62F3AF751760E68F00E4BA8F /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF741760E68F00E4BA8F /* Author.m */; };
 		62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFCF1764DF2A00E4BA8F /* Local.m */; };
@@ -141,6 +142,8 @@
 		621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProgramTKCalendarDayViewController.m; sourceTree = "<group>"; };
 		621A5A53175E98CB00B02EEC /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		621A5A54175E98CB00B02EEC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		62C372FF176F5B2800557724 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		62C37300176F5B2800557724 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		62F3AF6D1760CE3E00E4BA8F /* EventUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUIViewController.h; sourceTree = "<group>"; };
 		62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUIViewController.m; sourceTree = "<group>"; };
 		62F3AF731760E68F00E4BA8F /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
@@ -408,6 +411,8 @@
 				62F3B003176C72E600E4BA8F /* AllNotesViewController.m */,
 				62F3B037176CD92800E4BA8F /* AllPersonsViewController.h */,
 				62F3B038176CD92800E4BA8F /* AllPersonsViewController.m */,
+				62C372FF176F5B2800557724 /* Note.h */,
+				62C37300176F5B2800557724 /* Note.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -636,6 +641,7 @@
 				62F3B067176CEFF800E4BA8F /* SDWebImagePrefetcher.m in Sources */,
 				62F3B068176CEFF800E4BA8F /* UIButton+WebCache.m in Sources */,
 				62F3B069176CEFF800E4BA8F /* UIImageView+WebCache.m in Sources */,
+				62C37301176F5B2800557724 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

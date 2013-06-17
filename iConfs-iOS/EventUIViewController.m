@@ -12,7 +12,7 @@
     NSMutableArray * sections;
 }
 
-@property (nonatomic, retain) UITableView *info;
+//@property (nonatomic, retain) UITableView *info;
 
 @end
 
@@ -30,27 +30,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"viewDidLoad with eventID: %@", self.event.eventID);
+    
+    
     //title ; date; authors ; description; notes
-    sections = [[NSMutableArray alloc] init];
-    self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height) style:UITableViewStyleGrouped];
+    self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.info.dataSource = self;
     self.info.delegate = self;
     [self.view addSubview:self.info];
+    self.title = self.event.title;
     
     // [self displayAuthors];
     
     
-    [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-     [sections addObject:@"notes..."];
-#warning add notes...
-    
-    
-    
+    [self updateNotes];
     /*   self.sessionTitle.font = [UIFont fontWithName:@"Helvetica" size:14.0];    // For setting font style with size
      labelName.textColor = [UIColor whiteColor];        //For setting text color
      labelName.backgroundColor = [UIColor clearColor];  // For setting background color
@@ -75,6 +69,34 @@
      
      
      */
+    
+    [self createToolbar];
+}
+
+-(void)updateNotes{
+    NSMutableArray * server = [self getNotes:@"notes.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES WHERE ABOUT_SESSION = %@", self.event.eventID]];
+    
+    NSMutableArray * local = [self getNotes:@"notes_local.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES_LOCAL WHERE ABOUT_SESSION = %@", self.event.eventID]];
+    NSLog(@"updateNotes");
+    NSLog(@"local");
+    for (Note *n in local ) {
+        NSLog(@"%@", n.content);
+    }
+    NSLog(@"sections");
+    for (Note *n in sections ) {
+        NSLog(@"%@", n.content);
+    }
+    
+    sections = [NSMutableArray arrayWithArray:server];
+    [sections addObjectsFromArray: local];
+}
+
+- (void)createToolbar {
+    self.addNoteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
+    NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, self.addNoteButton, flexibleSpace, nil];
+    [self.toolbar setItems:buttonItems];
 }
 
 
@@ -86,13 +108,6 @@
     }
     return text;
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 -(NSMutableArray *)getAuthors{
     sqlite3_stmt *statement;
@@ -124,14 +139,74 @@
     return authors;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+//Notes
+/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
+
+[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
+
+[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
+
+[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS DELETED_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER)" WithName:@"deleted_local.db"];*/
+
+
+-(NSMutableArray *)getNotes:(NSString*)table withClause:(NSString*)clause{
+    NSLog(@"getNotes");
+    sqlite3_stmt *statement;
+    sqlite3 *peopleDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:table];
+    NSMutableArray* notes = [[NSMutableArray alloc]init];
+    
+    if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
+        
+        NSString *querySql = clause;
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+
+                Note *note = [[Note alloc]init];
+
+                if([table isEqualToString:@"notes.db"]){
+                    NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                    NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    NSLog(@"note content: %@", content);
+                    [note setContent:content];
+                    [note setIsLocal:NO];
+                    [note setNoteID:serverID];
+                    [notes addObject:note];
+                }else {
+                    NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                    NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+
+                    [note setContent:content];
+                    [note setIsLocal:YES];
+                    [note setNoteID:serverID];
+                    [notes addObject:note];
+                }
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(peopleDB);
+    }
+    return notes;
+}
+
 
 - (IBAction)goToRoom:(UIButton *)sender {
     if([self shouldPerformSegueWithIdentifier:@"segue12" sender:sender])
         [self performSegueWithIdentifier:@"segue12" sender:sender];
 
 }
-- (IBAction)addNote:(UIButton *)sender {
-}
+
 
 #pragma mark - Table view data source
 
@@ -149,15 +224,28 @@
 
 #pragma mark - UITableViewDataSource Methods
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{ 
+{
+    NSLog(@"note");
     static NSString *ProductCellIdentifier = @"ProductCellIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProductCellIdentifier];
     
-        
-    cell.textLabel.text =  [sections objectAtIndex:indexPath.section];
+   
+    Note * note = [sections objectAtIndex:indexPath.row];
     
+    
+    cell.textLabel.text =  note.content;
+    
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    
+
+    btn.frame = CGRectMake(cell.frame.size.width + cell.frame.origin.x - 60, 2, 30, 24);
+    [btn setTitle:@"Hi" forState:UIControlStateNormal];
+    [cell.contentView addSubview:btn];
+    
+    //cell.frame.size.width + cell.frame.origin.x - 30
     return cell;
     
 }
@@ -242,19 +330,6 @@
     return headerView;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
-    //room
-    UIButton * addNote = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    addNote.frame = CGRectMake(110, 15, 100, 40);
-    [addNote setTitle: @"Add note" forState:UIControlStateNormal];
-    [addNote addTarget:self
-             action:@selector(goToRoom:)
-   forControlEvents:UIControlEventTouchDown];
-    [headerView addSubview:addNote];
-    return headerView;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 30;
@@ -267,51 +342,47 @@
     return 60.0f;
 }
 
-/*-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
- 
- return @"Notes";
- 
- }*/
 
 #pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*   [tableView deselectRowAtIndexPath:indexPath animated:YES];
-     NetworkingViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"NetworkingViewController"];
-     network.networkingDescription = [[UITextView alloc] init];
-     network.personPhoto = [[UIImageView alloc] init];
-     
-     Networking *networking = [_personNetworking objectAtIndex:indexPath.row];
-     network.numNetworking = indexPath.row;
-     
-     
-     network.netTitle = networking.title;
-     Person * person = [self getPerson:networking.personID];
-     
-     network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
-     network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
-     network.photoPath = person.photo;
-     network.networkingDescriptionContent = networking.text;
-     network.personId = networking.personID;
-     [self presentViewController:network animated:YES completion:nil];*/
+    [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
+
 }
-
-
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
-    NSLog(@"shoulpreformesegue");
-    if(self.event.localID)
-         return YES;
-    return NO;
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
-    map.localID = self.event.localID;
+    NSLog(@"segue");
+    if([[segue identifier] isEqualToString:@"segue12"]){
+        ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
+        map.localID = self.event.localID;
+    } else if([[segue identifier] isEqualToString:@"segue15"]){
+        NoteViewController *note = (NoteViewController*)segue.destinationViewController;
+        note.hidePersonButton = NO;
+        note.hideSessionButton = YES;
+        note.eventID = self.event.eventID;
+
+        Note *n = [sections objectAtIndex:[sender integerValue]];
+        note.noteID = n.noteID;
+        note.isLocal = n.isLocal;
+        note.content = n.content;
+    } else {
+        NoteViewController *note = (NoteViewController*)segue.destinationViewController;
+        note.hidePersonButton = NO;
+        note.hideSessionButton = YES;
+        note.eventID = self.event.eventID;
+    }
 }
 
+- (IBAction)addNote:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"segue14" sender:sender];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [self updateNotes];
+    [self.info reloadData];
+}
 
 
 
