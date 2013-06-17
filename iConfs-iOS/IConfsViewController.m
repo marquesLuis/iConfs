@@ -43,6 +43,7 @@
     [self initBDFile:@"areas_status.db" table:@"AREAS_STATUS"];
     [self initBDFile:@"location_status.db" table:@"LOCATION_STATUS"];
     [self initBDFile:@"notes_status.db" table:@"NOTES_STATUS"];
+    [self initBDFile:@"contact_status.db" table:@"CONTACT_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -182,6 +183,28 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"people_status.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS INFO( SERVER_ID INTEGER PRIMARY KEY, TYPE TEXT, VALUE TEXT, PERSON_ID INTEGER)" WithName:@"info.db"];
+    
+    //tabela q contem os ids de todos os contactos q vieram do servidor (server id
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT( PERSON_ID INTEGER PRIMARY KEY)" WithName:@"contact.db"];
+    
+    //tabela q contem os ids dos contactos aceites no ios desde a ultima actualizacao
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY, PENDING_SERVER_ID INTEGER, REJECTED_SERVER_ID INTEGER)" WithName:@"contact_local.db"];
+    
+    //tabela q contem os ids dos contactos pedidos a outros (servidor)
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact.db"];
+    
+    //tabela q contem os ids dos contactos pedidos a outros (ios)
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact_local.db"];
+    
+    //tabela q contem os pedidos pendentes que ainda n foram aceites/rejeitados
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PENDING_CONTACT( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"pending_contact.db"];
+    
+    //tabela q contem os pedidos rejeitados que ja foram ao servidor
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT( REJECTED_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact.db"];
+    
+    //tabela q contem os pedidos rejeitados no ios
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT_LOCAL( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact_local.db"];
+    
     
     //networkings
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NETWORKINGS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NETWORKING TEXT, DATE TEXT, PERSON_ID INTEGER, SERVER_ID INTEGER)" WithName:@"networkings.db"];

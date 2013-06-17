@@ -370,6 +370,111 @@
     return result;
 }
 
+- (NSMutableArray *)buildNewContacts{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"contact_local.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM CONTACT_LOCAL"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *person_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                NSString *pending_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *rejected_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSMutableDictionary *contact = [NSMutableDictionary dictionaryWithCapacity:3];
+                [contact setObject:person_id forKey:@"person_id"];
+                [contact setObject:pending_id forKey:@"pending_id"];
+                [contact setObject:rejected_id forKey:@"rejected_id"];
+                NSMutableDictionary *contacts = [NSMutableDictionary dictionaryWithCapacity:1];
+                [contacts setObject:contact forKey:@"contact"];
+                [result addObject:contacts];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(notificationDB);
+    }
+    return result;
+}
+
+- (NSMutableArray *)buildAskedContacts{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"asked_contact_local.db"];
+    
+    //ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM ASKED_CONTACT_LOCAL"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *person_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+               [result addObject:person_id];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(notificationDB);
+    }
+    return result;
+}
+
+- (NSMutableArray *)buildRejectedContacts{
+    sqlite3_stmt *statement;
+    sqlite3 *notificationDB;
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"rejected_contact_local.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM REJECTED_CONTACT_LOCAL"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *person_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *pending_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                NSMutableDictionary *contact = [NSMutableDictionary dictionaryWithCapacity:2];
+                [contact setObject:person_id forKey:@"person_id"];
+                [contact setObject:pending_id forKey:@"pending_id"];
+                NSMutableDictionary *contacts = [NSMutableDictionary dictionaryWithCapacity:1];
+                [contacts setObject:contact forKey:@"contact"];
+                [result addObject:contacts];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(notificationDB);
+    }
+    return result;
+}
+
+- (NSMutableDictionary *) buildContacts{
+    NSMutableDictionary * result = [NSMutableDictionary dictionaryWithCapacity:3];
+    NSMutableArray * news = [self buildNewContacts];
+    if (news && [news count])
+        [result setObject:news forKey:@"news"];
+    NSMutableArray * asked = [self buildAskedContacts];
+    if (asked && [asked count])
+        [result setObject:asked forKey:@"asked"];
+    NSMutableArray * rejected = [self buildRejectedContacts];
+    if (rejected && [rejected count])
+        [result setObject:rejected forKey:@"rejected"];
+    return result;
+}
+
 -(NSMutableDictionary *) buildRequest{
     NSMutableDictionary *request = [NSMutableDictionary dictionary];
     NSMutableArray *feedbacks = [self buildFeedback];
@@ -402,6 +507,9 @@
     NSMutableDictionary *notes = [self buildNotes];
     if (notes && [notes count])
         [request setObject:notes forKey:@"notes"];
+    NSMutableDictionary *contacts = [self buildContacts];
+    if (contacts && [contacts count])
+        [request setObject:contacts forKey:@"contacts"];
     return request;
 }
 
