@@ -10,12 +10,18 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import "sqlite3.h"
+#import "KNMultiItemSelector.h"
 
 
-@interface NoteViewController : UIViewController  <UITextViewDelegate>
+
+@interface NoteViewController : UIViewController  <UITextViewDelegate, KNMultiItemSelectorDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
-- (IBAction)addNote:(UIBarButtonItem *)sender;
+@property (strong, nonatomic) IBOutlet UIButton *aboutPersonButton;
+@property (strong, nonatomic) IBOutlet UIButton *aboutSessionButton;
 
+- (IBAction)addNote:(UIBarButtonItem *)sender;
+- (IBAction)addPerson:(UIButton *)sender;
+- (IBAction)addSession:(UIButton *)sender;
 
 @end

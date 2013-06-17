@@ -11,8 +11,11 @@
 #import "Author.h"
 #import "sqlite3.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ImageViewController.h"
+
 @interface EventUIViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) Event * event;
 - (IBAction)addNote:(UIButton *)sender;
+@property (strong, nonatomic) IBOutlet UIButton *roomButton;
 
 @end
