@@ -63,8 +63,7 @@ return self;
     if(self.content){
         noteTextView.textColor = [UIColor blackColor];
         self.noteTextView.text = self.content;
-        
-        
+        isPlaceholder = NO;
     }
 }
 

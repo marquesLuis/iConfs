@@ -151,7 +151,6 @@
                         e.description = description;
                         e.kind = kind;
                         e.eventID = eventID;
-                        NSLog(@"--------------------------event ID ----------------------- %@", eventID);
                         e.begin = [date stringByAppendingString:dateBegin];
                         e.date = date;
                         e.end = [date stringByAppendingString:dateEnd];

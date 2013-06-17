@@ -31,7 +31,6 @@
 {
     [super viewDidLoad];
     
-    NSLog(@"viewDidLoad with eventID: %@", self.event.eventID);
     
     
     //title ; date; authors ; description; notes
@@ -43,7 +42,8 @@
     
     // [self displayAuthors];
     
-    
+    [self.info setEditing:YES animated:YES];
+    self.info.allowsSelectionDuringEditing = YES;
     [self updateNotes];
     /*   self.sessionTitle.font = [UIFont fontWithName:@"Helvetica" size:14.0];    // For setting font style with size
      labelName.textColor = [UIColor whiteColor];        //For setting text color
@@ -73,19 +73,14 @@
     [self createToolbar];
 }
 
+
+
+
+
 -(void)updateNotes{
     NSMutableArray * server = [self getNotes:@"notes.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES WHERE ABOUT_SESSION = %@", self.event.eventID]];
     
     NSMutableArray * local = [self getNotes:@"notes_local.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES_LOCAL WHERE ABOUT_SESSION = %@", self.event.eventID]];
-    NSLog(@"updateNotes");
-    NSLog(@"local");
-    for (Note *n in local ) {
-        NSLog(@"%@", n.content);
-    }
-    NSLog(@"sections");
-    for (Note *n in sections ) {
-        NSLog(@"%@", n.content);
-    }
     
     sections = [NSMutableArray arrayWithArray:server];
     [sections addObjectsFromArray: local];
@@ -157,7 +152,6 @@
 
 
 -(NSMutableArray *)getNotes:(NSString*)table withClause:(NSString*)clause{
-    NSLog(@"getNotes");
     sqlite3_stmt *statement;
     sqlite3 *peopleDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -178,7 +172,6 @@
                 if([table isEqualToString:@"notes.db"]){
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-                    NSLog(@"note content: %@", content);
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
@@ -225,7 +218,6 @@
 #pragma mark - UITableViewDataSource Methods
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"note");
     static NSString *ProductCellIdentifier = @"ProductCellIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
@@ -233,19 +225,7 @@
     
    
     Note * note = [sections objectAtIndex:indexPath.row];
-    
-    
     cell.textLabel.text =  note.content;
-    
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    
-
-    btn.frame = CGRectMake(cell.frame.size.width + cell.frame.origin.x - 60, 2, 30, 24);
-    [btn setTitle:@"Hi" forState:UIControlStateNormal];
-    [cell.contentView addSubview:btn];
-    
-    //cell.frame.size.width + cell.frame.origin.x - 30
     return cell;
     
 }
@@ -281,15 +261,13 @@
     roomButton.frame = LabelFrameRoom;
     [roomButton setTitle: @"Local" forState:UIControlStateNormal];
     
-    NSLog(@"the room has id: %@", self.event.localID);
-    
     [roomButton addTarget:self
                      action:@selector(goToRoom:)
            forControlEvents:UIControlEventTouchDown];
-    if(self.event.localID)
+    
+    if(![self.event.localID  isEqualToString:@"0"])
         [headerView addSubview:roomButton];
-    else
-        roomButton.hidden = YES;
+    
     
     //author label
     UILabel * author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
@@ -325,7 +303,6 @@
    // [descriptionText setBackgroundColor:[UIColor clearColor]];
     [descriptionText setText:self.event.description];
     [headerView addSubview:descriptionText];
-    NSLog(@"%f",self.view.frame.size.height);
 
     return headerView;
 }
@@ -348,12 +325,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
-
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"segue");
     if([[segue identifier] isEqualToString:@"segue12"]){
         ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
         map.localID = self.event.localID;
@@ -384,6 +359,47 @@
     [self.info reloadData];
 }
 
+-(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"removing the note...");
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete){
+        Note * note = [sections objectAtIndex:indexPath.row];
+        if(note.isLocal){
+            [self removeFrom:@"notes_local.db" table:@"NOTES_LOCAL" attribute:@"ID" withID:[note.noteID intValue]];
+        } else {
+            [self removeFrom:@"notes.db" table:@"NOTES" attribute:@"SERVER_ID" withID:[note.noteID intValue]];
+        }
+        [sections removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject: indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [self.info reloadData];
+    }
+    else {
+        [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
 
+    }
+}
+
+-(void) removeFrom: (NSString *) db_file table: (NSString *) table_name attribute: (NSString *) attribute withID: (int) server_id{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
+        const char* query_sql = [querySql UTF8String];
+        
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
+    }
+}
 
 @end

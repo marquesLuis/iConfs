@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AllNotesViewController : UIViewController
+#import "sqlite3.h"
+#import "Note.h"
+#import "NoteViewController.h"
+@interface AllNotesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UITableView *notesTableView;
 
 @end
