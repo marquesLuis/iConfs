@@ -43,7 +43,6 @@
     [self initBDFile:@"areas_status.db" table:@"AREAS_STATUS"];
     [self initBDFile:@"location_status.db" table:@"LOCATION_STATUS"];
     [self initBDFile:@"notes_status.db" table:@"NOTES_STATUS"];
-    [self initBDFile:@"contact_status.db" table:@"CONTACT_STATUS"];
 }
 
 - (void)didReceiveMemoryWarning
