@@ -966,7 +966,7 @@
     return [@"" stringByAppendingFormat:@"'%d','%d','%@','%d','%d', '%@'", server_id, owner_id, content, about_person, about_event, updated_at];
 }
 
--(void) handleNotes: (NSMutableDictionary *)notes{
+- (void) handleNotes: (NSMutableDictionary *)notes{
     NSLog(@"Handling Notes");
     NSString * db_file = @"notes.db";
     NSString * table_name = @"NOTES";
@@ -1010,6 +1010,49 @@
         [self deleteAllFrom:@"deleted_local.db" table:@"DELETED_LOCAL" where:@"ID" equalsIntegerArray:deleted_local];
     
     
+}
+
+- (void) handleContacts: (NSMutableDictionary *) contacts{
+    NSLog(@"Handling Contacts");
+    NSMutableArray *news = [contacts objectForKey:@"contacts"];
+    if (news){
+        [self deleteAllFrom:@"contact_local.db" table:@"CONTACT_LOCAL"];
+        for (NSNumber *n in news) {
+            NSString * values = [@"" stringByAppendingFormat:@"%d",[n integerValue]];
+            [self insertTo:@"contact.db" table:@"CONTACT" definition:@"PERSON_ID" values:values];
+            [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:values];
+        }
+    }
+    NSMutableArray *pending = [contacts objectForKey:@"pending"];
+    if (pending){
+        [self deleteAllFrom:@"pending_contact.db" table:@"PENDING_CONTACT"];
+        for (NSString *val in pending){
+            NSArray* foo = [val componentsSeparatedByString: @"_"];
+            NSString* server_id = [foo objectAtIndex: 0];
+            NSString* person_id = [foo objectAtIndex: 1];
+            NSString* values = [NSString stringWithFormat:@"'%@', '%@'",server_id, person_id];
+            [self insertTo:@"pending_contact.db" table:@"PENDING_CONTACT" definition:@"PENDING_SERVER_ID, PERSON_ID" values:values];
+        }
+    }
+    NSMutableArray * asked = [contacts objectForKey:@"asked"];
+    if (asked){
+        [self deleteAllFrom:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL"];
+        for (NSNumber *n in asked) {
+            NSString * values = [@"" stringByAppendingFormat:@"%d",[n integerValue]];
+            [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:values];
+        }
+    }
+    NSMutableArray * rejected = [contacts objectForKey:@"rejected"];
+    if(rejected){
+        [self deleteAllFrom:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL"];
+        for (NSString *val in rejected){
+            NSArray* foo = [val componentsSeparatedByString: @"_"];
+            NSString* server_id = [foo objectAtIndex: 0];
+            NSString* person_id = [foo objectAtIndex: 1];
+            NSString* values = [NSString stringWithFormat:@"'%@', '%@'",server_id, person_id];
+            [self insertTo:@"rejected_contact.db" table:@"REJECTED_CONTACT" definition:@"REJECTED_SERVER_ID, PERSON_ID" values:values];
+        }
+    }
 }
 
 - (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
@@ -1063,6 +1106,10 @@
     NSMutableDictionary *notes = [request objectForKey:@"notes"];
     if (notes)
         [self handleNotes:notes];
+    
+    NSMutableDictionary *contacts = [request objectForKey:@"contacts"];
+    if (contacts)
+        [self handleContacts:contacts];
     
     return nil;
 }
@@ -1205,6 +1252,28 @@
 -(void) insertStatus:(NSString *) db_file table: (NSString *) table_name lastID: (NSUInteger) last_id onDate:(NSString *) last_update removed:(NSUInteger) last_removed_id{
     NSString * values = [@"" stringByAppendingFormat:@"'%@', '%d', '%d'",last_update,last_id,last_removed_id];
     [self insertTo:db_file table:table_name definition:@"LAST_DATE , LAST_ID , LAST_REMOVED" values:values];
+}
+
+-(void) deleteAllFrom: (NSString *) db_file table: (NSString *) table_name{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ ",[table_name uppercaseString]];
+        const char* query_sql = [querySql UTF8String];
+        
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
+    }
 }
 
 -(void) deleteAllFrom:(NSString *) db_file table: (NSString *) table_name where: (NSString *) attribute equalsIntegerArray: (NSMutableArray *) array{
