@@ -445,14 +445,8 @@
         
         if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *person_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 NSString *pending_id = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-                NSMutableDictionary *contact = [NSMutableDictionary dictionaryWithCapacity:2];
-                [contact setObject:person_id forKey:@"person_id"];
-                [contact setObject:pending_id forKey:@"pending_id"];
-                NSMutableDictionary *contacts = [NSMutableDictionary dictionaryWithCapacity:1];
-                [contacts setObject:contact forKey:@"contact"];
-                [result addObject:contacts];
+                [result addObject:pending_id];
             }
             sqlite3_finalize(statement);
         }
