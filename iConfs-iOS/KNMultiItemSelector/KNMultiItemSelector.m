@@ -95,6 +95,9 @@
 }
 
 -(void)loadView {
+    
+    NSLog(@"viewDidLoad111111");
+
     rowselected = nil;
 
   self.view = [[UIView alloc] initWithFrame:CGRectZero];  
@@ -160,6 +163,13 @@
   // Nav bar button
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
+
+      /*  [self.tabBarController.tabBar setHidden:NO];
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    // toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width,40);
+    [self.view addSubview:toolbar];
+    [toolbar setHidden:NO];*/
+//self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -254,10 +264,13 @@
   // Change the cell appearance
   cell.textLabel.text = item.displayValue;
   if (item.imageUrl) {
-    //[cell.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[UIImage imageNamed:@"KNDefaultImage"]];
-#warning photo...
-      UIImage * imageFromURL = [UIImage imageWithContentsOfFile:item.imageUrl];
+      UIImage * imageFromURL;
+      if([item.imageUrl isEqualToString:@""])
+          imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+      else
+          imageFromURL = [UIImage imageWithContentsOfFile:item.imageUrl];
       
+      cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
       [cell.imageView setImage:imageFromURL];
   }
   if (item.image) {
@@ -274,7 +287,6 @@
 }
 
 #pragma mark - UITableView Delegate
-#warning modify...
 -(void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -535,6 +547,21 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+/*-(void)viewDidLoad{
+    NSLog(@"viewDidLoad");
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40);
+    
+    [self.view addSubview:toolbar];
+    
+    
+    //[self.tabBarController.tabBar setHidden:NO];
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width,40);
+    [self.view addSubview:toolbar];
+    [toolbar setHidden:NO];
+}*/
 
 - (void)viewDidUnload {
   self.tableView = nil;
