@@ -21,6 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
     }
     return self;
 }
@@ -29,6 +30,9 @@
 {
     [super viewDidLoad];
     
+    UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:image]];
+
     self.title = netTitle;
     networkingTitle.text = netTitle;
     self.navigationItem.backBarButtonItem.title = @"Back";
@@ -36,8 +40,14 @@
     [personName setTitle: namePerson forState: UIControlStateNormal];
     [self.networkingDescription setEditable:NO];
     self.networkingDescription.text = networkingDescriptionContent;
-   // self.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
-    UIImage * imageFromURL = [UIImage imageWithContentsOfFile:photoPath];
+    
+    UIImage * imageFromURL;
+    if([photoPath isEqualToString:@""])
+        imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+    else
+        imageFromURL = [UIImage imageWithContentsOfFile:photoPath];
+    self.personPhoto.contentMode = UIViewContentModeScaleAspectFit;
+    
     [self.personPhoto setImage:imageFromURL];
 
     [self navigationButtons];

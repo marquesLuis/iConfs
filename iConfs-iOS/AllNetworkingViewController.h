@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableNetworking;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
 
 @end

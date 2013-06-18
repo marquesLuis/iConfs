@@ -115,7 +115,6 @@
 {
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
-    NSLog(@"aa");
     
     if([self.localID isEqualToString:l.localID] && !loaded){
         loaded = YES;

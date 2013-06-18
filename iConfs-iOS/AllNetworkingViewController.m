@@ -37,22 +37,49 @@
    
     NSArray *itemArray = [NSArray arrayWithObjects: @"My interests", @"All", nil];
     _typeNet  = [[UISegmentedControl alloc] initWithItems:itemArray];
-    _typeNet.frame = CGRectMake(10, 5, 200, 40);
+    NSLog(@"%f",self.navigationBar.frame.size.width );
+    NSLog(@"%f",self.navigationBar.frame.size.height );
+
+    _typeNet.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
     _typeNet.segmentedControlStyle = UISegmentedControlStyleBar;
     _typeNet.selectedSegmentIndex = 1;
     [_typeNet addTarget:self action:@selector(valueChanged:) forControlEvents: UIControlEventValueChanged];
+    
+    
+	_typeNet.segmentedControlStyle = UISegmentedControlStyleBar;
+	_typeNet.momentary = NO;
+	
+    
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:_typeNet];
+    buttonItem.style = UIBarButtonItemStyleBordered;
+    
+    [self.toolbar setItems: [NSArray arrayWithObjects:buttonItem,  nil]];
+
 
 
     [self displayNetworking];
     
-    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
+    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
     [self.view addSubview:self.tableNetworking ];
 
     [self navigationButtons];
 }
-
+/*- (void)viewWillAppear:(BOOL)animated
+{
+    NSArray * toolbarButtons = self.toolbarItems;
+    
+    for(UI)
+	UISegmentedControl *segmentedControl = (UISegmentedControl *).//navigationItem.rightBarButtonItem.customView;
+	
+	// Before we show this view make sure the segmentedControl matches the nav bar style
+	if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent ||
+		self.navigationController.navigationBar.barStyle == UIBarStyleBlackOpaque)
+		segmentedControl.tintColor = [UIColor darkGrayColor];
+	else
+		segmentedControl.tintColor = [UIColor blueColor];
+}*/
 
 -(void)navigationButtons{
     
@@ -62,7 +89,7 @@
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,25 +149,42 @@
     CGRect Label2Frame = CGRectMake(10, 30, 175, 25);
     CGRect Label3Frame = CGRectMake(10, 50, 175, 25);
     
+    // networking title
     UILabel * netTitle = [[UILabel alloc] initWithFrame:Label1Frame];
     netTitle.text = networking.title;
+    netTitle.font = [UIFont systemFontOfSize:16.0];
+    netTitle.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:netTitle];
-    UILabel * netText = [[UILabel alloc] initWithFrame:Label2Frame];
-    netText.text = networking.text;
-    [cell.contentView addSubview:netText];
     
-    //change colors
-    // cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+    // networking description
+    UILabel * netText = [[UILabel alloc] initWithFrame:Label2Frame];
+    netText.backgroundColor = [UIColor clearColor];
+    netText.text = networking.text;
+    netText.font = [UIFont systemFontOfSize:14.0];
+    [cell.contentView addSubview:netText];
     
     Person *person = [self getPerson:networking.personID];
     UILabel * personName = [[UILabel alloc] initWithFrame:Label3Frame];
+    personName.backgroundColor = [UIColor clearColor];
+
     NSString * letter = [person.firstName substringToIndex:1];
     personName.text = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
-    
+    personName.font = [UIFont systemFontOfSize:12.0];
+
     [cell.contentView addSubview:personName];
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
-    UIImage * imageFromURL = [UIImage imageWithContentsOfFile:person.photo];//@"/Users/martalidon/Pictures/apple.jpg"];//person.photo];
+    imageView.contentMode  = UIViewContentModeScaleAspectFit;
+    
+    UIImage * imageFromURL;
+    if([person.photo isEqualToString:@""])
+        imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+    else
+        imageFromURL = [UIImage imageWithContentsOfFile:person.photo];
+    
+    
     [imageView setImage:imageFromURL];
+    
     [cell addSubview:imageView];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -153,14 +197,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 60.0f;
 }
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
-    [headerView addSubview:_typeNet];
-    return headerView;
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

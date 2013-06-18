@@ -35,6 +35,9 @@
     self.notificationText.text = notificationContent;
     self.notificationDate.text = notificationDateContent;
     [self navigationButtons];
+    
+    UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:image]];
 }
 
 
