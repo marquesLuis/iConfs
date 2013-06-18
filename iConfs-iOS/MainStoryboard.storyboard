@@ -878,9 +878,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="8PX-xz-DNH">
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="504" id="Mhq-v8-q3o"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="4Ks-YZ-57I">
                                         <rect key="frame" x="0.0" y="46" width="320" height="46"/>
@@ -899,8 +896,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8PX-xz-DNH" firstAttribute="top" secondItem="WfL-Pm-VTy" secondAttribute="top" type="default" id="0f5-Um-T34"/>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="top" secondItem="WfL-Pm-VTy" secondAttribute="top" type="default" id="3EL-Ei-DXo"/>
                             <constraint firstItem="8PX-xz-DNH" firstAttribute="trailing" secondItem="WfL-Pm-VTy" secondAttribute="trailing" type="default" id="CQo-aP-jKI"/>
+                            <constraint firstItem="8PX-xz-DNH" firstAttribute="bottom" secondItem="WfL-Pm-VTy" secondAttribute="bottom" type="default" id="JzF-Wp-Jlq"/>
                             <constraint firstItem="8PX-xz-DNH" firstAttribute="leading" secondItem="WfL-Pm-VTy" secondAttribute="leading" type="default" id="qqv-3U-vCK"/>
                         </constraints>
                     </view>
@@ -927,7 +925,7 @@
             <objects>
                 <viewController id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -1149,7 +1147,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="H5z-u7-vJR"/>
-        <segue reference="eJJ-Tb-A8d"/>
         <segue reference="ukM-KT-DGy"/>
+        <segue reference="hSP-JN-arM"/>
     </inferredMetricsTieBreakers>
 </document>

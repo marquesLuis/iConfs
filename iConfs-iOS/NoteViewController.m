@@ -85,7 +85,7 @@ return self;
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 

@@ -23,7 +23,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -32,14 +32,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self navigationButtons];
+
     _arrayOfNotifications = [[NSMutableArray alloc]init];
     [self displayNotifications];
-    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-40) style:UITableViewStyleGrouped];
+    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.tableNotifications.dataSource = self;
     self.tableNotifications.delegate = self;
     [self.view addSubview:self.tableNotifications ];
     self.title = @"Notifications";
-    [self navigationButtons];
+    
+    
 }
 
 
@@ -51,7 +54,7 @@
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
