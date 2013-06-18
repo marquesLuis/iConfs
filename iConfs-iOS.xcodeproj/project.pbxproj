@@ -28,6 +28,7 @@
 		621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */; };
 		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
 		62C37301176F5B2800557724 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C37300176F5B2800557724 /* Note.m */; };
+		62C3730F1770A24300557724 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C3730E1770A24300557724 /* Home.png */; };
 		62F3AF6F1760CE3E00E4BA8F /* EventUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */; };
 		62F3AF751760E68F00E4BA8F /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AF741760E68F00E4BA8F /* Author.m */; };
 		62F3AFD01764DF2A00E4BA8F /* Local.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFCF1764DF2A00E4BA8F /* Local.m */; };
@@ -145,6 +146,7 @@
 		621A5A54175E98CB00B02EEC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		62C372FF176F5B2800557724 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		62C37300176F5B2800557724 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		62C3730E1770A24300557724 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
 		62F3AF6D1760CE3E00E4BA8F /* EventUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventUIViewController.h; sourceTree = "<group>"; };
 		62F3AF6E1760CE3E00E4BA8F /* EventUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventUIViewController.m; sourceTree = "<group>"; };
 		62F3AF731760E68F00E4BA8F /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 		9DBF86631755FD6E00845BD7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				62C3730E1770A24300557724 /* Home.png */,
 				9D877CB6176FCF6600894D5C /* defaultPerson.jpg */,
 				621A59FF175E18B100B02EEC /* Contacts.jpg */,
 				621A5A00175E18B100B02EEC /* maps.jpg */,
@@ -576,6 +579,7 @@
 				62F3B05F176CEFF800E4BA8F /* KNZoomIcon@2x.png in Resources */,
 				62F3B062176CEFF800E4BA8F /* LICENSE in Resources */,
 				9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */,
+				62C3730F1770A24300557724 /* Home.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

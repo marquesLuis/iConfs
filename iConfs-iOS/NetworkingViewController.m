@@ -48,6 +48,8 @@
     
     UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     [self.navigationItem setRightBarButtonItem:homeButton];
+    [self.navigationItem setLeftItemsSupplementBackButton:YES];
+
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];

@@ -12,6 +12,7 @@
 #import "sqlite3.h"
 #import "KNMultiItemSelector.h"
 #import "Note.h"
+#import "Event.h"
 
 
 
@@ -25,7 +26,6 @@
 @property (strong, nonatomic) NSString * eventID;
 @property (strong, nonatomic) NSString * personID;
 @property (strong, nonatomic) NSString * content;
-
 @property (strong, nonatomic) NSString * noteID;
 
 @property BOOL isLocal;

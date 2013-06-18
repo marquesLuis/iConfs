@@ -64,6 +64,14 @@ return self;
         noteTextView.textColor = [UIColor blackColor];
         self.noteTextView.text = self.content;
         isPlaceholder = NO;
+        self.title = @"Edit note";
+
+        if(self.eventID){
+            [self.aboutSessionButton setTitle:[self getEventTitle] forState:UIControlStateNormal];
+        }
+        if(self.personID){
+            [self.aboutPersonButton setTitle:[self getPersonName] forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -194,6 +202,59 @@ return self;
         sqlite3_close(db);
     }
     return items;
+}
+
+-(NSString*)getPersonName{
+    NSString * name = @"About Person";
+        sqlite3_stmt *statement;
+        sqlite3 *peopleDB;
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docPath = [path objectAtIndex:0];
+        NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
+        
+        if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
+            
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE SERVER_ID = %@", self.personID];
+            const char* query_sql = [querySql UTF8String];
+            
+            if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+
+                    NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                    NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                    NSString *prefix = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                    NSString * letter = [firstName substringToIndex:1];
+
+                    name = [[[[[prefix stringByAppendingString:@" " ]stringByAppendingString:lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
+                }
+                sqlite3_close(peopleDB);
+            }
+            
+        }
+        return name;
+    
+}
+
+-(NSString*)getEventTitle{
+    sqlite3 *db;
+    NSString *title = @"About Person";
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
+    if (sqlite3_open([dbPathEvents UTF8String], &db)==SQLITE_OK) {
+        sqlite3_stmt *myStatment;
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM EVENTS WHERE SERVER_ID = %@", self.eventID];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &myStatment, NULL)==SQLITE_OK) {
+            while (sqlite3_step(myStatment)==SQLITE_ROW) {
+                title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
+            }
+            sqlite3_finalize(myStatment);
+        }
+        sqlite3_close(db);
+    }
+    return title;
 }
 
 -(NSMutableArray*)getAllSessions{
