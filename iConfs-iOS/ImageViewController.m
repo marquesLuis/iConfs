@@ -11,6 +11,7 @@
 @interface ImageViewController () <UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate>{
     NSMutableArray * locals;
     UIPickerView * picker;
+    BOOL loaded;
 }
 
 @end
@@ -23,6 +24,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        loaded = NO;
 
     }
     return self;
@@ -40,6 +42,20 @@
     picker.dataSource = self;
 	[self.view addSubview:picker];
     self.scrollView.delegate = self;
+    
+    [self navigationButtons];
+}
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    [self.navigationItem setLeftBarButtonItem:homeButton];
+    
+    [self.navigationItem setLeftItemsSupplementBackButton:YES];
+}
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,9 +115,10 @@
 {
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
+    NSLog(@"aa");
     
-    
-    if([self.localID isEqualToString:l.localID]){
+    if([self.localID isEqualToString:l.localID] && !loaded){
+        loaded = YES;
         NSString * path = l.path;
         UIImage * image = [UIImage imageWithContentsOfFile:path];
         //[self.map setImage:imageFromURL];
@@ -118,8 +135,8 @@
 
     }
     
-    else if(row == 0 && !self.localID){
-        
+    else if(row == 0 && !self.localID && !loaded){
+        loaded = YES;
         NSString * path = l.path;
         UIImage * image = [UIImage imageWithContentsOfFile:path];
         imageView = [[UIImageView alloc] initWithImage:image];

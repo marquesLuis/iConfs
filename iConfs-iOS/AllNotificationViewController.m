@@ -39,6 +39,19 @@
     self.tableNotifications.delegate = self;
     [self.view addSubview:self.tableNotifications ];
     self.title = @"Notifications";
+    [self navigationButtons];
+}
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    [self.navigationItem setLeftBarButtonItem:homeButton animated:YES];
+    
+    [self.navigationItem setLeftItemsSupplementBackButton:YES];
+}
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
 }
 
 - (void)didReceiveMemoryWarning

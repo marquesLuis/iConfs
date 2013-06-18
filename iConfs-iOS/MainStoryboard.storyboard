@@ -56,7 +56,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q86-Wv-zlY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1085" y="-221"/>
+            <point key="canvasLocation" x="1084" y="-242"/>
         </scene>
         <!--Personal ProgramTK Calendar Day View Controller-->
         <scene sceneID="pVE-Ny-Uf6">
@@ -321,7 +321,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdX-JP-ijD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1491" y="-221"/>
+            <point key="canvasLocation" x="1494" y="-242"/>
         </scene>
         <!--Networking View Controller-->
         <scene sceneID="Nyx-sv-VA1">
@@ -629,7 +629,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ef7-H5-a5B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2004" y="-221"/>
+            <point key="canvasLocation" x="2004" y="-242"/>
         </scene>
         <!--Communication View Controller - CommunicationViewController-->
         <scene sceneID="AI0-tf-MlB">
@@ -745,7 +745,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Vd-fR-HUc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1739" y="-1581"/>
+            <point key="canvasLocation" x="1769" y="-1655"/>
         </scene>
         <!--EventUI View Controller-->
         <scene sceneID="dBg-eA-mFn">
@@ -877,7 +877,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hkr-Je-f6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2004" y="-924"/>
+            <point key="canvasLocation" x="2004" y="-938"/>
         </scene>
         <!--Note View Controller - New note-->
         <scene sceneID="EMU-aK-NoZ">
@@ -955,7 +955,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TI6-Ei-FWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3339" y="-376"/>
+            <point key="canvasLocation" x="3337" y="-242"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DqG-af-atm">
@@ -985,14 +985,121 @@
         <image name="Schedule.jpg" width="50" height="50"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
+    <classes>
+        <class className="AllNetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="AllNotesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="notesTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="AllNotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CommunicationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="sendButton:"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="EventUIViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="info" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="roomButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="IConfsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NoteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="PersonProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
+        </class>
+        <class className="TKCalendarDayViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="H5z-u7-vJR"/>
         <segue reference="ukM-KT-DGy"/>
         <segue reference="hSP-JN-arM"/>
-        <segue reference="XYc-KS-Og4"/>
     </inferredMetricsTieBreakers>
 </document>

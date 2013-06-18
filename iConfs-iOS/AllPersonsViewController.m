@@ -30,9 +30,21 @@
     //NSMutableArray * friends;
     //[friends addObject:@"Marta"];
     
-    NSLog(@"All persons view controller");
     
     
+    [self navigationButtons];
+}
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    [self.navigationItem setLeftBarButtonItem:homeButton];
+    
+    [self.navigationItem setLeftItemsSupplementBackButton:YES];
+}
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 
