@@ -50,6 +50,17 @@
     self.tableNetworking.delegate = self;
     [self.view addSubview:self.tableNetworking ];
 
+    [self navigationButtons];
+}
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    [self.navigationItem setRightBarButtonItem:homeButton];
+}
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
 }
 
 - (void)didReceiveMemoryWarning

@@ -39,6 +39,18 @@
    // self.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
     UIImage * imageFromURL = [UIImage imageWithContentsOfFile:photoPath];
     [self.personPhoto setImage:imageFromURL];
+
+    [self navigationButtons];
+}
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    [self.navigationItem setRightBarButtonItem:homeButton];
+}
+- (IBAction)goBack:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,13 +58,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*- (IBAction)goToPersonProfile:(UIButton *)sender {
-    
-    PersonProfileViewController * network = [self.storyboard instantiateViewControllerWithIdentifier:@"PersonProfileViewController"];
-    network.personID = personId;
-    [self presentViewController:network animated:YES completion:nil];
-}*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

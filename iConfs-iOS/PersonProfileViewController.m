@@ -51,7 +51,12 @@
     [self createToolbar];
 }
 
-
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+        return UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleDelete;
+}
 
 
 
@@ -187,7 +192,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -206,7 +211,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     
     cell  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ProductCellIdentifier];
-#warning _title????
+
     switch (indexPath.section) {
         case 0:
             [self configureNetworkingCell:cell atIndexPath:indexPath];
@@ -243,11 +248,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // networking section
     if(indexPath.section == 0){
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self performSegueWithIdentifier:@"segue4" sender:nil];
-    } else {
-        [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]]; 
+        [self performSegueWithIdentifier:@"segue19" sender:nil];
+    }
+    // note section
+    else {
+        [self performSegueWithIdentifier:@"segue18" sender: [NSNumber numberWithInteger:indexPath.row]];
     }
 }
 
@@ -255,7 +263,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    if([[segue identifier] isEqualToString:@"segue4"]){
+    if([[segue identifier] isEqualToString:@"segue19"]){
     
         NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
         
@@ -279,7 +287,7 @@
     
     } else {
         
-        if([[segue identifier] isEqualToString:@"segue15"]){
+        if([[segue identifier] isEqualToString:@"segue18"]){
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
@@ -290,6 +298,7 @@
             note.isLocal = n.isLocal;
             note.content = n.content;
         } else {
+            NSLog(@"new note...");
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
@@ -297,10 +306,6 @@
         }
     }
 }
-
-
-
-
 
 -(void)updateNotes{
     NSMutableArray * server = [self getNotes:@"notes.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES WHERE ABOUT_PERSON = %@", self.personID]];
@@ -377,122 +382,125 @@
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
     
-   /* CGRect LabelFrameTitle = CGRectMake(10, 10, self.view.frame.size.width, 25);
-    CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
-    CGRect LabelFrameRoom = CGRectMake(200, 45, 80, 30);
-    CGRect LabelFrameAuthor = CGRectMake(10, 80, self.view.frame.size.width-150, 30);
-    CGRect LabelFrameAuthors = CGRectMake(10, 110, self.view.frame.size.width-20, 40);
-    CGRect LabelFrameDescription = CGRectMake(10, 160, 149, 25);
-    CGRect LabelFrameDescriptionTable = CGRectMake(10, 185, self.view.frame.size.width-20, 175);
-    */
-    // person label name
-    UILabel *labelName = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 295, 25)];
-    labelName.text = @"Name:";
-    labelName.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-    [headerView addSubview:labelName];
+   if(section == 0){
+        // person label name
+        UILabel *labelName = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 160, 25)];
+        labelName.text = @"Name:";
+        labelName.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:labelName];
+        
+        // person name
+        UITextView *name = [[UITextView alloc] initWithFrame:CGRectMake(150, 45, 160, 25)];
+        [name setEditable:NO];
+        NSString * n = [[[[personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:personProfile.lastName];
+        [name setText:n];
+        name.scrollEnabled = YES;
+        [headerView addSubview:name];
+        
+        // person label email
+        UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 120, 295, 25)];
+        labelEmail.text = @"Email:";
+        labelEmail.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:labelEmail];
+        
+        // person email
+        UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 145, 295, 25)];
+        [email setEditable:NO];
+        [email setText:personProfile.email];
+        email.scrollEnabled = YES;
+        [headerView addSubview:email];
+        
+        // person label institution
+        UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 160, 25)];
+        labelIns.text = @"Institution:";
+        labelIns.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:labelIns];
+        
+        // person institution
+        UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 95, 160, 25)];
+        [institution setEditable:NO];
+        [institution setText:personProfile.affiliation];
+        institution.scrollEnabled = YES;
+        [headerView addSubview:institution];
+        
+        /* UILabel *interest = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
+         interest.text = @"Interests:";
+         interest.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
+         [scroll addSubview:interest];
+         
+         UITextView *interests =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 100)];
+         [interests setEditable:NO];
+         [interests setText:areas];
+         interests.scrollEnabled = YES;
+         [interests setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
+         [scroll addSubview:interests];
+         */
+        
+        UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
+        personalDescription.text = @"Personal description:";
+        personalDescription.backgroundColor = [UIColor clearColor];
+        
+        [headerView addSubview:personalDescription];
+        
+        UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 200)];
+        [biography setEditable:NO];
+        biography.scrollEnabled = YES;
+        
+        [biography setText:personProfile.biography];
+        [headerView addSubview:biography];
+        
+        personNetworking = [[NSMutableArray alloc] init];
+        [self displayNetworking:personID];
+        
+        UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, 395, 295, 25)];
+        networking.text = @"Networking:";
+        networking.backgroundColor = [UIColor clearColor];        
+        [headerView addSubview:networking];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,30,100,90)];
+       imageView.contentMode  = UIViewContentModeScaleAspectFit;
+
+       UIImage * imageFromURL;
+       NSLog(@"foto da pessoa");
+       if([personProfile.photo isEqualToString:@""])
+           imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+       else
+           imageFromURL = [UIImage imageWithContentsOfFile:personProfile.photo];
+       
+        
+        [imageView setImage:imageFromURL];
+        [headerView addSubview:imageView];
+    }
     
-    // person name
-    UITextView *name = [[UITextView alloc] initWithFrame:CGRectMake(150, 45, 200, 25)];
-    [name setEditable:NO];
-    NSString * n = [[[[personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:personProfile.lastName];
-    [name setText:n];
-    name.scrollEnabled = YES;
-    [headerView addSubview:name];
-    
-    // person label email
-    UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 120, 295, 25)];
-    labelEmail.text = @"Email:";
-    labelEmail.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-    [headerView addSubview:labelEmail];
-    
-    // person email
-    UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 145, 295, 25)];
-    [email setEditable:NO];
-    [email setText:personProfile.email];
-    email.scrollEnabled = YES;
-    [headerView addSubview:email];
-    
-    // person label institution
-    UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 295, 25)];
-    labelIns.text = @"Institution:";
-    labelIns.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-    [headerView addSubview:labelIns];
-    
-    // person institution
-    UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 95, 295, 25)];
-    [institution setEditable:NO];
-    [institution setText:personProfile.affiliation];
-    institution.scrollEnabled = YES;
-    [headerView addSubview:institution];
-    
-    /* UILabel *interest = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
-     interest.text = @"Interests:";
-     interest.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-     [scroll addSubview:interest];
-     
-     UITextView *interests =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 100)];
-     [interests setEditable:NO];
-     [interests setText:areas];
-     interests.scrollEnabled = YES;
-     [interests setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
-     [scroll addSubview:interests];
-     */
-    
-    UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
-    personalDescription.text = @"Personal description:";
-    personalDescription.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-    
-    [headerView addSubview:personalDescription];
-    
-    UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 200)];
-    [biography setEditable:NO];
-    biography.scrollEnabled = YES;
-    
-    [biography setText:personProfile.biography];
-    [headerView addSubview:biography];
-    
-    personNetworking = [[NSMutableArray alloc] init];
-    [self displayNetworking:personID];
-    
-    UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, 395, 295, 25)];
-    networking.text = @"Networking:";
-    networking.textColor=[UIColor colorWithRed:(0/255.f) green:(191/255.f) blue:(255/255.f) alpha:1.0f];
-    
-    [headerView addSubview:networking];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,20,100,70)];
-    UIImage * imageFromURL = [UIImage imageWithContentsOfFile:personProfile.photo];
-    
-    [imageView setImage:imageFromURL];
-    [headerView addSubview:imageView];
+    else if(section == 1){
+        UILabel *notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 25)];
+        notesLabel.text = @"My notes:";
+        notesLabel.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:notesLabel];
+    }
 
     return headerView;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(indexPath.section == 0)
-        return 80.0;
-
-    return 30;
+   return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 400.0f;
+    if(section == 0)
+        return 425.0f;
+    return 40.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 60.0f;
+    return 10.0f;
 }
 
 
 #pragma mark - UITableViewDelegate Methods
 
-
-
-
-
 - (IBAction)addNote:(UIBarButtonItem *)sender {
-    [self performSegueWithIdentifier:@"segue14" sender:sender];
+    [self performSegueWithIdentifier:@"segue17" sender:sender];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -516,7 +524,7 @@
         [self.tableNetworking reloadData];
     }
     else {
-        [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
+       // [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
         
     }
 }
