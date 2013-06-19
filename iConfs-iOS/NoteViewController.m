@@ -47,7 +47,6 @@ return self;
     
     if(self.hidePersonButton){
         self.aboutPersonButton.hidden = YES;
-        NSLog(@"hide person button");
     }
     if(self.hideSessionButton)
         self.aboutSessionButton.hidden = YES;
@@ -85,7 +84,7 @@ return self;
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 
@@ -250,7 +249,7 @@ return self;
 
 -(NSString*)getEventTitle{
     sqlite3 *db;
-    NSString *title = @"About Person";
+    NSString *title = @"About Event";
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
@@ -336,6 +335,7 @@ return self;
     uinav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     uinav.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:uinav animated:YES completion:nil];
+    
 }
 
 - (IBAction)addSession:(UIButton *)sender {

@@ -28,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.notesTableView.dataSource = self;
     self.notesTableView.delegate = self;
     [self.notesTableView setEditing:YES animated:YES];
@@ -46,7 +47,7 @@
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 -(void)updateNotes{
@@ -86,17 +87,26 @@
                 if([table isEqualToString:@"notes.db"]){
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                    NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                    
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
+                    [note setPersonID:personId];
+                    [note setEventID:eventID];
                     [array addObject:note];
                 }else {
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                    NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                    NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
                     
                     [note setContent:content];
                     [note setIsLocal:YES];
                     [note setNoteID:serverID];
+                    [note setPersonID:personId];
+                    [note setEventID:eventID];
                     [array addObject:note];
                 }
             }
@@ -168,6 +178,8 @@
         note.noteID = n.noteID;
         note.isLocal = n.isLocal;
         note.content = n.content;
+        note.personID = n.personID;
+        note.eventID = n.eventID;
     } else if([[segue identifier] isEqualToString:@"segue11"]){
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;

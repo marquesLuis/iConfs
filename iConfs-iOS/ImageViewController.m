@@ -55,7 +55,7 @@
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
 }
 - (IBAction)goBack:(UIBarButtonItem *)sender {
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:NO];
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -115,7 +115,6 @@
 {
     Local * l = [locals objectAtIndex:row];
     pickerView.hidden = NO;
-    NSLog(@"aa");
     
     if([self.localID isEqualToString:l.localID] && !loaded){
         loaded = YES;
