@@ -726,7 +726,7 @@
     if (tmp){
         NSString * pic = [@"person" stringByAppendingFormat:@"_%d",server_id];
         photo = [self downloadFile:tmp withName:pic];
-        NSLog(@"Photo at %@", photo);
+        //NSLog(@"Photo at %@", photo);
     }
     
     NSString * bio = [person objectForKey:@"bio"];
@@ -910,7 +910,7 @@
     if (tmp){
         NSString * pic = [@"local" stringByAppendingFormat:@"_%d",server_id];
         photo = [self downloadFile:tmp withName:pic];
-        NSLog(@"Photo at %@", photo);
+        //NSLog(@"Photo at %@", photo);
     }
     
     return [@"" stringByAppendingFormat:@"'%@','%@','%d'", title, photo, server_id];
@@ -1203,7 +1203,7 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
-        NSLog(@"%@",querySql);
+        //NSLog(@"%@",querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);

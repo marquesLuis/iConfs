@@ -60,6 +60,7 @@
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CB6176FCF6600894D5C /* defaultPerson.jpg */; };
+		9D877CBF177220FA00894D5C /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CBE177220FA00894D5C /* Search.m */; };
 		9DBF865B1755FD6E00845BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865A1755FD6E00845BD7 /* UIKit.framework */; };
 		9DBF865D1755FD6E00845BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865C1755FD6E00845BD7 /* Foundation.framework */; };
 		9DBF865F1755FD6E00845BD7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865E1755FD6E00845BD7 /* CoreGraphics.framework */; };
@@ -201,6 +202,8 @@
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
 		9D323B351758AD2600B2424D /* Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Update.m; sourceTree = "<group>"; };
 		9D877CB6176FCF6600894D5C /* defaultPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultPerson.jpg; sourceTree = "<group>"; };
+		9D877CBD177220FA00894D5C /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
+		9D877CBE177220FA00894D5C /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
 		9DBF86571755FD6E00845BD7 /* iConfs-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iConfs-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBF865A1755FD6E00845BD7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9DBF865C1755FD6E00845BD7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -390,8 +393,6 @@
 				9DBF866C1755FD6E00845BD7 /* AppDelegate.m */,
 				620ABA4E17579F04000E5FFA /* HomeViewController.h */,
 				620ABA4F17579F04000E5FFA /* HomeViewController.m */,
-				9DBF86981756006200845BD7 /* IConfsViewController.h */,
-				9DBF86991756006200845BD7 /* IConfsViewController.m */,
 				9D323B341758AD2600B2424D /* Update.h */,
 				9D323B351758AD2600B2424D /* Update.m */,
 				62F3AFD21768D56700E4BA8F /* NoteViewController.h */,
@@ -419,6 +420,10 @@
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				62F3B03A176CEFF700E4BA8F /* KNMultiItemSelector */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
+				9D877CBD177220FA00894D5C /* Search.h */,
+				9D877CBE177220FA00894D5C /* Search.m */,
+				9DBF86981756006200845BD7 /* IConfsViewController.h */,
+				9DBF86991756006200845BD7 /* IConfsViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -654,6 +659,7 @@
 				62F3B068176CEFF800E4BA8F /* UIButton+WebCache.m in Sources */,
 				62F3B069176CEFF800E4BA8F /* UIImageView+WebCache.m in Sources */,
 				62C37301176F5B2800557724 /* Note.m in Sources */,
+				9D877CBF177220FA00894D5C /* Search.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
