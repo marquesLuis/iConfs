@@ -8,7 +8,9 @@
 
 #import "PersonProfileViewController.h"
 
-@interface PersonProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface PersonProfileViewController () <UITableViewDelegate, UITableViewDataSource>{
+    NSString * pendingID;
+}
     @property (nonatomic, strong)  Person * personProfile;
     @property (nonatomic, strong) NSMutableArray * personNetworking;
 @property (nonatomic, strong) NSMutableArray * notes;
@@ -36,7 +38,7 @@
     self.navigationItem.backBarButtonItem.title = @"Back";
     
     personProfile = [self getPerson:personID];
-    NSString * areas = [self getAreas:personID];
+   // NSString * areas = [self getAreas:personID];
     
     
 	 //title ; date; authors ; description; notes
@@ -349,15 +351,35 @@
 }
 
 
-//Notes
-/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
- 
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
- 
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
- 
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS DELETED_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER)" WithName:@"deleted_local.db"];*/
 
+-(BOOL)belongsToDB:(NSString*)table withClause:(NSString*)clause{
+
+    sqlite3_stmt *statement;
+    sqlite3 *peopleDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:table];
+    BOOL belongsToTable = NO;
+    if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
+        
+        NSString *querySql = clause;
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                
+                if([table isEqualToString:@"PENDING_CONTACT"])
+                    pendingID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                belongsToTable = YES;
+                break;
+            }
+            sqlite3_finalize(statement);
+
+        }
+        sqlite3_close(peopleDB);
+    }
+    return belongsToTable;
+}
 
 -(NSMutableArray *)getNotes:(NSString*)table withClause:(NSString*)clause{
     sqlite3_stmt *statement;
@@ -389,7 +411,7 @@
                     [note setPersonID:personId];
                     [note setEventID:eventID];
                     [array addObject:note];
-                }else {
+                }else if([table isEqualToString:@"notes_local.db"]){
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
@@ -401,7 +423,7 @@
                     [note setPersonID:personId];
                     [note setEventID:eventID];
                     [array addObject:note];
-                }
+                } 
             }
         }
         sqlite3_finalize(statement);
@@ -409,6 +431,8 @@
     }
     return array;
 }
+
+
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -429,15 +453,66 @@
         [name setText:n];
         name.scrollEnabled = YES;
         [headerView addSubview:name];
-        
-        // person label email
-        UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 120, 295, 25)];
+       
+       NSLog(@"hello");
+       
+       
+              
+       
+       
+       // if contact show private info
+       if([self belongsToDB:@"contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM CONTACT WHERE PERSON_ID = %@", self.personID]]){
+           
+       }
+       // if is pending contact
+       else if([self belongsToDB:@"pending_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM PENDING_CONTACT WHERE PERSON_ID = %@", self.personID]]) {
+           
+           UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+           addContact.frame = CGRectMake(150, 130, 75, 25);
+           [addContact setTitle: @"Accept" forState:UIControlStateNormal];
+           
+           [addContact addTarget:self
+                          action:@selector(acceptContact:)
+                forControlEvents:UIControlEventTouchDown];
+           
+           [headerView addSubview:addContact];
+           UIButton *rejectContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+           rejectContact.frame = CGRectMake(225, 130, 75, 25);
+           [rejectContact setTitle: @"Reject" forState:UIControlStateNormal];
+           
+           [rejectContact addTarget:self
+                          action:@selector(rejectContact:)
+                forControlEvents:UIControlEventTouchDown];
+           
+           [headerView addSubview:rejectContact];
+           
+       }
+       // if is a rejected or an asked contact
+       else if([self belongsToDB:@"rejected_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM REJECTED_CONTACT WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"rejected_contact_local.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM REJECTED_CONTACT_LOCAL WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"asked_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"asked_contact_local.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT_LOCAL WHERE PERSON_ID = %@", self.personID]]){
+           // do nothing
+       }
+       // only option add contact
+       else {
+           UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+           addContact.frame = CGRectMake(150, 130, 150, 25);
+           [addContact setTitle: @"Add contact" forState:UIControlStateNormal];
+           
+           [addContact addTarget:self
+                          action:@selector(addContact:)
+                forControlEvents:UIControlEventTouchDown];
+           
+           [headerView addSubview:addContact];
+
+       }
+       
+       // person label email
+        UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 130, 100, 25)];
         labelEmail.text = @"Email:";
         labelEmail.backgroundColor = [UIColor clearColor];
         [headerView addSubview:labelEmail];
-        
+        //10
         // person email
-        UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 145, 295, 25)];
+        UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 160, 295, 25)];
         [email setEditable:NO];
         [email setText:personProfile.email];
         email.scrollEnabled = YES;
@@ -494,7 +569,6 @@
        imageView.contentMode  = UIViewContentModeScaleAspectFit;
 
        UIImage * imageFromURL;
-       NSLog(@"foto da pessoa");
        if([personProfile.photo isEqualToString:@""])
            imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
        else
@@ -516,6 +590,53 @@
 }
 
 
+/*
+ //tabela q contem os ids de todos os contactos q vieram do servidor (server id
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT( PERSON_ID INTEGER PRIMARY KEY)" WithName:@"contact.db"];
+ 
+ //tabela q contem os ids dos contactos aceites no ios desde a ultima actualizacao
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY, PENDING_SERVER_ID INTEGER, REJECTED_SERVER_ID INTEGER)" WithName:@"contact_local.db"];
+ 
+ //tabela q contem os ids dos contactos pedidos a outros (servidor)
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact.db"];
+ 
+ //tabela q contem os ids dos contactos pedidos a outros (ios)
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact_local.db"];
+ 
+ //tabela q contem os pedidos pendentes que ainda n foram aceites/rejeitados
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PENDING_CONTACT( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"pending_contact.db"];
+ 
+ //tabela q contem os pedidos rejeitados que ja foram ao servidor
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT( REJECTED_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact.db"];
+ 
+ //tabela q contem os pedidos rejeitados no ios
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT_LOCAL( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact_local.db"];
+ 
+ 
+ */
+
+-(void)addContact:(UIButton *)sender {
+
+    [self insertTo:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL" definition: @"PERSON_ID"
+            values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
+    
+    [self.tableNetworking reloadData];
+}
+
+-(void)rejectContact:(UIButton *)sender {
+    [self insertTo:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL" definition: @"PENDING_SERVER_ID, PERSON_ID"
+            values: [@"" stringByAppendingFormat:@"'%@' , '%@'", self.personID, pendingID]];
+    
+    [self.tableNetworking reloadData];
+}
+
+-(void)acceptContact:(UIButton *)sender {
+    [self insertTo:@"rejected_contact_local.db" table:@"CONTACT_LOCAL" definition: @"PERSON_ID, PENDING_SERVER_ID, REJECTED_SERVER_ID"
+            values: [@"" stringByAppendingFormat:@"'%@', '%@', '0'", self.personID, pendingID]];
+    
+    [self.tableNetworking reloadData];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    return 30;
 }
@@ -528,6 +649,29 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10.0f;
 }
+
+-(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
+        //NSLog(@"%@",querySql);
+        const char* query_sql = [querySql UTF8String];
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ inserted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT inserted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
+    }
+}
+
+
 
 
 #pragma mark - UITableViewDelegate Methods
