@@ -412,13 +412,13 @@
 				62F3B003176C72E600E4BA8F /* AllNotesViewController.m */,
 				62C372FF176F5B2800557724 /* Note.h */,
 				62C37300176F5B2800557724 /* Note.m */,
-				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
-				62F3B03A176CEFF700E4BA8F /* KNMultiItemSelector */,
-				9DBF86631755FD6E00845BD7 /* Supporting Files */,
 				9D877CBD177220FA00894D5C /* Search.h */,
 				9D877CBE177220FA00894D5C /* Search.m */,
 				9DBF86981756006200845BD7 /* IConfsViewController.h */,
 				9DBF86991756006200845BD7 /* IConfsViewController.m */,
+				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
+				62F3B03A176CEFF700E4BA8F /* KNMultiItemSelector */,
+				9DBF86631755FD6E00845BD7 /* Supporting Files */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
