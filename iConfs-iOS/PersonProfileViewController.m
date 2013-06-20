@@ -368,7 +368,7 @@
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
                 
-                if([table isEqualToString:@"PENDING_CONTACT"])
+                if([table isEqualToString:@"pending_contact.db"])
                     pendingID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                 belongsToTable = YES;
                 break;
@@ -454,10 +454,7 @@
         name.scrollEnabled = YES;
         [headerView addSubview:name];
        
-       NSLog(@"hello");
        
-       
-              
        
        
        // if contact show private info
@@ -488,7 +485,7 @@
            
        }
        // if is a rejected or an asked contact
-       else if([self belongsToDB:@"rejected_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM REJECTED_CONTACT WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"rejected_contact_local.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM REJECTED_CONTACT_LOCAL WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"asked_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT WHERE PERSON_ID = %@", self.personID]] || [self belongsToDB:@"asked_contact_local.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT_LOCAL WHERE PERSON_ID = %@", self.personID]]){
+       else if([self belongsToDB:@"asked_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT WHERE PERSON_ID = %@", self.personID]]){
            // do nothing
        }
        // only option add contact
@@ -619,11 +616,16 @@
 
     [self insertTo:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL" definition: @"PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
+    [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition: @"PERSON_ID"
+            values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
     
     [self.tableNetworking reloadData];
 }
 
 -(void)rejectContact:(UIButton *)sender {
+    
+    [self removeFrom:@"pending_contact.db" table:@"PENDING_CONTACT" attribute:@"PENDING_SERVER_ID" withID:[pendingID intValue]];
+    
     [self insertTo:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL" definition: @"PENDING_SERVER_ID, PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@' , '%@'", self.personID, pendingID]];
     
@@ -631,11 +633,18 @@
 }
 
 -(void)acceptContact:(UIButton *)sender {
+
+    [self removeFrom:@"pending_contact.db" table:@"PENDING_CONTACT" attribute:@"PENDING_SERVER_ID" withID:[pendingID intValue]];
     [self insertTo:@"contact_local.db" table:@"CONTACT_LOCAL" definition: @"PERSON_ID, PENDING_SERVER_ID, REJECTED_SERVER_ID"
             values: [@"" stringByAppendingFormat:@"'%@', '%@', '0'", self.personID, pendingID]];
+    [self insertTo:@"contact.db" table:@"CONTACT" definition: @"PERSON_ID"
+            values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
     
     [self.tableNetworking reloadData];
 }
+
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    return 30;
