@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 #import "Update.h"
+#import "sqlite3.h"
+#import "KNMultiItemSelector.h"
 #import "NetworkingTableViewController.h"
 
 @interface HomeViewController : UIViewController
 
 - (IBAction)updateButton:(UIBarButtonItem *)sender;
+- (IBAction)goToContacts:(UIButton *)sender;
 
 @property  (strong, nonatomic) Update * update;
 @end

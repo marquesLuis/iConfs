@@ -30,10 +30,6 @@
 	// Do any additional setup after loading the view.
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.update = [[Update alloc] initDB];
-    
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,15 +38,71 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
-
 - (IBAction)updateButton:(UIBarButtonItem *)sender {
     [self.update update];
 }
 
+- (IBAction)goToContacts:(UIButton *)sender {
+    
+    NSLog(@"goToParticipants");
+    NSMutableArray * items = [self getAllPersons];
+    KNMultiItemSelector * selector;
+    
+    
+    selector = [[KNMultiItemSelector alloc] initWithItems:items
+                                             preselectedItems:nil
+                                                        title:@"Participants"
+                                              placeholderText:@"Search by name"
+                                                     delegate:self
+                                                         text:nil];
+        
+    selector.infoType = 3;
+    // Again, the two optional settings
+    selector.allowSearchControl = YES;
+    selector.useTableIndex      = YES;
+    selector.useRecentItems     = NO;
+    selector.maxNumberOfRecentItems = 0;
+    selector.allowModeButtons = NO;
+    UINavigationController * uinav = [[UINavigationController alloc] initWithRootViewController:selector];
+    uinav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    uinav.modalPresentationStyle = UIModalPresentationFormSheet;
+   [self.navigationController pushViewController:selector animated:YES];
+}
 
+-(NSMutableArray*)getAllPersons{
+    NSMutableArray * items = [NSMutableArray array];
+    
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                
+                NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+                
+                NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
+                
+                
+                NSString *name = [[firstName stringByAppendingString:@" "]stringByAppendingString:lastName];
+                [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:personID imageUrl:photo]];
+
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(db);
+    }
+    return items;
+}
 
 
 
@@ -107,5 +159,7 @@
     
     return YES;
 }
+
+
 
 @end

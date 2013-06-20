@@ -12,11 +12,12 @@
     @property (nonatomic, strong)  Person * personProfile;
     @property (nonatomic, strong) NSMutableArray * personNetworking;
 @property (nonatomic, strong) NSMutableArray * notes;
+@property (nonatomic, strong) UIToolbar *t;
 
 @end
 
 @implementation PersonProfileViewController
-@synthesize personID, tableNetworking, notes, personNetworking, personProfile;
+@synthesize personID, tableNetworking, notes, personNetworking, personProfile, t;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -336,7 +337,15 @@
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, self.addNote, flexibleSpace, nil];
+    /*t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
+    t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+    [t setItems: [NSArray arrayWithObjects:buttonItems,  nil]];
+    [self.view addSubview:t];*/
+    self.toolbar = [[UIToolbar alloc] init];
+    self.toolbar.frame = CGRectMake(0, 460, self.view.frame.size.width, 44);
     [self.toolbar setItems:buttonItems];
+    self.toolbar.hidden = NO;
+    [self.view addSubview:self.toolbar];
 }
 
 

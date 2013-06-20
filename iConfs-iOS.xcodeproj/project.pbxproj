@@ -36,7 +36,6 @@
 		62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFD31768D56800E4BA8F /* NoteViewController.m */; };
 		62F3AFD9176A206600E4BA8F /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3AFD8176A206600E4BA8F /* ImageViewController.m */; };
 		62F3B004176C72E600E4BA8F /* AllNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3B003176C72E600E4BA8F /* AllNotesViewController.m */; };
-		62F3B039176CD92800E4BA8F /* AllPersonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F3B038176CD92800E4BA8F /* AllPersonsViewController.m */; };
 		62F3B05A176CEFF800E4BA8F /* KNDefaultImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F3B03C176CEFF800E4BA8F /* KNDefaultImage.png */; };
 		62F3B05B176CEFF800E4BA8F /* KNDefaultImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F3B03D176CEFF800E4BA8F /* KNDefaultImage@2x.png */; };
 		62F3B05C176CEFF800E4BA8F /* KNSelectorTip.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F3B03E176CEFF800E4BA8F /* KNSelectorTip.png */; };
@@ -162,8 +161,6 @@
 		62F3AFD8176A206600E4BA8F /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		62F3B002176C72E500E4BA8F /* AllNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNotesViewController.h; sourceTree = "<group>"; };
 		62F3B003176C72E600E4BA8F /* AllNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotesViewController.m; sourceTree = "<group>"; };
-		62F3B037176CD92800E4BA8F /* AllPersonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllPersonsViewController.h; sourceTree = "<group>"; };
-		62F3B038176CD92800E4BA8F /* AllPersonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllPersonsViewController.m; sourceTree = "<group>"; };
 		62F3B03C176CEFF800E4BA8F /* KNDefaultImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KNDefaultImage.png; sourceTree = "<group>"; };
 		62F3B03D176CEFF800E4BA8F /* KNDefaultImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KNDefaultImage@2x.png"; sourceTree = "<group>"; };
 		62F3B03E176CEFF800E4BA8F /* KNSelectorTip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KNSelectorTip.png; sourceTree = "<group>"; };
@@ -413,8 +410,6 @@
 				62F3AFCF1764DF2A00E4BA8F /* Local.m */,
 				62F3B002176C72E500E4BA8F /* AllNotesViewController.h */,
 				62F3B003176C72E600E4BA8F /* AllNotesViewController.m */,
-				62F3B037176CD92800E4BA8F /* AllPersonsViewController.h */,
-				62F3B038176CD92800E4BA8F /* AllPersonsViewController.m */,
 				62C372FF176F5B2800557724 /* Note.h */,
 				62C37300176F5B2800557724 /* Note.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
@@ -648,7 +643,6 @@
 				62F3AFD41768D56800E4BA8F /* NoteViewController.m in Sources */,
 				62F3AFD9176A206600E4BA8F /* ImageViewController.m in Sources */,
 				62F3B004176C72E600E4BA8F /* AllNotesViewController.m in Sources */,
-				62F3B039176CD92800E4BA8F /* AllPersonsViewController.m in Sources */,
 				62F3B060176CEFF800E4BA8F /* KNMultiItemSelector.m in Sources */,
 				62F3B061176CEFF800E4BA8F /* KNSelectorItem.m in Sources */,
 				62F3B063176CEFF800E4BA8F /* SDImageCache.m in Sources */,

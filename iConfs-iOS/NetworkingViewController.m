@@ -73,13 +73,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"networing prepare for segue");
     PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
-    NSLog(@"%@", personId);
     
     person.personID = personId;
-    
-    
 }
 
 @end

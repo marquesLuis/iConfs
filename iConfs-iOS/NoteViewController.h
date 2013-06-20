@@ -15,8 +15,8 @@
 #import "Event.h"
 
 
-
-@interface NoteViewController : UIViewController  <UITextViewDelegate, KNMultiItemSelectorDelegate>
+//, KNMultiItemSelectorDelegate
+@interface NoteViewController : UIViewController  <UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
 @property (strong, nonatomic) IBOutlet UIButton *aboutPersonButton;

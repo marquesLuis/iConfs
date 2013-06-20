@@ -228,15 +228,11 @@
     
     //get index position for the selected control
     NSInteger selectedIndex = [segment selectedSegmentIndex];
-    NSLog(@"valueChanged");
     if(selectedIndex == 0) {
         if([_privateNetworking count]== 0){
-            NSLog(@"Go to personal networking");
             NSMutableArray *net = [self displayNetworkingPersonal];
-            NSLog(@"Go to personal networking");
 
             if([net count] == 0){
-                NSLog(@"There's no personal networking");
                 _typeNet.selectedSegmentIndex = 1;
 
                 [self alertMessages:@"There's no personal networking to show" withMessage:@""];
@@ -402,7 +398,5 @@
     }
     return personalNetworking;
 }
-
-
 
 @end

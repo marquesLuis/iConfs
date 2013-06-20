@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KNSelectorItem.h"
+#import "PersonProfileViewController.h"
 
 typedef enum {
   KNSelectorModeNormal,
@@ -48,9 +49,22 @@ typedef enum {
 }
 
 #pragma mark - Public properties
+@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+//@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) UITableView * tableView;
-@property (nonatomic, strong) UITextField * searchTextField;
+
+/* 
+ 1 if the table has info about a person,
+ 2 if the table has info about a session,
+ 3 if the table has info about a contact
+ */
+
+@property int infoType;
+
+//@property (nonatomic, strong) UITableView * tableView;
+//@property (nonatomic, strong) UITextField * searchTextField;
 @property (nonatomic, readonly) NSArray * selectedItems;
 @property (nonatomic, assign) NSInteger maximumItemsSelected;
 @property (nonatomic, assign) NSInteger tag;

@@ -12,11 +12,17 @@
 
 #pragma mark - Private Interface
 
+#define CONTACT	3
+#define PERSON 1
+#define EVENT 2
+
 @interface KNMultiItemSelector (){
     NSIndexPath* rowselected;
     NSString * preselectedSelectedValue;
-}
+    UISegmentedControl *contactToolbar;
 
+}
+@property (strong, nonatomic) UIToolbar *t;
 @end
 
 #pragma mark - Implementation
@@ -49,6 +55,7 @@
     text = t;
   self = [super init];
   if (self) {
+      
     preselectedSelectedValue = @"-1";
     delegate = delegateObject;
     self.title = title;
@@ -94,17 +101,20 @@
   return self;
 }
 
--(void)loadView {
+-(void)viewDidLoad {
     
-    NSLog(@"viewDidLoad111111");
+    NSLog(@"largura : %f", self.view.frame.size.width);
+    NSLog(@"altura : %f", self.view.frame.size.height);
+    
 
     rowselected = nil;
 
-  self.view = [[UIView alloc] initWithFrame:CGRectZero];  
+  //self.view = [[UIView alloc] initWithFrame:CGRectZero];
   self.view.backgroundColor = [UIColor whiteColor];
   
   // Initialize tableView
-  self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  //self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (3*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
   self.tableView.delegate = self;
   self.tableView.dataSource = self;
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -119,7 +129,9 @@
   textFieldWrapper.layer.shadowOffset = CGSizeMake(0,1);
   textFieldWrapper.layer.shadowRadius = 5.0f;
   textFieldWrapper.layer.shadowOpacity = 0.2;
-  self.searchTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+ 
+    //self.searchTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+    self.searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, 40)];
   self.searchTextField.backgroundColor = [UIColor whiteColor];
   self.searchTextField.clipsToBounds = NO;
   self.searchTextField.keyboardType = UIKeyboardTypeASCIICapable;
@@ -160,21 +172,205 @@
   [self.view addSubview:selectedModeButton];
   [self updateSelectedCount];
   
-  // Nav bar button
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didFinish)];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
-
-      /*  [self.tabBarController.tabBar setHidden:NO];
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    // toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width,40);
-    [self.view addSubview:toolbar];
-    [toolbar setHidden:NO];*/
-//self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
+    [self createToolbar];
+    [self navigationButtons];
 }
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goHome:)];
+    
+    if(self.infoType == CONTACT){
+        [self.navigationItem setLeftBarButtonItem:homeButton];
+        self.navigationItem.leftItemsSupplementBackButton = YES;
+    } else {
+        // Nav bar button
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didFinish)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancel)];
+        
+    }
+}
+- (IBAction)goHome:(UIBarButtonItem *)sender {
+
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+}
+
+- (IBAction)goBack:(UIButton *)sender {
+
+
+[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)createToolbar {
+    
+    if(self.infoType == CONTACT){
+        
+        NSArray *itemArray = [NSArray arrayWithObjects: @"My contacts", @"Participants", @"Pending contacts", nil];
+        contactToolbar  = [[UISegmentedControl alloc] initWithItems:itemArray];
+        
+        
+        contactToolbar.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
+        contactToolbar.segmentedControlStyle = UISegmentedControlStyleBar;
+        contactToolbar.selectedSegmentIndex = 1;
+        [contactToolbar addTarget:self action:@selector(valueChanged:) forControlEvents: UIControlEventValueChanged];
+        
+        
+        contactToolbar.segmentedControlStyle = UISegmentedControlStyleBar;
+        contactToolbar.momentary = NO;
+        
+        
+        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:contactToolbar];
+        buttonItem.style = UIBarButtonItemStyleBordered;
+        
+        _t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
+        _t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+        [_t setItems: [NSArray arrayWithObjects:buttonItem,  nil]];
+        [self.view addSubview:_t];
+
+    
+    } else {
+    
+        UIBarButtonItem *addNoteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
+        UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        NSLog(@"%f", self.view.frame.size.height);
+        NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, addNoteButton, flexibleSpace, nil];
+        _t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
+        _t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+        [_t setItems:buttonItems];
+        [self.view addSubview:_t];
+    }
+   
+    //[self.toolbar setItems:buttonItems];
+    //[self.view addSubview:self.toolbar];
+}
+
+- (void)valueChanged:(UISegmentedControl *)segment {
+    //get index position for the selected control
+   NSInteger selectedIndex = [segment selectedSegmentIndex];
+    if(selectedIndex == 1) {
+        NSLog(@"people");
+        [self getAllPersons];
+        [self indexOfTable];
+        
+    }else if (selectedIndex == 0){
+        NSLog(@"contacts");
+        [items removeAllObjects];
+        [self getMyContacts:@"contact.db" withClause:@"select * from main.PEOPLE people inner join SECOND.CONTACT contact  on people.SERVER_ID = contact.PERSON_ID"];
+        
+        [self indexOfTable];
+    } else if(selectedIndex == 2){
+        NSLog(@"contacts");
+        [items removeAllObjects];
+        [self getMyContacts:@"pending_contact.db" withClause:@"select * from main.PEOPLE people inner join SECOND.PENDING_CONTACT contact  on people.SERVER_ID = contact.PERSON_ID"];
+        [self indexOfTable];
+    }
+    
+    [self.tableView reloadData];
+}
+
+-(void) indexOfTable{
+    NSMutableArray * rArr =[[NSUserDefaults standardUserDefaults] objectForKey:self.recentItemStorageKey];
+    
+    // Preparing indices and Recent items
+    [indices removeAllObjects];
+    for (KNSelectorItem * i in items) {
+        NSString * letter = [i.displayValue substringToIndex:1];
+        if (![indices objectForKey:letter]) {
+            [indices setObject:[NSMutableArray array] forKey:letter];
+        }
+        if ([rArr containsObject:i.selectValue]) {
+            [recentItems addObject:i];
+        }
+        NSMutableArray * a = [indices objectForKey:letter];
+        [a addObject:i];
+    }
+}
+
+
+-(void)getAllPersons{
+    
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
+    [items removeAllObjects];
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                
+                NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+                
+                NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
+                
+                NSString *name = [[firstName stringByAppendingString:@" "]stringByAppendingString:lastName];
+                [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:personID imageUrl:photo]];
+            }
+        }
+        sqlite3_close(db);
+    }
+}
+
+
+////tabela q contem os ids de todos os contactos q vieram do servidor (server id
+/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT( PERSON_ID INTEGER PRIMARY KEY)" WithName:@"contact.db"];
+
+//tabela q contem os ids dos contactos aceites no ios desde a ultima actualizacao
+[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY, PENDING_SERVER_ID INTEGER, REJECTED_SERVER_ID INTEGER)" WithName:@"contact_local.db"];
+ //people
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
+ 
+ */
+
+-(void)getMyContacts:(NSString*)table withClause:(NSString*)clause{
+    
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathPeople = [docPath stringByAppendingPathComponent:@"people.db"];
+    NSString *dbPathContacts = [docPath stringByAppendingPathComponent:table];
+
+    if (sqlite3_open([dbPathPeople UTF8String], &db) == SQLITE_OK)
+    {
+        NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathContacts UTF8String]];
+        char *errorMessage;
+        sqlite3_stmt *statment;
+
+        if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
+        {
+            
+            if (sqlite3_prepare_v2(db, [clause UTF8String], -1, &statment, nil) == SQLITE_OK){
+                while (sqlite3_step(statment)==SQLITE_ROW) {
+                    NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statment, 1)];
+                    NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statment, 2)];
+                    NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statment, 6)];
+                    
+                    NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statment, 8)];
+                    
+                    NSString *name = [[firstName stringByAppendingString:@" "]stringByAppendingString:lastName];
+                    [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:personID imageUrl:photo]];
+                    NSLog(@"%@", name);
+                }
+            }
+        sqlite3_close(db);
+        }
+    }
+}
+
 
 -(void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
+    
   // Layout UI elements
   CGRect f = self.view.frame;
   textFieldWrapper.frame = CGRectMake(0, 0, f.size.width, 44);
@@ -206,6 +402,7 @@
   }
 
   self.tableView.frame = tableFrame;
+
 }
 
 -(void)setAllowModeButtons:(BOOL)allow {
@@ -225,70 +422,102 @@
 #pragma mark - UITableView Datasource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
   if (selectorMode == KNSelectorModeNormal) {
     int noSec = useTableIndex ? [[self sortedIndices] count] : 1;
     return self.useRecentItems && recentItems.count ? noSec+1 : noSec;
   } else {
     return 1;
   }
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if (selectorMode == KNSelectorModeSearch) {
+    NSLog(@"numberOfRowsInSection");
+    
+    if (selectorMode == KNSelectorModeSearch) {
+      NSLog(@"1");
+
     return filteredItems.count;
   } else if (selectorMode == KNSelectorModeNormal) {
+      NSLog(@"2");
+
     if (useRecentItems && section==0 && recentItems.count) {
+        NSLog(@"3");
+
       return recentItems.count;
     } else if (useTableIndex) {
+        NSLog(@"4");
+
       if (useRecentItems && recentItems.count) section -= 1;
       NSMutableArray * rows = [indices objectForKey:[[self sortedIndices] objectAtIndex:section]];
+        NSLog(@"5");
+
       return rows.count;
     } else {
+        NSLog(@"6");
+
       return items.count;
     }
   } else {
+      NSLog(@"7");
+
     return self.selectedItems.count;
   }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  static NSString *CellIdentifier = @"KNSelectorItemCell";
-  UITableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-  }
-
-  // Which item?
-  KNSelectorItem * item = [self itemAtIndexPath:indexPath];
-
-  // Change the cell appearance
-  cell.textLabel.text = item.displayValue;
-  if (item.imageUrl) {
-      UIImage * imageFromURL;
-      if([item.imageUrl isEqualToString:@""])
-          imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
-      else
-          imageFromURL = [UIImage imageWithContentsOfFile:item.imageUrl];
-      
-      cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-      [cell.imageView setImage:imageFromURL];
-  }
-  if (item.image) {
-    [cell.imageView setImage:item.image];
-  }
+  
+    static NSString *CellIdentifier = @"KNSelectorItemCell";
+    UITableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+    }
+    
+    KNSelectorItem * item = [self itemAtIndexPath:indexPath];
+  
+    // Change the cell appearance    
+    cell.textLabel.text = item.displayValue;
+    NSLog(@"%@", item.displayValue);
+    if (item.imageUrl) {
+        UIImage * imageFromURL;
+        if([item.imageUrl isEqualToString:@""])
+            imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+        else
+            imageFromURL = [UIImage imageWithContentsOfFile:item.imageUrl];
+        
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [cell.imageView setImage:imageFromURL];
+    }
+    
+    
+    if (item.image) {
+        [cell.imageView setImage:item.image];
+    }
+    
     if([preselectedSelectedValue isEqualToString:item.selectValue] && indexPath.section != 0){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         item.selected = YES;
         rowselected = indexPath;
     } else
         cell.accessoryType = item.selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-
-  return cell;
+    
+    return cell;
 }
 
 #pragma mark - UITableView Delegate
 -(void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    if(self.infoType == CONTACT){
+        PersonProfileViewController * person = [[PersonProfileViewController alloc] init];
+        KNSelectorItem * item = [self itemAtIndexPath:indexPath];
+        person.personID = item.selectValue;
+        [[self navigationController] pushViewController:person animated:YES];
+        return;
+    }
+    
     
     //user carrega na pessoa que tinha seleccionado, mal abre a pag
     if([rowselected isEqual: indexPath] && ![preselectedSelectedValue isEqualToString:@"-1"]){
@@ -339,6 +568,7 @@
         }
     
 }
+
 
 -(void)hideSelection:(UITableView*)_tableView{
     KNSelectorItem * item = [self itemAtIndexPath:rowselected];
@@ -509,6 +739,13 @@
   }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    NSInteger lastSectionIndex = [self.tableView numberOfSections] - 1;
+    if(lastSectionIndex == section)
+        return 60.0f;
+    return 0.0f;
+}
+
 #pragma mark - Table indices
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
@@ -548,20 +785,6 @@
   return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-/*-(void)viewDidLoad{
-    NSLog(@"viewDidLoad");
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 40);
-    
-    [self.view addSubview:toolbar];
-    
-    
-    //[self.tabBarController.tabBar setHidden:NO];
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, 0, self.view.frame.size.width,40);
-    [self.view addSubview:toolbar];
-    [toolbar setHidden:NO];
-}*/
 
 - (void)viewDidUnload {
   self.tableView = nil;
@@ -572,6 +795,24 @@
   selectedModeButton = nil;
   
   [super viewDidUnload];
+}
+
+
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSLog(@"willAnimateRotationToInterfaceOrientation");
+    
+    CGRect navigationToolbarFrame = self.navigationController.navigationBar.frame;
+    NSLog(@"%f", navigationToolbarFrame.origin.x);
+        NSLog(@"%f", navigationToolbarFrame.origin.y);
+        NSLog(@"%f", navigationToolbarFrame.size.width);
+   // CGRect customToolbarFrame = CGRectOffset(navigationToolbarFrame, 0.0, navigationToolbarFrame.size.height);
+    [UIView animateWithDuration:duration animations:^{
+        _t.frame = CGRectMake(0, 228, self.view.frame.size.width, 40);//customToolbarFrame;
+    }];
+
+    
 }
 
 @end
