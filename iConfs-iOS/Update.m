@@ -1011,6 +1011,9 @@
     NSMutableArray *news = [contacts objectForKey:@"contacts"];
     if (news){
         [self deleteAllFrom:@"contact_local.db" table:@"CONTACT_LOCAL"];
+        NSMutableArray *added = [contacts objectForKey:@"added"];
+        if (added)
+            [self deleteAllFrom:@"contact_local.db" table:@"CONTACT_LOCAL" where:@"PERSON_ID" equalsIntegerArray:added];
         for (NSNumber *n in news) {
             NSString * values = [@"" stringByAppendingFormat:@"%d",[n integerValue]];
             [self insertTo:@"contact.db" table:@"CONTACT" definition:@"PERSON_ID" values:values];
@@ -1030,7 +1033,9 @@
     }
     NSMutableArray * asked = [contacts objectForKey:@"asked"];
     if (asked){
-        [self deleteAllFrom:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL"];
+        NSMutableArray *added = [contacts objectForKey:@"asked_local"];
+        if (added)
+            [self deleteAllFrom:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL" where:@"PERSON_ID" equalsIntegerArray:added];
         for (NSNumber *n in asked) {
             NSString * values = [@"" stringByAppendingFormat:@"%d",[n integerValue]];
             [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:values];
@@ -1038,7 +1043,10 @@
     }
     NSMutableArray * rejected = [contacts objectForKey:@"rejected"];
     if(rejected){
-        [self deleteAllFrom:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL"];
+        NSMutableArray *added = [contacts objectForKey:@"rejected_local"];
+        if (added)
+            [self deleteAllFrom:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL" where:@"PENDING_SERVER_ID" equalsIntegerArray:added];
+        
         for (NSString *val in rejected){
             NSArray* foo = [val componentsSeparatedByString: @"_"];
             NSString* server_id = [foo objectAtIndex: 0];
