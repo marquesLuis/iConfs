@@ -631,7 +631,7 @@
 }
 
 -(void)acceptContact:(UIButton *)sender {
-    [self insertTo:@"rejected_contact_local.db" table:@"CONTACT_LOCAL" definition: @"PERSON_ID, PENDING_SERVER_ID, REJECTED_SERVER_ID"
+    [self insertTo:@"contact_local.db" table:@"CONTACT_LOCAL" definition: @"PERSON_ID, PENDING_SERVER_ID, REJECTED_SERVER_ID"
             values: [@"" stringByAppendingFormat:@"'%@', '%@', '0'", self.personID, pendingID]];
     
     [self.tableNetworking reloadData];
