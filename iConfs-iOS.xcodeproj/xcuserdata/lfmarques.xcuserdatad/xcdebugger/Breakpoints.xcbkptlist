@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
+         timestampString = "393533545.987617"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "823"
-         endingLineNumber = "823"
+         startingLineNumber = "821"
+         endingLineNumber = "821"
          landmarkName = "-handlePeople:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
+         timestampString = "393533545.987617"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "824"
-         endingLineNumber = "824"
+         startingLineNumber = "822"
+         endingLineNumber = "822"
          landmarkName = "@implementation Update"
          landmarkType = "3">
       </FileBreakpoint>
@@ -34,7 +34,33 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
+         timestampString = "393533545.987617"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "823"
+         endingLineNumber = "823"
+         landmarkName = "-readAttending:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "iConfs-iOS/Update.m"
+         timestampString = "393533545.987617"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "824"
+         endingLineNumber = "824"
+         landmarkName = "-readAttending:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "iConfs-iOS/Update.m"
+         timestampString = "393533545.987617"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "825"
@@ -47,7 +73,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
+         timestampString = "393533545.987617"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "826"
@@ -60,37 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
+         timestampString = "393533545.987617"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "827"
          endingLineNumber = "827"
-         landmarkName = "-readAttending:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "828"
-         endingLineNumber = "828"
-         landmarkName = "-readAttending:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "iConfs-iOS/Update.m"
-         timestampString = "393532960.167342"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "829"
-         endingLineNumber = "829"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>

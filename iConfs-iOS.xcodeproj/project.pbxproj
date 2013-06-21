@@ -689,14 +689,11 @@
 				62C37301176F5B2800557724 /* Note.m in Sources */,
 				9D877CBF177220FA00894D5C /* Search.m in Sources */,
 				62AF25C417738ACB00B27B8D /* PersonalInfo.m in Sources */,
-<<<<<<< HEAD
 				62AF25CA1774AB1400B27B8D /* SearchViewController.m in Sources */,
-=======
 				9D877CF81774CF7600894D5C /* AESCrypt.m in Sources */,
 				9D877CFA1774CF7600894D5C /* NSData+Base64.m in Sources */,
 				9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */,
 				9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */,
->>>>>>> facad9e3b5629f34f3c010e8f35e33e2eaccff42
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
