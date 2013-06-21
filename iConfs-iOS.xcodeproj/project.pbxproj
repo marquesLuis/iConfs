@@ -213,7 +213,6 @@
 		9D877CBE177220FA00894D5C /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
 		9D877CEF1774CF7600894D5C /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
 		9D877CF01774CF7600894D5C /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
-		9D877CF11774CF7600894D5C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9D877CF21774CF7600894D5C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		9D877CF31774CF7600894D5C /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		9D877CF41774CF7600894D5C /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
@@ -349,7 +348,6 @@
 			children = (
 				9D877CEF1774CF7600894D5C /* AESCrypt.h */,
 				9D877CF01774CF7600894D5C /* AESCrypt.m */,
-				9D877CF11774CF7600894D5C /* LICENSE */,
 				9D877CF21774CF7600894D5C /* NSData+Base64.h */,
 				9D877CF31774CF7600894D5C /* NSData+Base64.m */,
 				9D877CF41774CF7600894D5C /* NSData+CommonCrypto.h */,
