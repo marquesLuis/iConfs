@@ -62,6 +62,11 @@
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CB6176FCF6600894D5C /* defaultPerson.jpg */; };
 		9D877CBF177220FA00894D5C /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CBE177220FA00894D5C /* Search.m */; };
+		9D877CF81774CF7600894D5C /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF01774CF7600894D5C /* AESCrypt.m */; };
+		9D877CF91774CF7600894D5C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CF11774CF7600894D5C /* LICENSE */; };
+		9D877CFA1774CF7600894D5C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF31774CF7600894D5C /* NSData+Base64.m */; };
+		9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF51774CF7600894D5C /* NSData+CommonCrypto.m */; };
+		9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF71774CF7600894D5C /* NSString+Base64.m */; };
 		9DBF865B1755FD6E00845BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865A1755FD6E00845BD7 /* UIKit.framework */; };
 		9DBF865D1755FD6E00845BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865C1755FD6E00845BD7 /* Foundation.framework */; };
 		9DBF865F1755FD6E00845BD7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF865E1755FD6E00845BD7 /* CoreGraphics.framework */; };
@@ -207,6 +212,15 @@
 		9D877CB6176FCF6600894D5C /* defaultPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultPerson.jpg; sourceTree = "<group>"; };
 		9D877CBD177220FA00894D5C /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
 		9D877CBE177220FA00894D5C /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
+		9D877CEF1774CF7600894D5C /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
+		9D877CF01774CF7600894D5C /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
+		9D877CF11774CF7600894D5C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		9D877CF21774CF7600894D5C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		9D877CF31774CF7600894D5C /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		9D877CF41774CF7600894D5C /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
+		9D877CF51774CF7600894D5C /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
+		9D877CF61774CF7600894D5C /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		9D877CF71774CF7600894D5C /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		9DBF86571755FD6E00845BD7 /* iConfs-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iConfs-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DBF865A1755FD6E00845BD7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9DBF865C1755FD6E00845BD7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -334,6 +348,15 @@
 		9DBF864E1755FD6E00845BD7 = {
 			isa = PBXGroup;
 			children = (
+				9D877CEF1774CF7600894D5C /* AESCrypt.h */,
+				9D877CF01774CF7600894D5C /* AESCrypt.m */,
+				9D877CF11774CF7600894D5C /* LICENSE */,
+				9D877CF21774CF7600894D5C /* NSData+Base64.h */,
+				9D877CF31774CF7600894D5C /* NSData+Base64.m */,
+				9D877CF41774CF7600894D5C /* NSData+CommonCrypto.h */,
+				9D877CF51774CF7600894D5C /* NSData+CommonCrypto.m */,
+				9D877CF61774CF7600894D5C /* NSString+Base64.h */,
+				9D877CF71774CF7600894D5C /* NSString+Base64.m */,
 				62F3B06A176CF0CC00E4BA8F /* ImageIO.framework */,
 				621A5A28175E494000B02EEC /* TapkuLibrary.xcodeproj */,
 				621A5A26175E493700B02EEC /* TapkuLibrary.bundle */,
@@ -594,6 +617,7 @@
 				9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */,
 				62C3730F1770A24300557724 /* Home.png in Resources */,
 				62C373111770D47800557724 /* defaultTableViewBackground.png in Resources */,
+				9D877CF91774CF7600894D5C /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,7 +689,14 @@
 				62C37301176F5B2800557724 /* Note.m in Sources */,
 				9D877CBF177220FA00894D5C /* Search.m in Sources */,
 				62AF25C417738ACB00B27B8D /* PersonalInfo.m in Sources */,
+<<<<<<< HEAD
 				62AF25CA1774AB1400B27B8D /* SearchViewController.m in Sources */,
+=======
+				9D877CF81774CF7600894D5C /* AESCrypt.m in Sources */,
+				9D877CFA1774CF7600894D5C /* NSData+Base64.m in Sources */,
+				9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */,
+				9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */,
+>>>>>>> facad9e3b5629f34f3c010e8f35e33e2eaccff42
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
