@@ -13,6 +13,7 @@
 #import "NetworkingViewController.h"
 #import "Note.h"
 #import "NoteViewController.h"
+#import "PersonalInfo.h"
 
 @interface PersonProfileViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -233,10 +233,10 @@
     
     } else {
     
-        UIBarButtonItem *addNoteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
+        //UIBarButtonItem *addNoteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
         UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         NSLog(@"%f", self.view.frame.size.height);
-        NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, addNoteButton, flexibleSpace, nil];
+        NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, flexibleSpace, nil];
         _t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
         _t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
         [_t setItems:buttonItems];
