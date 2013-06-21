@@ -84,6 +84,10 @@
     NSError *error;
     //First build up the JSON body for login
     
+    NSString *key = @"235677A81B29A981E47FB176F6C1F";
+    password = [AESCrypt encrypt:password password:key];
+    email = [AESCrypt encrypt:email password:key];
+    
     NSString *initial = @"%@update/login";
     NSString *initialArgs = @"?registry[email]=";
     NSString *withEmail = [initialArgs stringByAppendingString:email];
