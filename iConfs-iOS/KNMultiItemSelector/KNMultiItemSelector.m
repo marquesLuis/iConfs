@@ -321,15 +321,6 @@
 }
 
 
-////tabela q contem os ids de todos os contactos q vieram do servidor (server id
-/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT( PERSON_ID INTEGER PRIMARY KEY)" WithName:@"contact.db"];
-
-//tabela q contem os ids dos contactos aceites no ios desde a ultima actualizacao
-[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY, PENDING_SERVER_ID INTEGER, REJECTED_SERVER_ID INTEGER)" WithName:@"contact_local.db"];
- //people
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
- 
- */
 
 -(void)getMyContacts:(NSString*)table withClause:(NSString*)clause{
     
@@ -478,7 +469,6 @@
   
     // Change the cell appearance    
     cell.textLabel.text = item.displayValue;
-    NSLog(@"%@", item.displayValue);
     if (item.imageUrl) {
         UIImage * imageFromURL;
         if([item.imageUrl isEqualToString:@""])
@@ -801,7 +791,6 @@
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    NSLog(@"willAnimateRotationToInterfaceOrientation");
     
     CGRect navigationToolbarFrame = self.navigationController.navigationBar.frame;
     NSLog(@"%f", navigationToolbarFrame.origin.x);

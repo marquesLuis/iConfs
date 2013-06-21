@@ -17,6 +17,7 @@
 - (NSMutableArray *) getEventsFromRegex:(NSString *) regex;
 - (NSMutableArray *) getPeopleFromRegex:(NSString *) regex;
 - (NSMutableArray *) getNetworkingFromRegex:(NSString *) regex;
-- (NSMutableArray *) getNotesFromRegex:(NSString *) regex;
+- (NSMutableArray *) getNotesServerFromRegex:(NSString *) regex;
+- (NSMutableArray *) getNotesLocalFromRegex:(NSString *) regex;
 
 @end

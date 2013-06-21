@@ -399,6 +399,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="NAr-kj-pVq">
                         <barButtonItem key="backBarButtonItem" title="Back" id="d7f-we-lfm"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Upc-dT-SpB">
+                            <connections>
+                                <segue destination="ava-bD-PPQ" kind="push" identifier="segue23" id="edV-n7-HcM"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="networkingDescription" destination="mN3-hJ-eFw" id="PoF-2a-KQs"/>
@@ -935,6 +940,77 @@
             </objects>
             <point key="canvasLocation" x="1934" y="458"/>
         </scene>
+        <!--Search View Controller - Search-->
+        <scene sceneID="4Qy-nA-PKK">
+            <objects>
+                <viewController storyboardIdentifier="SearchViewController" id="ava-bD-PPQ" customClass="SearchViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xIz-FD-Qmo">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6BL-ln-IJY">
+                                <items/>
+                            </toolbar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" My search " minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Gf-Kb-Reb">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="248" id="OKY-bj-oEU"/>
+                                    <constraint firstAttribute="height" constant="33" id="ufz-5f-Jpz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="E1c-AO-yXT">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="430" id="BiK-Hv-YXT"/>
+                                </constraints>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pn4-qx-c23">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="74" id="hpn-lf-SE6"/>
+                                    <constraint firstAttribute="height" constant="31" id="sMj-Nl-9bd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doSearch:" destination="ava-bD-PPQ" eventType="touchUpInside" id="v7O-Zc-kDL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Pn4-qx-c23" firstAttribute="top" secondItem="xIz-FD-Qmo" secondAttribute="top" type="default" id="2gL-nv-pne"/>
+                            <constraint firstItem="6BL-ln-IJY" firstAttribute="bottom" secondItem="xIz-FD-Qmo" secondAttribute="bottom" type="default" id="6D7-1K-nwh"/>
+                            <constraint firstItem="8Gf-Kb-Reb" firstAttribute="leading" secondItem="xIz-FD-Qmo" secondAttribute="leading" type="default" id="ATU-bf-lId"/>
+                            <constraint firstItem="E1c-AO-yXT" firstAttribute="trailing" secondItem="xIz-FD-Qmo" secondAttribute="trailing" type="default" id="XmH-El-9db"/>
+                            <constraint firstItem="E1c-AO-yXT" firstAttribute="leading" secondItem="xIz-FD-Qmo" secondAttribute="leading" type="default" id="atK-hk-UIS"/>
+                            <constraint firstItem="Pn4-qx-c23" firstAttribute="bottom" secondItem="8Gf-Kb-Reb" secondAttribute="bottom" type="default" id="bI8-Yi-z4C"/>
+                            <constraint firstItem="Pn4-qx-c23" firstAttribute="trailing" secondItem="xIz-FD-Qmo" secondAttribute="trailing" type="default" id="cwR-Lb-1j6"/>
+                            <constraint firstItem="6BL-ln-IJY" firstAttribute="top" secondItem="E1c-AO-yXT" secondAttribute="bottom" type="default" id="he3-f3-Ri8"/>
+                            <constraint firstItem="6BL-ln-IJY" firstAttribute="leading" secondItem="xIz-FD-Qmo" secondAttribute="leading" type="default" id="lp2-A5-yyB"/>
+                            <constraint firstItem="6BL-ln-IJY" firstAttribute="trailing" secondItem="xIz-FD-Qmo" secondAttribute="trailing" type="default" id="w2W-O5-HkX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Search" id="K79-dm-gEw">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="HlR-gj-HZS"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="resultsOfSearch" destination="E1c-AO-yXT" id="4pU-9E-pXj"/>
+                        <outlet property="searchBar" destination="8Gf-Kb-Reb" id="3A5-vg-J70"/>
+                        <outlet property="toolbar" destination="6BL-ln-IJY" id="uYG-bI-T6F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fn0-g6-vaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2806" y="578"/>
+        </scene>
         <!--All Notes View Controller - Notes-->
         <scene sceneID="sft-KW-qw5">
             <objects>
@@ -1099,15 +1175,151 @@
         <image name="Schedule.jpg" width="50" height="50"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
+    <classes>
+        <class className="AllNetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="AllNotesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="notesTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="AllNotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="CommunicationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
+                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="sendButton:"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="EventUIViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="info" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="roomButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goToContacts:" candidateClass="UIButton"/>
+                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="IConfsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ImageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="KNMultiItemSelector" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/KNMultiItemSelector.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goHome:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="searchTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NetworkingViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="NoteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
+                <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NotificationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="PersonProfileViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="SearchViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doSearch:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="resultsOfSearch" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="TKCalendarDayViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="XYc-KS-Og4"/>
         <segue reference="Ia1-G5-ae0"/>
-        <segue reference="eJJ-Tb-A8d"/>
+        <segue reference="XYc-KS-Og4"/>
         <segue reference="blc-fZ-HyN"/>
+        <segue reference="zvh-69-tNz"/>
     </inferredMetricsTieBreakers>
 </document>

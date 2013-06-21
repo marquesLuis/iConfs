@@ -28,6 +28,7 @@
 		621A5A3F175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A3E175E506300B02EEC /* PersonalProgramTKCalendarDayViewController.m */; };
 		621A5A55175E98CB00B02EEC /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 621A5A54175E98CB00B02EEC /* Event.m */; };
 		62AF25C417738ACB00B27B8D /* PersonalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AF25C317738ACB00B27B8D /* PersonalInfo.m */; };
+		62AF25CA1774AB1400B27B8D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AF25C91774AB1400B27B8D /* SearchViewController.m */; };
 		62C37301176F5B2800557724 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C37300176F5B2800557724 /* Note.m */; };
 		62C3730F1770A24300557724 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C3730E1770A24300557724 /* Home.png */; };
 		62C373111770D47800557724 /* defaultTableViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C373101770D47800557724 /* defaultTableViewBackground.png */; };
@@ -148,6 +149,8 @@
 		621A5A54175E98CB00B02EEC /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		62AF25C217738ACB00B27B8D /* PersonalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfo.h; sourceTree = "<group>"; };
 		62AF25C317738ACB00B27B8D /* PersonalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfo.m; sourceTree = "<group>"; };
+		62AF25C81774AB1400B27B8D /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		62AF25C91774AB1400B27B8D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		62C372FF176F5B2800557724 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		62C37300176F5B2800557724 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		62C3730E1770A24300557724 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
@@ -419,11 +422,13 @@
 				9D877CBE177220FA00894D5C /* Search.m */,
 				9DBF86981756006200845BD7 /* IConfsViewController.h */,
 				9DBF86991756006200845BD7 /* IConfsViewController.m */,
+				62AF25C217738ACB00B27B8D /* PersonalInfo.h */,
+				62AF25C317738ACB00B27B8D /* PersonalInfo.m */,
 				9DBF86741755FD6E00845BD7 /* iConfs_iOS.xcdatamodeld */,
 				62F3B03A176CEFF700E4BA8F /* KNMultiItemSelector */,
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
-				62AF25C217738ACB00B27B8D /* PersonalInfo.h */,
-				62AF25C317738ACB00B27B8D /* PersonalInfo.m */,
+				62AF25C81774AB1400B27B8D /* SearchViewController.h */,
+				62AF25C91774AB1400B27B8D /* SearchViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -660,6 +665,7 @@
 				62C37301176F5B2800557724 /* Note.m in Sources */,
 				9D877CBF177220FA00894D5C /* Search.m in Sources */,
 				62AF25C417738ACB00B27B8D /* PersonalInfo.m in Sources */,
+				62AF25CA1774AB1400B27B8D /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

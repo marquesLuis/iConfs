@@ -73,9 +73,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
-    
-    person.personID = personId;
+    if([[segue identifier] isEqualToString:@"segue3"]){
+        PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
+        person.personID = personId;
+    }
 }
 
 @end

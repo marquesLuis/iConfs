@@ -32,10 +32,16 @@
     NSString * whereString = [NSString stringWithFormat:@"TITLE LIKE '%@' OR NETWORKING LIKE '%@'",regex, regex];
     return [self doSearchFromFile:@"networkings.db" fromTable:@"NETWORKINGS" where:whereString numArgs:6];
 }
-- (NSMutableArray *) getNotesFromRegex:(NSString *) regex{
+- (NSMutableArray *) getNotesServerFromRegex:(NSString *) regex{
     regex = [self prepareRegex:regex];
     NSString * whereString = [NSString stringWithFormat:@"CONTENT LIKE '%@'",regex];
    return [self doSearchFromFile:@"notes.db" fromTable:@"NOTES" where:whereString numArgs:6];
+}
+
+- (NSMutableArray *) getNotesLocalFromRegex:(NSString *) regex{
+    regex = [self prepareRegex:regex];
+    NSString * whereString = [NSString stringWithFormat:@"CONTENT LIKE '%@'",regex];
+    return [self doSearchFromFile:@"notes_local.db" fromTable:@"NOTES_LOCAL" where:whereString numArgs:6];
 }
 
 - (NSMutableArray *) doSearchFromFile:(NSString *)db_file fromTable:(NSString *)table_name where:(NSString *)where numArgs:(int) numArgs{
