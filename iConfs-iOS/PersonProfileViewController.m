@@ -15,11 +15,12 @@
     @property (nonatomic, strong) NSMutableArray * personNetworking;
 @property (nonatomic, strong) NSMutableArray * notes;
 @property (nonatomic, strong) UIToolbar *t;
+@property (nonatomic, strong) NSMutableArray * info;
 
 @end
 
 @implementation PersonProfileViewController
-@synthesize personID, tableNetworking, notes, personNetworking, personProfile, t;
+@synthesize personID, tableNetworking, notes, personNetworking, personProfile,  info;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,11 +51,43 @@
     
     [self.tableNetworking setEditing:YES animated:YES];
     self.tableNetworking.allowsSelectionDuringEditing = YES;
+    info = [[NSMutableArray alloc] init];
     [self updateNotes];
+    [self personal_info];
     [self createToolbar];
     [self navigationButtons];
 }
 
+
+-(void) personal_info{
+    if([self belongsToDB:@"contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM CONTACT WHERE PERSON_ID = %@", self.personID]]){
+        [info removeAllObjects];
+        sqlite3_stmt *statement;
+        sqlite3 *db;
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docPath = [path objectAtIndex:0];
+        NSString *dbPathString = [docPath stringByAppendingPathComponent:@"info.db"];
+        
+        if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+            NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM INFO WHERE PERSON_ID = %@", self.personID];
+            const char* query_sql = [querySql UTF8String];
+            
+            if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+                while (sqlite3_step(statement)==SQLITE_ROW) {
+                    NSString *type = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                    NSString *value = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                    PersonalInfo * infos = [[PersonalInfo alloc]init];
+                    [infos setType:type];
+                    [infos setValue:value];
+                    [info addObject:infos];
+                    
+                }
+            }
+            sqlite3_close(db);
+        }
+
+    }
+}
 
 -(void)navigationButtons{
     
@@ -69,7 +102,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0)
+    if(indexPath.section == 0 || indexPath.section == 2)
         return UITableViewCellEditingStyleNone;
     return UITableViewCellEditingStyleDelete;
 }
@@ -207,8 +240,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if([info count]== 0){
+        NSLog(@"no personal info");
+        return 2;
+    }
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -216,6 +253,8 @@
     // Return the number of rows in the section.
     if(section == 1)
         return [notes count];
+    if(section == 2)
+        return [info count];
     return [personNetworking count];
 }
 
@@ -236,11 +275,21 @@
         case 1:
             [self configureNoteCell:cell atIndexPath:indexPath];
             break;
+        case 2:
+            [self configurePersonalInfoCell:cell atIndexPath:indexPath];
         default:
             break;
     
     }
     return cell;
+}
+
+- (void)configurePersonalInfoCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    PersonalInfo *personal = [info objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = personal.type;
+    cell.detailTextLabel.text = personal.value;
 }
 
 - (void)configureNetworkingCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -264,13 +313,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     // networking section
     if(indexPath.section == 0){
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self performSegueWithIdentifier:@"segue19" sender:nil];
     }
     // note section
-    else {
+    else if(indexPath.section == 1){
         [self performSegueWithIdentifier:@"segue18" sender: [NSNumber numberWithInteger:indexPath.row]];
     }
 }
@@ -581,6 +631,11 @@
         notesLabel.text = @"My notes:";
         notesLabel.backgroundColor = [UIColor clearColor];
         [headerView addSubview:notesLabel];
+    } else if (section == 2){
+        UILabel *personalInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 25)];
+        personalInfoLabel.text = @"Personal information:";
+        personalInfoLabel.backgroundColor = [UIColor clearColor];
+        [headerView addSubview:personalInfoLabel];
     }
 
     return headerView;
@@ -686,7 +741,15 @@
 #pragma mark - UITableViewDelegate Methods
 
 - (IBAction)addNote:(UIBarButtonItem *)sender {
-    [self performSegueWithIdentifier:@"segue17" sender:sender];
+    
+    NSLog(@"new note...");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
+    
+    NoteViewController *note =[storyboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
+    note.hidePersonButton = YES;
+    note.hideSessionButton = NO;
+    note.personID = self.personID;
+    [[self navigationController] pushViewController:note animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

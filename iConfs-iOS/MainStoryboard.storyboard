@@ -990,7 +990,7 @@
         <!--Note View Controller - New note-->
         <scene sceneID="EMU-aK-NoZ">
             <objects>
-                <viewController id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NoteViewController" id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
