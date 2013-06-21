@@ -63,7 +63,6 @@
 		9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CB6176FCF6600894D5C /* defaultPerson.jpg */; };
 		9D877CBF177220FA00894D5C /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CBE177220FA00894D5C /* Search.m */; };
 		9D877CF81774CF7600894D5C /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF01774CF7600894D5C /* AESCrypt.m */; };
-		9D877CF91774CF7600894D5C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CF11774CF7600894D5C /* LICENSE */; };
 		9D877CFA1774CF7600894D5C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF31774CF7600894D5C /* NSData+Base64.m */; };
 		9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF51774CF7600894D5C /* NSData+CommonCrypto.m */; };
 		9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D877CF71774CF7600894D5C /* NSString+Base64.m */; };
@@ -617,7 +616,6 @@
 				9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */,
 				62C3730F1770A24300557724 /* Home.png in Resources */,
 				62C373111770D47800557724 /* defaultTableViewBackground.png in Resources */,
-				9D877CF91774CF7600894D5C /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
