@@ -76,15 +76,15 @@
 }
 
 -(void) update{
-    [self handleResponse:[self postRequest:[self buildRequest]]];
-    [self alertMessages:@"Success" withMessage:@"Everything is now up to date :)"];
+    if ([self handleResponse:[self postRequest:[self buildRequest]withAlert:YES]])
+        [self alertMessages:@"Success" withMessage:@"Everything is now up to date :)"];
 }
 
 - (void) updateWithoutMessage{
-    [self handleResponse:[self postRequest:[self buildRequest]]];
+    [self handleResponse:[self postRequest:[self buildRequest]withAlert:NO]];
 }
 
--(NSMutableDictionary *) postRequest:(NSMutableDictionary *)jsonRequest
+-(NSMutableDictionary *) postRequest:(NSMutableDictionary *)jsonRequest withAlert:(BOOL)alert
 {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
@@ -117,7 +117,8 @@
         
     }
     @catch (NSException * e) {
-        [self alertMessages:@"Error" withMessage:@"Error on login, try again later."];
+        if (alert)
+            [self alertMessages:@"Error" withMessage:@"Connection Error, try again later."];
         return nil;
     }
     
@@ -1057,7 +1058,10 @@
     }
 }
 
-- (NSMutableDictionary *) handleResponse:(NSMutableDictionary *)request{
+- (BOOL) handleResponse:(NSMutableDictionary *)request{
+    if (!request)
+        return NO;
+    
     NSLog(@"Handling");
     
     NSMutableDictionary *feedbacks = [request objectForKey:@"feedbacks"];
@@ -1113,7 +1117,7 @@
     if (contacts)
         [self handleContacts:contacts];
     
-    return nil;
+    return YES;
 }
 
 /*
