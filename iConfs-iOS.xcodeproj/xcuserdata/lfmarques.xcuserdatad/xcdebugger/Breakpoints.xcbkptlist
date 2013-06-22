@@ -13,8 +13,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "822"
          endingLineNumber = "822"
-         landmarkName = "-handlePeople:"
-         landmarkType = "5">
+         landmarkName = "@implementation Update"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -26,8 +26,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "823"
          endingLineNumber = "823"
-         landmarkName = "@implementation Update"
-         landmarkType = "3">
+         landmarkName = "-readAttending:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
