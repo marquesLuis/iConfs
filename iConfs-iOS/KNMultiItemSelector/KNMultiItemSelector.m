@@ -424,34 +424,26 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"numberOfRowsInSection");
     
     if (selectorMode == KNSelectorModeSearch) {
-      NSLog(@"1");
 
     return filteredItems.count;
   } else if (selectorMode == KNSelectorModeNormal) {
-      NSLog(@"2");
 
     if (useRecentItems && section==0 && recentItems.count) {
-        NSLog(@"3");
 
       return recentItems.count;
     } else if (useTableIndex) {
-        NSLog(@"4");
 
       if (useRecentItems && recentItems.count) section -= 1;
       NSMutableArray * rows = [indices objectForKey:[[self sortedIndices] objectAtIndex:section]];
-        NSLog(@"5");
 
       return rows.count;
     } else {
-        NSLog(@"6");
 
       return items.count;
     }
   } else {
-      NSLog(@"7");
 
     return self.selectedItems.count;
   }

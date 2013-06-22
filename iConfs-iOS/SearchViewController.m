@@ -21,7 +21,7 @@
     NSMutableArray *notesLocal;
     NSMutableArray *sessions;
     NSMutableArray *networking;
-    
+    NSMutableDictionary * indices;
     UISegmentedControl *options;
 
 }
@@ -53,8 +53,97 @@
     
     self.searchBar.keyboardType = UIKeyboardTypeASCIICapable;
     self.searchBar.returnKeyType = UIReturnKeyDone;
+}
 
+/*
+ //people
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
+ 
+ //networkings
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NETWORKINGS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NETWORKING TEXT, DATE TEXT, PERSON_ID INTEGER, SERVER_ID INTEGER)" WithName:@"networkings.db"];
+ 
 
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
+ 
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
+ 
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
+ 
+ //Events
+ [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
+ 
+ */
+//initialize indices
+-(void)tableIndices{
+    indices = [NSMutableDictionary dictionary];
+        
+        
+    if(options.selectedSegmentIndex == PEOPLE){
+        for (NSMutableArray * i in persons)
+            [self insertIntoIndices:persons withName:[i objectAtIndex:1] withObject:i];
+    } else if (options.selectedSegmentIndex == NETWORKING){
+        for (NSMutableArray * i in networking)
+            [self insertIntoIndices:networking withName:[i objectAtIndex:1] withObject:i];
+    } else if(options.selectedSegmentIndex == NOTES){
+        for (NSMutableArray * i in notesLocal)
+            [self insertIntoIndices:notesLocal withName:[i objectAtIndex:3] withObject:i];
+        for (NSMutableArray * i in notesServer)
+            [self insertIntoIndices:notesServer withName:[i objectAtIndex:2] withObject:i];
+    } else if(options.selectedSegmentIndex == SESSIONS){
+        for (NSMutableArray * i in sessions)
+            [self insertIntoIndices:sessions withName:[i objectAtIndex:1] withObject:i];
+    }
+        
+}
+
+-(void)insertIntoIndices:(NSMutableArray *)array withName:(NSString*)name withObject:(NSMutableArray*)i{
+        NSString * letter = [name substringToIndex:1];
+        if (![indices objectForKey:letter]) {
+            [indices setObject:[NSMutableArray array] forKey:letter];
+        }
+        NSMutableArray * a = [indices objectForKey:letter];
+        [a addObject:i];
+}
+
+#pragma mark - UITableView Datasource
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSLog(@"numberOfSectionsInTableView");
+    [self tableIndices];
+    int size = [[self sortedIndices]count];
+    
+    if(options.selectedSegmentIndex == PEOPLE || options.selectedSegmentIndex == SESSIONS || options.selectedSegmentIndex == NOTES || options.selectedSegmentIndex == NETWORKING)
+            if(size)
+                return size;
+    return 0;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    id p = [[self sortedIndices] objectAtIndex:section];
+    
+    NSMutableArray * rows = [indices objectForKey:p];
+    NSLog(@"numberOfRowsInSection section : %d, num rows : %d with id : %@", section, rows.count, p);
+
+    return rows.count;
+}
+
+-(NSArray*)sortedIndices {
+    NSLog(@"sortedIndices");
+    return [indices.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+}
+
+#pragma mark - Table indices
+
+- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
+    NSLog(@"titleForHeaderInSection");
+    NSLog(@"%d", section);
+            return [[self sortedIndices] objectAtIndex:section];
+        
+}
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    NSLog(@"sectionIndexTitlesForTableView");
+            return [self sortedIndices];
+        
 }
 
 /**
@@ -77,7 +166,7 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+/*- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // se nao houver nenhum resultado.
     
@@ -85,9 +174,9 @@
         return 1;
     
     return 0;
-}
+}*/
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+/*- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     if(options.selectedSegmentIndex == PEOPLE)
@@ -102,10 +191,10 @@
     if(options.selectedSegmentIndex == NETWORKING)
         return [networking count];
     return 0;
-}
+}*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{NSLog(@"cellForRowAtIndexPath");
     NSString *CellIdentifier = @"Cell1";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -129,6 +218,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"heightForRowAtIndexPath");
     NSLog(@"segmentindex = %d", NETWORKING);
     if(options.selectedSegmentIndex == NETWORKING){
         NSLog(@"HELLO!");
@@ -181,27 +271,37 @@
 
 - (void)configureSessionsCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [[sessions objectAtIndex:indexPath.row] objectAtIndex:1];
+    NSMutableArray * session = [[indices objectForKey:[[self sortedIndices] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = [session  objectAtIndex:1];
 }
+
+/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
+
+
+[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
+
+*/
 
 - (void)configureNotesCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"count notesLocal %d", notesLocal.count);
-    NSLog(@"count notesServer %d", notesServer.count);
     NSLog(@"indexPath. row = %d", indexPath.row);
-    
-    // 1º local notes
-    if(indexPath.row < [notesLocal count])
-        cell.textLabel.text = [[notesLocal objectAtIndex:indexPath.row] objectAtIndex:3];
-     else 
-        cell.textLabel.text = [[notesServer objectAtIndex:(indexPath.row-1)] objectAtIndex:2];
+    NSMutableArray * note = [[indices objectForKey:[[self sortedIndices] objectAtIndex:indexPath.section]]objectAtIndex:indexPath.row];
+    NSLog(@"count note %d", [note count]);
+
+    //  local notes
+    if([note count] == 7)
+        cell.textLabel.text = [note  objectAtIndex:3];
+     else
+        cell.textLabel.text = [note objectAtIndex:2];
 }
 
 - (void)configurePeopleCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray * person = [persons objectAtIndex:indexPath.row] ;
-    
+    //NSMutableArray * person = [persons objectAtIndex:indexPath.row] ;
+    NSMutableArray * person = [[indices objectForKey:[[self sortedIndices] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+
     NSString * firstName = [person objectAtIndex:1];
     NSString * lastName = [person objectAtIndex:2];
     cell.textLabel.text = [[firstName stringByAppendingFormat:@" "] stringByAppendingFormat:@"%@", lastName];
@@ -219,8 +319,9 @@
 - (void)configureNetworkingCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSMutableArray * network = [networking objectAtIndex:indexPath.row];
-    
+   // NSMutableArray * network = [networking objectAtIndex:indexPath.row];
+    NSMutableArray * network = [[indices objectForKey:[[self sortedIndices] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+
     CGRect Label1Frame = CGRectMake(10, 10, 175, 25);
     CGRect Label2Frame = CGRectMake(10, 30, 175, 25);
     CGRect Label3Frame = CGRectMake(10, 50, 175, 25);

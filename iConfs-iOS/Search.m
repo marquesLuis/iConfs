@@ -41,7 +41,7 @@
 - (NSMutableArray *) getNotesLocalFromRegex:(NSString *) regex{
     regex = [self prepareRegex:regex];
     NSString * whereString = [NSString stringWithFormat:@"CONTENT LIKE '%@'",regex];
-    return [self doSearchFromFile:@"notes_local.db" fromTable:@"NOTES_LOCAL" where:whereString numArgs:6];
+    return [self doSearchFromFile:@"notes_local.db" fromTable:@"NOTES_LOCAL" where:whereString numArgs:7];
 }
 
 - (NSMutableArray *) doSearchFromFile:(NSString *)db_file fromTable:(NSString *)table_name where:(NSString *)where numArgs:(int) numArgs{
