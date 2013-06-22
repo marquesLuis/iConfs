@@ -1059,8 +1059,10 @@
 }
 
 - (BOOL) handleResponse:(NSMutableDictionary *)request{
-    if (!request)
+    if (!request){
+        NSLog(@"Request is null");
         return NO;
+    }
     
     NSLog(@"Handling");
     
