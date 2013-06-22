@@ -368,11 +368,10 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.resultsOfSearch deselectRowAtIndexPath:indexPath animated:YES];
     
     // Return the number of rows in the section.
     if(options.selectedSegmentIndex == PEOPLE)
-        [self performSegueWithIdentifier:@"segue26" sender: [NSNumber numberWithInteger:indexPath.row]];
+        [self performSegueWithIdentifier:@"segue26" sender: self];//[NSNumber numberWithInteger:indexPath.row]];
 
     
     if(options.selectedSegmentIndex == SESSIONS)
@@ -384,6 +383,7 @@
     if(options.selectedSegmentIndex == NETWORKING)
         [self performSegueWithIdentifier:@"segue25" sender: [NSNumber numberWithInteger:indexPath.row]];
     
+    [self.resultsOfSearch deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 
@@ -391,17 +391,19 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    int row = [sender intValue];
-    NSLog(@"%d", row);
+    int row = self.resultsOfSearch.indexPathForSelectedRow.row;
+    int section = self.resultsOfSearch.indexPathForSelectedRow.section;
     if([[segue identifier] isEqualToString:@"segue25"]){
         NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
         
         network.networkingDescription = [[UITextView alloc] init];
         network.personPhoto = [[UIImageView alloc] init];
-        NSMutableArray *n = [networking objectAtIndex:row];
+        
+        NSMutableArray * n = [[indices objectForKey:[[self sortedIndices] objectAtIndex:section]] objectAtIndex:row];
+        
         NSString * personID = [n objectAtIndex:4];
 
-        network.numNetworking = row;
+        network.numNetworking = self.resultsOfSearch.indexPathForSelectedRow.row;
         network.netTitle = [n objectAtIndex:1];
         Person * person = [self getPerson:personID];
         
@@ -417,18 +419,18 @@
         note.hidePersonButton = YES;
         note.hideSessionButton = NO;
         note.title = @"My note";
-        NSMutableArray *n;
+        
+        NSMutableArray * n = [[indices objectForKey:[[self sortedIndices] objectAtIndex:section]] objectAtIndex:row];
+
         
         // 1º local notes
-        if(row < [notesLocal count]){
-            n = [notesLocal objectAtIndex:row];
+        if([n count] == 7){
             note.isLocal = YES;
             note.personID = [n objectAtIndex:4];
             note.noteID = [n objectAtIndex:0];
             note.content = [n objectAtIndex:3];
             note.eventID = [n objectAtIndex:5];
         } else {
-            n = [notesServer objectAtIndex:(row-1)];
             note.isLocal = NO;
             note.personID = [n objectAtIndex:3];
             note.noteID = [n objectAtIndex:0];
@@ -437,11 +439,11 @@
         }
     } else if([[segue identifier] isEqualToString:@"segue26"]){
         PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
-        NSMutableArray *p = [persons objectAtIndex:row];
+        NSMutableArray * p = [[indices objectForKey:[[self sortedIndices] objectAtIndex:section]] objectAtIndex:row];
         person.personID = [p objectAtIndex:8];
     } else if([[segue identifier] isEqualToString:@"segue24"]){
         EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
-        NSMutableArray * s = [sessions objectAtIndex:row];
+        NSMutableArray * s = [[indices objectForKey:[[self sortedIndices] objectAtIndex:section]] objectAtIndex:row];
         Event * e = [[Event alloc]init];
         
         [e setTitle:[s objectAtIndex:1]];
