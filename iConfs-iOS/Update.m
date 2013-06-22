@@ -797,8 +797,8 @@
         for(NSString *key in updated.allKeys){
             NSMutableDictionary *person = [updated objectForKey:key];
             NSString * values = [self readPerson:person];
-            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[person objectForKey:@"id"] integerValue] definition:definition values:values];
-            [self removeFrom:info_db_file table:info_table_name attribute:@"PERSON_ID" withID:[[person objectForKey:@"id"] integerValue]];
+            [self updateRowFrom:db_file table:table_name whereAttribute:@"SERVER_ID" equalsID:[[person objectForKey:@"server_id"] integerValue] definition:definition values:values];
+            [self removeFrom:info_db_file table:info_table_name attribute:@"PERSON_ID" withID:[[person objectForKey:@"server_id"] integerValue]];
             NSMutableDictionary * new_infos = [person objectForKey:@"infos"];
             if (new_infos && [new_infos count]){
                 for (NSString * info_key in new_infos){
