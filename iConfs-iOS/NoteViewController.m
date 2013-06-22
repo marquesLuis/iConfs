@@ -154,6 +154,10 @@ return self;
         [self removeNote:NO withId:self.noteID];
     }
     
+    //update
+    Update *update = [[Update alloc] initDB];
+    [update updateWithoutMessage];
+    
     [[self navigationController] popViewControllerAnimated:YES];
 }
 

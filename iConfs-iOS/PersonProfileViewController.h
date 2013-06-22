@@ -14,6 +14,7 @@
 #import "Note.h"
 #import "NoteViewController.h"
 #import "PersonalInfo.h"
+#import "Update.h"
 
 @interface PersonProfileViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

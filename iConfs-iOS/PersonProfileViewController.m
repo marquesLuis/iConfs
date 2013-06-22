@@ -673,6 +673,9 @@
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
     [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition: @"PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
+   
+    Update *update = [[Update alloc] initDB];
+    [update updateWithoutMessage];
     
     [self.tableNetworking reloadData];
 }
@@ -684,6 +687,9 @@
     [self insertTo:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL" definition: @"PENDING_SERVER_ID, PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@' , '%@'", pendingID, self.personID]];
     
+    Update *update = [[Update alloc] initDB];
+    [update updateWithoutMessage];
+    
     [self.tableNetworking reloadData];
 }
 
@@ -694,6 +700,9 @@
             values: [@"" stringByAppendingFormat:@"'%@', '%@', '0'", self.personID, pendingID]];
     [self insertTo:@"contact.db" table:@"CONTACT" definition: @"PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
+    
+    Update *update = [[Update alloc] initDB];
+    [update updateWithoutMessage];
     
     [self.tableNetworking reloadData];
 }

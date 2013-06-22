@@ -104,6 +104,10 @@
         [self insertOnDB:[NSString stringWithFormat:@"INSERT INTO MESSAGES (MESSAGE, EMAIL) values ('%s', '%s')",[self.feedback.text UTF8String], [self.emailField.text UTF8String]] On:(BOOL)isfeedback WithName:@"messages.db"];
     }
     
+    //update
+    Update *update = [[Update alloc] initDB];
+    [update updateWithoutMessage];
+    
     //change view
     [[self navigationController] popViewControllerAnimated:YES];
     
