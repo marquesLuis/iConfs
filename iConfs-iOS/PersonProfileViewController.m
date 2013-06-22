@@ -682,7 +682,7 @@
     [self removeFrom:@"pending_contact.db" table:@"PENDING_CONTACT" attribute:@"PENDING_SERVER_ID" withID:[pendingID intValue]];
     
     [self insertTo:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL" definition: @"PENDING_SERVER_ID, PERSON_ID"
-            values: [@"" stringByAppendingFormat:@"'%@' , '%@'", self.personID, pendingID]];
+            values: [@"" stringByAppendingFormat:@"'%@' , '%@'", pendingID, self.personID]];
     
     [self.tableNetworking reloadData];
 }
