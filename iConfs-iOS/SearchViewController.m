@@ -13,6 +13,8 @@
 #define NOTES 2
 #define NETWORKING 3
 
+
+
 @interface SearchViewController () <UITableViewDelegate, UITableViewDataSource>{
     NSMutableArray *persons;
     NSMutableArray *notesServer;
@@ -107,10 +109,7 @@
     NSString *CellIdentifier = @"Cell1";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     
@@ -128,6 +127,16 @@
     
     return cell;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"segmentindex = %d", NETWORKING);
+    if(options.selectedSegmentIndex == NETWORKING){
+        NSLog(@"HELLO!");
+        return 80.0f;
+    }
+    return 40.0f;
+}
+
 -(Person *)getPerson:(NSString*)personId{
     sqlite3_stmt *statement;
     sqlite3 *peopleDB;
@@ -170,19 +179,6 @@
     return person;
 }
 
-/*
- //Notes
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
- 
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
- 
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
- 
- //Events
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
- 
- */
-
 - (void)configureSessionsCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     cell.textLabel.text = [[sessions objectAtIndex:indexPath.row] objectAtIndex:1];
@@ -190,25 +186,17 @@
 
 - (void)configureNotesCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"count notesLocal %d", notesLocal.count);
+    NSLog(@"count notesServer %d", notesServer.count);
+    NSLog(@"indexPath. row = %d", indexPath.row);
+    
     // 1º local notes
     if(indexPath.row < [notesLocal count])
         cell.textLabel.text = [[notesLocal objectAtIndex:indexPath.row] objectAtIndex:3];
      else 
-        cell.textLabel.text = [[notesServer objectAtIndex:indexPath.row] objectAtIndex:2];
-
-    
-    
-
+        cell.textLabel.text = [[notesServer objectAtIndex:(indexPath.row-1)] objectAtIndex:2];
 }
-
-/*
- 
- //people
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PEOPLE( ID INTEGER PRIMARY KEY AUTOINCREMENT, FIRSTNAME TEXT, LASTNAME TEXT, PREFIX TEXT, AFFILIATION TEXT, EMAIL TEXT, PHOTO TEXT, BIOGRAPHY TEXT, SERVER_ID INTEGER, LAST_DATE TEXT)" WithName:@"people.db"];
- 
- //networkings
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NETWORKINGS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NETWORKING TEXT, DATE TEXT, PERSON_ID INTEGER, SERVER_ID INTEGER)" WithName:@"networkings.db"];
- */
 
 - (void)configurePeopleCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
@@ -279,8 +267,122 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"segue5" sender:nil];
+    [self.resultsOfSearch deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // Return the number of rows in the section.
+    if(options.selectedSegmentIndex == PEOPLE)
+        [self performSegueWithIdentifier:@"segue26" sender: [NSNumber numberWithInteger:indexPath.row]];
+
+    
+    if(options.selectedSegmentIndex == SESSIONS)
+        [self performSegueWithIdentifier:@"segue24" sender: [NSNumber numberWithInteger:indexPath.row]];
+    
+    if(options.selectedSegmentIndex == NOTES)
+        [self performSegueWithIdentifier:@"segue27" sender: [NSNumber numberWithInteger:indexPath.row]];
+    
+    if(options.selectedSegmentIndex == NETWORKING)
+        [self performSegueWithIdentifier:@"segue25" sender: [NSNumber numberWithInteger:indexPath.row]];
+    
+
 }
+
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    int row = [sender intValue];
+    NSLog(@"%d", row);
+    if([[segue identifier] isEqualToString:@"segue25"]){
+        NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
+        
+        network.networkingDescription = [[UITextView alloc] init];
+        network.personPhoto = [[UIImageView alloc] init];
+        NSMutableArray *n = [networking objectAtIndex:row];
+        NSString * personID = [n objectAtIndex:4];
+
+        network.numNetworking = row;
+        network.netTitle = [n objectAtIndex:1];
+        Person * person = [self getPerson:personID];
+        
+        network.namePerson = [[[[person.prefix stringByAppendingString:@" "]stringByAppendingString:person.firstName]stringByAppendingString:@" "]stringByAppendingString:person.lastName];
+        network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+        network.photoPath = person.photo;
+        network.networkingDescriptionContent = [n objectAtIndex:1];
+        network.personId = personID;
+        
+    } else if([[segue identifier] isEqualToString:@"segue27"]){
+        NSLog(@"My note");
+        NoteViewController *note = (NoteViewController*)segue.destinationViewController;
+        note.hidePersonButton = YES;
+        note.hideSessionButton = NO;
+        note.title = @"My note";
+        NSMutableArray *n;
+        
+        // 1º local notes
+        if(row < [notesLocal count]){
+            n = [notesLocal objectAtIndex:row];
+            note.isLocal = YES;
+            note.personID = [n objectAtIndex:4];
+            note.noteID = [n objectAtIndex:0];
+            note.content = [n objectAtIndex:3];
+            note.eventID = [n objectAtIndex:5];
+        } else {
+            n = [notesServer objectAtIndex:(row-1)];
+            note.isLocal = NO;
+            note.personID = [n objectAtIndex:3];
+            note.noteID = [n objectAtIndex:0];
+            note.content = [n objectAtIndex:2];
+            note.eventID = [n objectAtIndex:4];
+        }
+    } else if([[segue identifier] isEqualToString:@"segue26"]){
+        PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
+        NSMutableArray *p = [persons objectAtIndex:row];
+        person.personID = [p objectAtIndex:8];
+    } else if([[segue identifier] isEqualToString:@"segue24"]){
+        EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
+        NSMutableArray * s = [sessions objectAtIndex:row];
+        Event * e = [[Event alloc]init];
+        
+        [e setTitle:[s objectAtIndex:1]];
+        [e setDescription:[s objectAtIndex:2]];
+        [e setKind:[s objectAtIndex:4]];
+        [e setBegin:[s objectAtIndex:5]];
+        [e setEnd:[s objectAtIndex:6]];
+        [e setDate:[s objectAtIndex:7]];
+        [e setLocation:[self getLocal:[s objectAtIndex:10]]];
+        [e setKeynote:[s objectAtIndex:9]];
+        [e setSpeakerID:[s objectAtIndex:8]];
+        [e setLocalID:[s objectAtIndex:10]];
+        [e setEventID:[s objectAtIndex:3]];
+        second.event = e;
+    }
+}
+    
+    
+-(NSString *)getLocal:(NSString*)localID{
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"location.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM LOCATION WHERE SERVER_ID = %@", localID];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                
+                
+            }
+        }
+        sqlite3_close(db);
+    }
+    return nil;
+}
+    
 
 
 - (void)didReceiveMemoryWarning

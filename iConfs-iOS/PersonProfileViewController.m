@@ -330,7 +330,7 @@
 {
     
     if([[segue identifier] isEqualToString:@"segue19"]){
-    
+#warning verificar outras rows...
         NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
         
         NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;

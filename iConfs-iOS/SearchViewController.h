@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Search.h"
 #import "Person.h"
+#import "NetworkingViewController.h"
+#import "PersonProfileViewController.h"
+#import "EventUIViewController.h"
+#import "NoteViewController.h"
 
 @interface SearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITextField *searchBar;
