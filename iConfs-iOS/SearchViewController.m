@@ -45,7 +45,10 @@
     
     
     [self treatKeyboard];
-    //self.resultsOfSearch = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+    //self.searchBar = [[UITextField alloc]initWithFrame:CGRectMake(0, 50, self.view.frame.size.width-100, 144)];
+    //self.searchBar.borderStyle = UITextBorderStyleNone;
+    //[self.view addSubview:self.searchBar];
+    //self.resultsOfSearch = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.resultsOfSearch.dataSource = self;
     self.resultsOfSearch.delegate = self;
     [self.view addSubview:self.resultsOfSearch];

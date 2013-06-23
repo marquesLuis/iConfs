@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "KNSelectorItem.h"
 #import "PersonProfileViewController.h"
+#import "SearchViewController.h"
 
 typedef enum {
   KNSelectorModeNormal,

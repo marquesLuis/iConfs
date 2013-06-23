@@ -414,7 +414,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqB-Du-eUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2558" y="-286"/>
+            <point key="canvasLocation" x="3026" y="-286"/>
         </scene>
         <!--Person Profile View Controller-->
         <scene sceneID="NXm-ed-Vsx">
@@ -543,6 +543,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="tkZ-MG-mAX">
                         <barButtonItem key="backBarButtonItem" title="Back" id="4DA-wQ-SjY"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="6jQ-Ky-aNX">
+                            <connections>
+                                <segue destination="ava-bD-PPQ" kind="push" id="o5E-rM-eVX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableNotifications" destination="t2Z-Lh-UbO" id="MLD-UA-yTL"/>
@@ -562,9 +567,9 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-DU-T0g">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="yL6-B5-Qay"/>
+                                    <constraint firstAttribute="height" constant="21" id="5zC-GN-Fr1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -578,8 +583,8 @@
                             </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hC-3u-klw">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="275" id="a25-LT-c5V"/>
-                                    <constraint firstAttribute="height" constant="21" id="efP-dO-6ma"/>
+                                    <constraint firstAttribute="height" constant="21" id="Rxg-u1-SaR"/>
+                                    <constraint firstAttribute="width" constant="280" id="VMO-ol-97D"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -591,21 +596,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3hC-3u-klw" firstAttribute="leading" secondItem="SLu-DU-T0g" secondAttribute="leading" type="default" id="0Gh-Fp-1ua"/>
-                            <constraint firstAttribute="trailing" secondItem="tWW-ls-H3G" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="3Z7-SL-ouC"/>
-                            <constraint firstAttribute="trailing" secondItem="SLu-DU-T0g" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="FfZ-Z6-RjH"/>
-                            <constraint firstItem="Jy5-0I-t6y" firstAttribute="top" secondItem="tWW-ls-H3G" secondAttribute="bottom" type="default" id="Gyf-OG-MGS"/>
-                            <constraint firstItem="3hC-3u-klw" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="63" id="Hx1-zB-fLu"/>
+                            <constraint firstItem="tWW-ls-H3G" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="102" id="3fB-NH-p3h"/>
+                            <constraint firstItem="tWW-ls-H3G" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="5gx-WK-EBk"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="20" symbolic="YES" type="default" id="EAx-7w-hmm"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" type="default" id="RpL-rn-Uq2"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="109" id="kaz-1K-HLY"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="26" id="Zmm-jd-vz5"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="trailing" secondItem="SLu-DU-T0g" secondAttribute="trailing" type="default" id="efX-cd-wP2"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="leading" secondItem="SLu-DU-T0g" secondAttribute="leading" type="default" id="etG-kb-0Oi"/>
+                            <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="54" id="ign-Q2-EcE"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="bottom" secondItem="aIq-VG-R5S" secondAttribute="bottom" type="default" id="m6I-Xn-3aj"/>
+                            <constraint firstAttribute="trailing" secondItem="tWW-ls-H3G" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="pLB-7b-A3T"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="trailing" secondItem="aIq-VG-R5S" secondAttribute="trailing" type="default" id="psz-3w-1Rk"/>
-                            <constraint firstAttribute="trailing" secondItem="3hC-3u-klw" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qDT-R0-KFD"/>
-                            <constraint firstItem="tWW-ls-H3G" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="yht-f1-aHZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notification" id="rhN-6Q-aQq">
                         <barButtonItem key="backBarButtonItem" title="Back" id="OOD-xZ-FJC"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ck3-iY-qga">
+                            <connections>
+                                <segue destination="ava-bD-PPQ" kind="push" identifier="segue29" id="YTK-Nm-t1y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="notificationDate" destination="SLu-DU-T0g" id="gN7-bT-haT"/>
@@ -661,6 +671,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Networking" id="qEp-uH-HNk">
                         <barButtonItem key="backBarButtonItem" title="Back" id="cD7-f8-elL"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="1iM-FZ-npE">
+                            <connections>
+                                <segue destination="ava-bD-PPQ" kind="push" id="Tet-2Z-6LC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="toolbar" destination="Dz0-t4-JuG" id="gLA-bR-XxS"/>
@@ -853,6 +868,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Maps" id="qpS-GM-uLe">
                         <barButtonItem key="backBarButtonItem" title="Back" id="LsS-U5-rqR"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="Sdu-0c-kOl">
+                            <connections>
+                                <segue destination="ava-bD-PPQ" kind="push" id="CUQ-7U-pfd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="scrollView" destination="w3V-hJ-NmC" id="Ls2-oa-91R"/>
@@ -860,14 +880,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Vd-fR-HUc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1541" y="-955"/>
+            <point key="canvasLocation" x="1574" y="-1362"/>
         </scene>
         <!--EventUI View Controller-->
         <scene sceneID="dBg-eA-mFn">
             <objects>
                 <viewController storyboardIdentifier="EventUIViewController" id="BoZ-sp-bTT" customClass="EventUIViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ljv-Zl-qK0">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPc-Sj-Njm">
@@ -938,7 +958,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIm-rk-VWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1934" y="458"/>
+            <point key="canvasLocation" x="2300" y="486"/>
         </scene>
         <!--Search View Controller - Search-->
         <scene sceneID="4Qy-nA-PKK">
@@ -1059,7 +1079,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fn0-g6-vaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2458" y="450"/>
+            <point key="canvasLocation" x="1865" y="467"/>
         </scene>
         <!--All Notes View Controller - Notes-->
         <scene sceneID="sft-KW-qw5">
@@ -1111,7 +1131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hkr-Je-f6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2004" y="-938"/>
+            <point key="canvasLocation" x="2460" y="-198"/>
         </scene>
         <!--Note View Controller - New note-->
         <scene sceneID="EMU-aK-NoZ">
@@ -1231,10 +1251,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vap-t8-tVb"/>
-        <segue reference="mNJ-h0-X0J"/>
-        <segue reference="83h-jB-Zo5"/>
+        <segue reference="Tet-2Z-6LC"/>
+        <segue reference="yYa-b4-9nU"/>
         <segue reference="Ixr-QI-REd"/>
+        <segue reference="vap-t8-tVb"/>
         <segue reference="XYc-KS-Og4"/>
+        <segue reference="Ia1-G5-ae0"/>
     </inferredMetricsTieBreakers>
 </document>
