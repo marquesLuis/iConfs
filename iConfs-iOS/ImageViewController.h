@@ -14,6 +14,7 @@
 	UIImageView *imageView;
 }
 
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) NSString * localID;
