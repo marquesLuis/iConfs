@@ -58,6 +58,7 @@
 		62FC9A56175F721900A22AAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62FC9A55175F721900A22AAD /* MainStoryboard.storyboard */; };
 		62FC9A5A175F81B100A22AAD /* AllNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */; };
 		62FC9A60175F947D00A22AAD /* AllNetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */; };
+		9D0349761777359D007801DE /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D0349751777359D007801DE /* NSString+HTML.m */; };
 		9D323B361758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D323B371758AD2600B2424D /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D323B351758AD2600B2424D /* Update.m */; };
 		9D877CB7176FCF6600894D5C /* defaultPerson.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D877CB6176FCF6600894D5C /* defaultPerson.jpg */; };
@@ -206,6 +207,8 @@
 		62FC9A59175F81B100A22AAD /* AllNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNotificationViewController.m; sourceTree = "<group>"; };
 		62FC9A5E175F947D00A22AAD /* AllNetworkingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllNetworkingViewController.h; sourceTree = "<group>"; };
 		62FC9A5F175F947D00A22AAD /* AllNetworkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllNetworkingViewController.m; sourceTree = "<group>"; };
+		9D0349741777359D007801DE /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		9D0349751777359D007801DE /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		9D323B341758AD2600B2424D /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Update.h; sourceTree = "<group>"; };
 		9D323B351758AD2600B2424D /* Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Update.m; sourceTree = "<group>"; };
 		9D877CB6176FCF6600894D5C /* defaultPerson.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultPerson.jpg; sourceTree = "<group>"; };
@@ -346,6 +349,8 @@
 		9DBF864E1755FD6E00845BD7 = {
 			isa = PBXGroup;
 			children = (
+				9D0349741777359D007801DE /* NSString+HTML.h */,
+				9D0349751777359D007801DE /* NSString+HTML.m */,
 				9D877CEF1774CF7600894D5C /* AESCrypt.h */,
 				9D877CF01774CF7600894D5C /* AESCrypt.m */,
 				9D877CF21774CF7600894D5C /* NSData+Base64.h */,
@@ -690,6 +695,7 @@
 				9D877CFA1774CF7600894D5C /* NSData+Base64.m in Sources */,
 				9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */,
 				9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */,
+				9D0349761777359D007801DE /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
