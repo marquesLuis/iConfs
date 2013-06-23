@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 #import "Notification.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface NotificationViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;

@@ -176,14 +176,31 @@
     [self navigationButtons];
 }
 
+- (IBAction)goHome:(UIBarButtonItem *)sender {
+    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+}
+
+- (IBAction)goSearch:(UIBarButtonItem *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
+    SearchViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    [self setTitle:@"Back"];
+    [self.navigationController pushViewController:viewController animated:NO];
+
+}
+
+
 
 -(void)navigationButtons{
     
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goHome:)];
+  //  UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goHome:)];
     
     if(self.infoType == CONTACT){
-        [self.navigationItem setLeftBarButtonItem:homeButton];
-        self.navigationItem.leftItemsSupplementBackButton = YES;
+        
+        UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Home.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goHome:)];
+        [self.navigationItem setLeftBarButtonItem:homeButton animated:YES];
+        [self.navigationItem setLeftItemsSupplementBackButton:YES];
+        UIBarButtonItem *search = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(goSearch:)];
+        [self.navigationItem setRightBarButtonItem:search];
     } else {
         // Nav bar button
         
@@ -192,10 +209,7 @@
         
     }
 }
-- (IBAction)goHome:(UIBarButtonItem *)sender {
 
-    [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-}
 
 - (IBAction)goBack:(UIButton *)sender {
 
@@ -251,24 +265,24 @@
     //get index position for the selected control
    NSInteger selectedIndex = [segment selectedSegmentIndex];
     if(selectedIndex == 1) {
-        NSLog(@"people");
+        [self setTitle:@"Participants"];
         [self getAllPersons];
         [self indexOfTable];
         
     }else if (selectedIndex == 0){
-        NSLog(@"contacts");
+        [self setTitle:@"My contacts"];
         [items removeAllObjects];
         [self getMyContacts:@"contact.db" withClause:@"select * from main.PEOPLE people inner join SECOND.CONTACT contact  on people.SERVER_ID = contact.PERSON_ID"];
         
         [self indexOfTable];
     } else if(selectedIndex == 2){
-        NSLog(@"contacts");
+        [self setTitle:@"Pending"];
         [items removeAllObjects];
         [self getMyContacts:@"pending_contact.db" withClause:@"select * from main.PEOPLE people inner join SECOND.PENDING_CONTACT contact  on people.SERVER_ID = contact.PERSON_ID"];
         [self indexOfTable];
     }
-    
     [self.tableView reloadData];
+    
 }
 
 -(void) indexOfTable{
@@ -359,6 +373,15 @@
 
 
 -(void)viewWillAppear:(BOOL)animated {
+    
+    if(contactToolbar.selectedSegmentIndex == 0){
+          [self setTitle:@"My contacts"];
+    } else if (contactToolbar.selectedSegmentIndex == 1){
+        [self setTitle:@"Participants"];
+    } else if(contactToolbar.selectedSegmentIndex == 2)
+        [self setTitle:@"Pending"];
+    
+    [self.tableView reloadData];
   [super viewWillAppear:animated];
 
     

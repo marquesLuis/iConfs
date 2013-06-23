@@ -74,7 +74,7 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         [_arrayOfNotifications removeAllObjects];
         
-        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NOTIFICATIONS"];
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM NOTIFICATIONS ORDER BY DATE DESC"];
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
@@ -143,7 +143,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
+    if([[segue identifier] isEqualToString:@"segue5"]){
+
     NSIndexPath *indexPath = [tableNotifications indexPathForSelectedRow];
     
     NotificationViewController * notif = (NotificationViewController*)segue.destinationViewController;
@@ -155,7 +156,7 @@
     NSLog(@"%@", notification.date);
     notif.notificationDateContent = notification.date;
     notif.notificationContent = notification.text;
-    
+    }
 }
 
 /*

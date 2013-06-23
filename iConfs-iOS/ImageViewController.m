@@ -136,13 +136,15 @@
     
     else if(row == 0 && !self.localID && !loaded){
         loaded = YES;
+
         NSString * path = l.path;
         UIImage * image = [UIImage imageWithContentsOfFile:path];
+
         imageView = [[UIImageView alloc] initWithImage:image];
         imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         imageView.contentMode  = UIViewContentModeScaleAspectFit;
         [self.scrollView addSubview:imageView];
-        [self.scrollView setContentSize:[image size]];
+        [self.scrollView setContentSize:imageView.frame.size];
         [self.scrollView setMaximumZoomScale:500.0];
         [self.scrollView setShowsHorizontalScrollIndicator:NO];
         [self.scrollView setShowsVerticalScrollIndicator:NO];
@@ -158,6 +160,7 @@
     NSString * path = l.path;
     
     UIImage * image = [UIImage imageWithContentsOfFile:path];
+
     imageView = [[UIImageView alloc] initWithImage:image ];
     imageView.frame = CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
     imageView.contentMode  = UIViewContentModeScaleAspectFit;
@@ -167,7 +170,7 @@
     }
     [self.scrollView setZoomScale:1];
     [self.scrollView addSubview:imageView];
-    [self.scrollView setContentSize:[image size]];
+    [self.scrollView setContentSize:imageView.frame.size];
     [self.scrollView setMaximumZoomScale:500.0];
 }
 

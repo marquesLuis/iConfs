@@ -200,6 +200,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    
+    if([[segue identifier] isEqualToString:@"segue2"]){
+
     NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
     NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
     network.networkingDescription = [[UITextView alloc] init];
@@ -221,6 +224,7 @@
     network.photoPath = person.photo;
     network.networkingDescriptionContent = networking.text;
     network.personId = networking.personID;
+}
 }
 
 
@@ -265,7 +269,7 @@
     
     sqlite3_stmt *statement;
     sqlite3 *networkingDB;
-    NSString * selectquery = @"SELECT * FROM NETWORKINGS";
+    NSString * selectquery = @"SELECT * FROM NETWORKINGS ORDER BY DATE DESC";
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"networkings.db"];
@@ -414,7 +418,7 @@
                 if (i!=[networks count]-1)
                     where = [where stringByAppendingString:@","];
                 else
-                    where = [where stringByAppendingString:@")"];
+                    where = [where stringByAppendingString:@") ORDER BY DATE DESC"];
             }
             NSString * querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS WHERE SERVER_ID IN (%@", where];
             NSLog(@"Pesquisa SQL: %@", querySql);
