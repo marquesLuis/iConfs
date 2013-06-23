@@ -137,10 +137,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"segue5" sender:nil];
-    
-    
-    
-  //  [self presentViewController:notif animated:YES completion:nil];
 }
 
 
@@ -156,6 +152,7 @@
     Notification *notification = [_arrayOfNotifications objectAtIndex:indexPath.row];
     notif.numNotification = indexPath.row;
     notif.notificationTitle = notification.title;
+    NSLog(@"%@", notification.date);
     notif.notificationDateContent = notification.date;
     notif.notificationContent = notification.text;
     
