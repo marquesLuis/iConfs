@@ -7,6 +7,7 @@
 //
 
 #import "Update.h"
+#import "NSString+HTML.h"
 
 @interface Update()
 @property (strong, nonatomic) NSString *auth_params;
@@ -84,6 +85,12 @@
     [self handleResponse:[self postRequest:[self buildRequest]withAlert:NO]];
 }
 
+
+- (NSString *)cleanString:(NSString *)string {
+    string = [string stringByReplacingOccurrencesOfString:@"&newline;" withString:@"\n"];
+    return [string kv_decodeHTMLCharacterEntities];
+}
+
 -(NSMutableDictionary *) postRequest:(NSMutableDictionary *)jsonRequest withAlert:(BOOL)alert
 {
     NSError *error;
@@ -104,14 +111,17 @@
         returnData = [NSURLConnection sendSynchronousRequest:urlRequest
                                                     returningResponse:&response
                                                                 error:&error];
-            NSString *newStr = [[NSString alloc]  initWithBytes:[returnData bytes]
-                                                          length:[returnData length] encoding: NSUTF8StringEncoding];
-        NSLog(@"String received:");
-        NSLog(@"%@", newStr);
+        
+        NSString *string = [[NSString alloc]  initWithBytes:[returnData bytes]
+                                                     length:[returnData length] encoding:NSUTF8StringEncoding];
+        string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"&newline;"]];
+        NSLog(@"String result:");
+        NSLog(@"%@", string);
+        //NSArray *array= [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:&error];
         
         
         NSError *jsonParsingError = nil;
-        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
+        NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:&jsonParsingError];
         
         return json;
         
@@ -665,8 +675,8 @@
 }
 
 - (NSString *) readNetworking: (NSMutableDictionary *)network{
-    NSString *title = [network objectForKey:@"title"];
-    NSString *content = [network objectForKey:@"content"];
+    NSString *title = [self cleanString:[network objectForKey:@"title"]];
+    NSString *content =  [self cleanString:[network objectForKey:@"content"]];
     NSString *date = [network objectForKey:@"date"];
     int person_id = [[network objectForKey:@"person_id"] integerValue];
     int server_id = [[network objectForKey:@"server_id"] integerValue];
@@ -1059,8 +1069,10 @@
 }
 
 - (BOOL) handleResponse:(NSMutableDictionary *)request{
-    if (!request)
+    if (!request){
+        NSLog(@"Request is null");
         return NO;
+    }
     
     NSLog(@"Handling");
     
