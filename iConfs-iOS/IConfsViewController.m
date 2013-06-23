@@ -116,9 +116,10 @@
         NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:&jsonParsingError];
         
         NSMutableDictionary * person = [json objectForKey:@"person"];
-        int server_id = [[person objectForKey:@"server_id"] integerValue];
-        NSString * values = [@"" stringByAppendingFormat:@"'%d', '%@','%@'",server_id, email, password];
+        NSString * server_id = [person objectForKey:@"server_id"];
+        NSString * values = [@"" stringByAppendingFormat:@"'%@', '%@','%@'",server_id, email, password];
         [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"SERVER_ID, EMAIL, PASSWORD" values:values];
+        [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:[NSString stringWithFormat:@"'%@'",server_id]];
         
         NSMutableDictionary * dates = [json objectForKey:@"dates"];
         [self insertTo:@"calendar.db" table:@"CALENDAR" definition:@"FIRST, LAST" values:[@"" stringByAppendingFormat:@"'%@', '%@'", [dates objectForKey:@"begin"], [dates objectForKey:@"end"]]];
