@@ -241,7 +241,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if([info count]== 0){
-        NSLog(@"no personal info");
         return 2;
     }
     // Return the number of sections.
@@ -313,7 +312,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     // networking section
     if(indexPath.section == 0){
@@ -323,6 +321,9 @@
     else if(indexPath.section == 1){
         [self performSegueWithIdentifier:@"segue18" sender: [NSNumber numberWithInteger:indexPath.row]];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
 
@@ -509,7 +510,7 @@
        
        // if contact show private info
        if([self belongsToDB:@"contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM CONTACT WHERE PERSON_ID = %@", self.personID]]){
-           
+        // do nothing
        }
        // if is pending contact
        else if([self belongsToDB:@"pending_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM PENDING_CONTACT WHERE PERSON_ID = %@", self.personID]]) {
