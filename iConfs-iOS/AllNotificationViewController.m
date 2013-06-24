@@ -36,7 +36,9 @@
 
     _arrayOfNotifications = [[NSMutableArray alloc]init];
     [self displayNotifications];
-    self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+   // self.tableNotifications = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+    self.tableNotifications.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height));
+
     self.tableNotifications.dataSource = self;
     self.tableNotifications.delegate = self;
     [self.view addSubview:self.tableNotifications ];

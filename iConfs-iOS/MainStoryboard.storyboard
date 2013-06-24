@@ -428,7 +428,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hqB-Du-eUA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3026" y="-286"/>
+            <point key="canvasLocation" x="2498" y="-587"/>
         </scene>
         <!--Person Profile View Controller-->
         <scene sceneID="NXm-ed-Vsx">
@@ -521,18 +521,14 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="t2Z-Lh-UbO">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="HZu-Gj-sGX"/>
-                                    <constraint firstAttribute="height" constant="243" id="cbv-gZ-Cr5"/>
-                                </constraints>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="t2Z-Lh-UbO">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6zK-kj-RfY">
-                                        <rect key="frame" x="0.0" y="22" width="93" height="44"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="73" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -548,11 +544,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="r4n-LZ-J6e" firstAttribute="top" secondItem="t2Z-Lh-UbO" secondAttribute="bottom" type="default" id="70P-cJ-uLT"/>
                             <constraint firstItem="r4n-LZ-J6e" firstAttribute="leading" secondItem="K2u-Ba-JFn" secondAttribute="leading" type="default" id="Ju4-Hx-J6t"/>
                             <constraint firstItem="r4n-LZ-J6e" firstAttribute="bottom" secondItem="K2u-Ba-JFn" secondAttribute="bottom" type="default" id="UGp-cH-Nuh"/>
-                            <constraint firstItem="r4n-LZ-J6e" firstAttribute="centerX" secondItem="t2Z-Lh-UbO" secondAttribute="centerX" type="default" id="lDG-R2-sy0"/>
+                            <constraint firstItem="t2Z-Lh-UbO" firstAttribute="trailing" secondItem="K2u-Ba-JFn" secondAttribute="trailing" type="default" id="Urx-nO-NeU"/>
+                            <constraint firstItem="t2Z-Lh-UbO" firstAttribute="leading" secondItem="K2u-Ba-JFn" secondAttribute="leading" type="default" id="WEg-xc-bzA"/>
                             <constraint firstItem="r4n-LZ-J6e" firstAttribute="trailing" secondItem="K2u-Ba-JFn" secondAttribute="trailing" type="default" id="qbL-kU-Zhq"/>
-                            <constraint firstItem="t2Z-Lh-UbO" firstAttribute="top" secondItem="K2u-Ba-JFn" secondAttribute="top" constant="20" symbolic="YES" type="default" id="t4a-eu-3Nr"/>
+                            <constraint firstItem="t2Z-Lh-UbO" firstAttribute="top" secondItem="K2u-Ba-JFn" secondAttribute="top" type="default" id="wlb-eS-3gA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" id="tkZ-MG-mAX">
@@ -649,23 +647,19 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-Ts-YbY">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="160" id="069-Gc-NBS"/>
-                                    <constraint firstAttribute="height" constant="252" id="Pcy-fI-l61"/>
-                                </constraints>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="OYb-7Y-OOU">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell5" id="lQH-Z2-aDw">
-                                        <rect key="frame" x="0.0" y="22" width="160" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="j0l-IP-7TP">
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="140" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <segue destination="Lf2-YB-DYM" kind="push" identifier="segue2" id="ukM-KT-DGy"/>
+                                            <segue destination="Lf2-YB-DYM" kind="push" identifier="segue2" id="aP2-Cp-5GH"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -676,11 +670,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="OYb-7Y-OOU" firstAttribute="trailing" secondItem="Gmq-er-5np" secondAttribute="trailing" type="default" id="1c7-Kg-4He"/>
+                            <constraint firstItem="OYb-7Y-OOU" firstAttribute="top" secondItem="Gmq-er-5np" secondAttribute="top" type="default" id="7q2-RB-aws"/>
                             <constraint firstItem="Dz0-t4-JuG" firstAttribute="leading" secondItem="Gmq-er-5np" secondAttribute="leading" type="default" id="JdN-ak-kfz"/>
                             <constraint firstItem="Dz0-t4-JuG" firstAttribute="bottom" secondItem="Gmq-er-5np" secondAttribute="bottom" type="default" id="PEY-lw-iNa"/>
+                            <constraint firstItem="OYb-7Y-OOU" firstAttribute="leading" secondItem="Gmq-er-5np" secondAttribute="leading" type="default" id="Q01-qm-o0q"/>
                             <constraint firstItem="Dz0-t4-JuG" firstAttribute="trailing" secondItem="Gmq-er-5np" secondAttribute="trailing" type="default" id="jBe-L7-htT"/>
-                            <constraint firstItem="N9S-Ts-YbY" firstAttribute="top" secondItem="Gmq-er-5np" secondAttribute="top" constant="109" id="ony-qH-EKY"/>
-                            <constraint firstItem="N9S-Ts-YbY" firstAttribute="leading" secondItem="Gmq-er-5np" secondAttribute="leading" constant="66" id="yqF-pM-Gb4"/>
+                            <constraint firstItem="OYb-7Y-OOU" firstAttribute="bottom" secondItem="Dz0-t4-JuG" secondAttribute="top" type="default" id="xnL-PL-I3A"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Networking" id="qEp-uH-HNk">
@@ -692,6 +688,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="tableNetworking" destination="OYb-7Y-OOU" id="S2D-GB-3iW"/>
                         <outlet property="toolbar" destination="Dz0-t4-JuG" id="gLA-bR-XxS"/>
                     </connections>
                 </viewController>
@@ -1153,7 +1150,7 @@
             <objects>
                 <viewController storyboardIdentifier="NoteViewController" id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -1278,7 +1275,6 @@
         <class className="AllNotificationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1320,7 +1316,6 @@
         <class className="ImageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
@@ -1328,6 +1323,9 @@
         <class className="KNMultiItemSelector" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/KNMultiItemSelector.h"/>
             <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIButton"/>
+                <relationship kind="action" name="goHome:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="goSearch:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="searchTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1339,7 +1337,6 @@
         <class className="NetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
@@ -1353,7 +1350,6 @@
                 <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
                 <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
@@ -1371,8 +1367,6 @@
         <class className="PersonProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1380,15 +1374,11 @@
         </class>
         <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-            </relationships>
         </class>
         <class className="SearchViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doSearch:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="resultsOfSearch" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1406,10 +1396,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="H5z-u7-vJR"/>
         <segue reference="8hN-KL-ukg"/>
+        <segue reference="aP2-Cp-5GH"/>
+        <segue reference="mNJ-h0-X0J"/>
+        <segue reference="edV-n7-HcM"/>
+        <segue reference="hSP-JN-arM"/>
         <segue reference="5s0-9K-Shm"/>
-        <segue reference="CUQ-7U-pfd"/>
-        <segue reference="vap-t8-tVb"/>
-        <segue reference="Ixr-QI-REd"/>
-        <segue reference="yYa-b4-9nU"/>
     </inferredMetricsTieBreakers>
 </document>

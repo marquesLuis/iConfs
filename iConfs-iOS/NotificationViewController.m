@@ -9,7 +9,7 @@
 #import "NotificationViewController.h"
 
 @interface NotificationViewController () {
-    
+    CAShapeLayer *line;
     
 } @end
 
@@ -46,11 +46,10 @@
     UIBezierPath *linePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0,self.view.frame.size.width, 1)];
     
     //shape layer for the line
-    CAShapeLayer *line = [CAShapeLayer layer];
+    line = [CAShapeLayer layer];
     line.path = [linePath CGPath];
     line.fillColor = [[UIColor blackColor] CGColor];
     line.frame = CGRectMake(0, 88, self.view.frame.size.width,1);
-    
     [self.view.layer addSublayer:line];
 }
 
@@ -71,5 +70,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    NSLog(@"willAnimateRotationToInterfaceOrientation");
+    NSLog(@"%f", self.view.frame.size.width);
+   [UIView animateWithDuration:duration animations:^{
+       [line setFrame:CGRectMake(0, 88, 700,1)];
+       
+    }];
+}*/
+
+-(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    CGRect b;
+    
+    if(UIInterfaceOrientationIsLandscape(toInterfaceOrientation))b = CGRectMake(0, 0, 480, 320);
+    else b = CGRectMake(0, 0, 320, 480);
+    
+    [CATransaction begin];
+    [CATransaction setValue:[NSNumber numberWithFloat:duration] forKey:kCATransactionAnimationDuration];
+    [self.view.layer setBounds:b];
+    [CATransaction commit];
+
+    [UIView animateWithDuration:duration animations:^{
+
+    [self.view.layer addSublayer:line];
+    }];
+
+}
 
 @end

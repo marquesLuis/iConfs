@@ -59,10 +59,13 @@
     
     [self displayNetworking];
     
-    self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+    //self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+  //  self.tableNetworking.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height));
+    
+
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
-    [self.view addSubview:self.tableNetworking ];
+   // [self.view addSubview:self.tableNetworking ];
     
     [self navigationButtons];
 }
