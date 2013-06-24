@@ -36,7 +36,7 @@
     self.title = netTitle;
     networkingTitle.text = netTitle;
     self.navigationItem.backBarButtonItem.title = @"Back";
-
+    self.networkingDescription.backgroundColor = [UIColor clearColor];
     [personName setTitle: namePerson forState: UIControlStateNormal];
     [self.networkingDescription setEditable:NO];
     self.networkingDescription.text = networkingDescriptionContent;
