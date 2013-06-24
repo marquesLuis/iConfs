@@ -892,7 +892,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Vd-fR-HUc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1574" y="-1362"/>
+            <point key="canvasLocation" x="2878" y="-570"/>
         </scene>
         <!--EventUI View Controller-->
         <scene sceneID="dBg-eA-mFn">
@@ -902,19 +902,6 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPc-Sj-Njm">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="6AR-Am-Pii" kind="push" identifier="segue12" id="XYc-KS-Og4"/>
-                                </connections>
-                            </button>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wX-wE-vT0">
                                 <items>
                                     <barButtonItem title="Add note" id="LKz-8v-671">
@@ -924,18 +911,14 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9Wg-L1-0Di">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="252" id="ApB-Yo-hu6"/>
-                                    <constraint firstAttribute="width" constant="160" id="oR2-sp-3Bt"/>
-                                </constraints>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="9Wg-L1-0Di">
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ZRm-Xb-GD8">
-                                        <rect key="frame" x="0.0" y="22" width="160" height="44"/>
+                                        <rect key="frame" x="0.0" y="46" width="320" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="140" height="43"/>
+                                            <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -945,16 +928,34 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sw9-qc-TNm">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="Nk4-Q3-WNc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="6AR-Am-Pii" kind="push" identifier="segue12" id="TwF-IC-8jf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="aPc-Sj-Njm" secondAttribute="trailing" constant="43" id="98C-A8-Pde"/>
-                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="leading" secondItem="Ljv-Zl-qK0" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="GCf-jy-Uvc"/>
-                            <constraint firstItem="aPc-Sj-Njm" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" constant="69" id="PEt-8L-Qda"/>
+                            <constraint firstItem="Sw9-qc-TNm" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" type="default" id="BJU-1G-JMQ"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="leading" secondItem="Ljv-Zl-qK0" secondAttribute="leading" type="default" id="NX4-uW-bMh"/>
                             <constraint firstItem="4wX-wE-vT0" firstAttribute="bottom" secondItem="Ljv-Zl-qK0" secondAttribute="bottom" type="default" id="POv-wn-S7n"/>
                             <constraint firstItem="4wX-wE-vT0" firstAttribute="trailing" secondItem="Ljv-Zl-qK0" secondAttribute="trailing" type="default" id="PUZ-ar-E8u"/>
-                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" constant="15" id="gAY-BL-HAA"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="bottom" secondItem="4wX-wE-vT0" secondAttribute="top" type="default" id="V1k-V9-BTF"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="trailing" secondItem="Ljv-Zl-qK0" secondAttribute="trailing" type="default" id="a2p-ko-3oj"/>
+                            <constraint firstAttribute="trailing" secondItem="Sw9-qc-TNm" secondAttribute="trailing" constant="41" id="e9f-Mv-AV9"/>
                             <constraint firstItem="4wX-wE-vT0" firstAttribute="leading" secondItem="Ljv-Zl-qK0" secondAttribute="leading" type="default" id="lov-rS-Q86"/>
+                            <constraint firstItem="9Wg-L1-0Di" firstAttribute="top" secondItem="Ljv-Zl-qK0" secondAttribute="top" type="default" id="pmD-sM-C8Q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nBS-qc-b5p">
@@ -964,13 +965,12 @@
                         <outlet property="addNoteButton" destination="LKz-8v-671" id="vDB-St-gzF"/>
                         <outlet property="info" destination="9Wg-L1-0Di" id="rKS-Sb-yNX"/>
                         <outlet property="navigationBar" destination="nBS-qc-b5p" id="h57-gY-TFu"/>
-                        <outlet property="roomButton" destination="aPc-Sj-Njm" id="Gqo-uS-0kz"/>
                         <outlet property="toolbar" destination="4wX-wE-vT0" id="KBB-9W-pCL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rIm-rk-VWK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2300" y="486"/>
+            <point key="canvasLocation" x="1542" y="-951"/>
         </scene>
         <!--Search View Controller - Search-->
         <scene sceneID="4Qy-nA-PKK">
@@ -1150,7 +1150,7 @@
             <objects>
                 <viewController storyboardIdentifier="NoteViewController" id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="20" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -1257,146 +1257,18 @@
         <image name="Schedule.jpg" width="50" height="50"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
-    <classes>
-        <class className="AllNetworkingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="AllNotesViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="notesTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="AllNotificationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="CommunicationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CommunicationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
-                <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="sendButton:"/>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="EventUIViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="info" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="roomButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="HomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goToContacts:" candidateClass="UIButton"/>
-                <relationship kind="action" name="updateButton:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="IConfsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IConfsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passwordField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="ImageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="KNMultiItemSelector" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/KNMultiItemSelector.h"/>
-            <relationships>
-                <relationship kind="outlet" name="searchTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="NetworkingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="networkingDescription" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="personPhoto" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="NoteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NoteViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
-                <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="NotificationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="notificationText" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="PersonProfileViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
-        </class>
-        <class className="SearchViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doSearch:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="resultsOfSearch" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="TKCalendarDayViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="H5z-u7-vJR"/>
+        <segue reference="TwF-IC-8jf"/>
+        <segue reference="5s0-9K-Shm"/>
         <segue reference="8hN-KL-ukg"/>
-        <segue reference="yYa-b4-9nU"/>
-        <segue reference="edV-n7-HcM"/>
+        <segue reference="6VH-20-vTN"/>
+        <segue reference="CUQ-7U-pfd"/>
         <segue reference="vap-t8-tVb"/>
-        <segue reference="83h-jB-Zo5"/>
-        <segue reference="Ixr-QI-REd"/>
+        <segue reference="yYa-b4-9nU"/>
     </inferredMetricsTieBreakers>
 </document>

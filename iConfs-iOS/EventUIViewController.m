@@ -10,6 +10,8 @@
 
 @interface EventUIViewController ()<UITableViewDelegate, UITableViewDataSource>{
     NSMutableArray * sections;
+    int y;
+
 }
 
 //@property (nonatomic, retain) UITableView *info;
@@ -31,14 +33,14 @@
 {
     [super viewDidLoad];
     
-    
+    y = 700;
     
     //title ; date; authors ; description; notes
-    self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
+    //self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.info.dataSource = self;
     self.info.delegate = self;
     [self.view addSubview:self.info];
-    self.title = self.event.title;
+    self.title = @"Session";
     
     // [self displayAuthors];
     
@@ -255,20 +257,18 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
-    
-    CGRect LabelFrameTitle = CGRectMake(10, 10, self.view.frame.size.width, 25);
+    y = 80;
+    CGRect LabelFrameTitle = CGRectMake(0, 5, self.view.frame.size.width, 30);
     CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
     CGRect LabelFrameRoom = CGRectMake(200, 45, 80, 30);
-    CGRect LabelFrameAuthor = CGRectMake(10, 80, self.view.frame.size.width-150, 30);
-    CGRect LabelFrameAuthors = CGRectMake(10, 110, self.view.frame.size.width-20, 40);
-    CGRect LabelFrameDescription = CGRectMake(10, 160, 149, 25);
-    CGRect LabelFrameDescriptionTable = CGRectMake(10, 185, self.view.frame.size.width-20, 175);
+   
     
     //title
-    UILabel * title = [[UILabel alloc] initWithFrame:LabelFrameTitle];
+    UITextView * title = [[UITextView alloc] initWithFrame:LabelFrameTitle];
     title.backgroundColor = [UIColor clearColor];
+    [title setEditable:NO];
     title.text = self.event.title;
-    [title setFont:[UIFont fontWithName:@"ChalkboardSE-Bold" size:18]];
+    title.font = [UIFont boldSystemFontOfSize:20.0f];
     [headerView addSubview:title];
     
     //date
@@ -291,41 +291,86 @@
         [headerView addSubview:roomButton];
     
     
-    //author label
-    UILabel * author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
-    author.backgroundColor = [UIColor clearColor];
-    [author setText: @"Authors:"];
-    [headerView addSubview:author];
+    NSString * allAuthors = [self displayAuthors];
+    if(![allAuthors isEqualToString:@""]){
     
-    //authors
-    UITextView * authors = [[UITextView alloc] initWithFrame:LabelFrameAuthors];
-    [authors setEditable:NO];
-    authors.scrollEnabled = YES;
-    authors.layer.cornerRadius = 5.0f;
-    authors.clipsToBounds = YES;
-    authors.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
-    [authors setTextAlignment: NSTextAlignmentJustified];
-    [authors setText:[self displayAuthors]];
-    [headerView addSubview:authors];
-    
-    //description label
-    UILabel * description = [[UILabel alloc] initWithFrame:LabelFrameDescription];
-    description.backgroundColor = [UIColor clearColor];
-    [description setText: @"Description"];
-    [headerView addSubview:description];
-    
-    //description
-    UITextView * descriptionText = [[UITextView alloc] initWithFrame:LabelFrameDescriptionTable];
-    [descriptionText setEditable:NO];
-    descriptionText.scrollEnabled = YES;
-    descriptionText.layer.cornerRadius = 5.0f;
-    descriptionText.clipsToBounds = YES;
-    descriptionText.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
-    [descriptionText setTextAlignment: NSTextAlignmentJustified];
-   // [descriptionText setBackgroundColor:[UIColor clearColor]];
-    [descriptionText setText:self.event.description];
-    [headerView addSubview:descriptionText];
+        CGRect LabelFrameAuthor = CGRectMake(10, 80, self.view.frame.size.width-150, 30);
+        CGRect LabelFrameAuthors = CGRectMake(10, 110, self.view.frame.size.width-20, 40);
 
+        
+        //authors
+        UITextView * authors = [[UITextView alloc] initWithFrame:LabelFrameAuthors];
+        [authors setEditable:NO];
+        authors.scrollEnabled = YES;
+        authors.layer.cornerRadius = 5.0f;
+        authors.backgroundColor = [UIColor clearColor];
+        authors.clipsToBounds = YES;
+        authors.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
+        [authors setTextAlignment: NSTextAlignmentJustified];
+        [authors setText:allAuthors];
+        [headerView addSubview:authors];
+        
+        //author label
+        UILabel * author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
+        author.backgroundColor = [UIColor clearColor];
+        [author setText: @"Authors:"];
+        author.font = [UIFont boldSystemFontOfSize:15.0f];
+        [headerView addSubview:author];
+        y = 160;
+    }
+    
+    if(![self.event.description isEqualToString:@""]){
+        
+        CGRect LabelFrameDescription = CGRectMake(10, y, 149, 25);
+        y+=25;
+        CGRect LabelFrameDescriptionTable = CGRectMake(2, y, self.view.frame.size.width-20, 175);
+        //description label
+        UILabel * description = [[UILabel alloc] initWithFrame:LabelFrameDescription];
+        description.backgroundColor = [UIColor clearColor];
+        description.font = [UIFont boldSystemFontOfSize:15.0f];
+        [description setText: @"Description"];
+        [headerView addSubview:description];
+        
+        //description
+        UITextView * descriptionText = [[UITextView alloc] initWithFrame:LabelFrameDescriptionTable];
+        
+        
+
+        
+        [descriptionText setEditable:NO];
+        descriptionText.scrollEnabled = YES;
+        descriptionText.layer.cornerRadius = 5.0f;
+        descriptionText.backgroundColor = [UIColor clearColor];
+        descriptionText.clipsToBounds = YES;
+        descriptionText.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
+        [descriptionText setTextAlignment: NSTextAlignmentJustified];
+        [descriptionText setText:self.event.description];
+        NSLog(@"description text  : %f", descriptionText.frame.size.height);
+        NSLog(@"description text  : %f", descriptionText.contentSize.height);
+
+        
+        if(descriptionText.contentSize.height <= 175){
+            NSLog(@"description text  : %f", descriptionText.frame.size.height);
+            CGRect frame = descriptionText.frame;
+            frame.size.height = descriptionText.contentSize.height;
+            descriptionText.frame = frame;
+            [descriptionText setFrame:CGRectMake(2, y, self.view.frame.size.width-20,descriptionText.contentSize.height) ];
+            y+=descriptionText.contentSize.height + 10;
+
+        } else
+            y+=185;
+        
+        
+        [headerView addSubview:descriptionText];
+    }
+    CGRect LabelFrameNotes = CGRectMake(10, y, 149, 25);
+    y+=25;
+    UILabel * notes = [[UILabel alloc] initWithFrame:LabelFrameNotes];
+    notes.backgroundColor = [UIColor clearColor];
+    notes.font = [UIFont boldSystemFontOfSize:15.0f];
+    [notes setText: @"My notes"];
+    [headerView addSubview:notes];
+    
     return headerView;
 }
 
@@ -334,7 +379,7 @@
     return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 400.0f;
+    return y;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

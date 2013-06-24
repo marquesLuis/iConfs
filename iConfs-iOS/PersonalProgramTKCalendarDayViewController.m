@@ -296,8 +296,10 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{    EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
+{
+    EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
     second.event = [events objectAtIndex:eventSelected];
+
 }
 
 
