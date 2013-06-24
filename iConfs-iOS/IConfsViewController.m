@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self treatKeyboard];
@@ -43,8 +44,13 @@
     [self initBDFile:@"areas_status.db" table:@"AREAS_STATUS"];
     [self initBDFile:@"location_status.db" table:@"LOCATION_STATUS"];
     [self initBDFile:@"notes_status.db" table:@"NOTES_STATUS"];
+    
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    self.toolbar.hidesBackButton = YES;
+}
+#warning toolbar no iconfs?
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -349,4 +355,18 @@
         sqlite3_close(notificationDB);
     }
 }
+
+/*- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    
+    CGRect navigationToolbarFrame = self.navigationController.navigationBar.frame;
+    [UIView animateWithDuration:duration animations:^{
+        self.emailField.frame = CGRectMake(0, 52, 150, 40);//customToolbarFrame;
+        self.passwordField.frame = CGRectMake(0, 102, self.view.frame.size.width, 40);//customToolbarFrame;
+        self.
+    }];
+    
+    
+}*/
+
 @end

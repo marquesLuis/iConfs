@@ -12,6 +12,7 @@
 
 @interface IConfsViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UINavigationItem *toolbar;
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 

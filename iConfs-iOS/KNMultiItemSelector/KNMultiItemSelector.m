@@ -102,11 +102,6 @@
 }
 
 -(void)viewDidLoad {
-    
-    NSLog(@"largura : %f", self.view.frame.size.width);
-    NSLog(@"altura : %f", self.view.frame.size.height);
-    
-
     rowselected = nil;
 
   //self.view = [[UIView alloc] initWithFrame:CGRectZero];

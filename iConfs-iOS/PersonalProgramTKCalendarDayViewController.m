@@ -41,7 +41,7 @@
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
     dateFormatter1.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    NSDate *date = [dateFormatter1 dateFromString:beginDate];
+    NSDate *date = [dateFormatter1 dateFromString:beginDate];NSLog(@"date : %@", date);
     self.dayView.date = date;
     
     
@@ -97,16 +97,18 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"calendar.db"];
-    
+            NSLog(@"2");
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
         NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM CALENDAR"];
         const char* query_sql = [querySql UTF8String];
-        
+        NSLog(@"3");
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
+                        NSLog(@"4");
                 beginDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 endDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSLog(@"%@", beginDate);
                 
             }
         }
@@ -118,6 +120,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline didMoveToDate:(NSDate*)eventDate{
+	NSDate * begin = [self convertNSStringTONSDateTOMinute:beginDate];
+    NSDate * end = [self convertNSStringTONSDateTOMinute:endDate];
+    
+    if([eventDate compare:begin] == NSOrderedAscending){
+        eventDate = begin;
+         self.dayView.date = begin;
+    } else if ([eventDate compare: end] == NSOrderedDescending){
+        eventDate = end;
+         self.dayView.date = end;
+    }
 }
 
 #pragma mark TKCalendarDayViewDelegate
@@ -236,6 +251,7 @@
 	return ret;
 }
 
+
 -(NSString *)getLocal:(NSString*)localID{
     sqlite3_stmt *statement;
     sqlite3 *db;
@@ -258,6 +274,13 @@
         sqlite3_close(db);
     }
     return nil;
+}
+
+-(NSDate*)convertNSStringTONSDateTOMinute:(NSString*)date{
+    NSString *beginDateDB = date;
+    NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
+    [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
+    return  [dateFormatter1 dateFromString:beginDateDB];
 }
 
 -(NSDate*)convertNSStringToNSDate:(NSString*)date{
