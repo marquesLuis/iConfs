@@ -38,9 +38,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)updateButton:(UIBarButtonItem *)sender {
-    [self.update update];
-}
+
 
 - (IBAction)goToContacts:(UIButton *)sender {
     
@@ -67,6 +65,10 @@
     uinav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     uinav.modalPresentationStyle = UIModalPresentationFormSheet;
    [self.navigationController pushViewController:selector animated:YES];
+}
+
+- (IBAction)updateButton:(UIButton *)sender {
+    [self.update update];
 }
 
 -(NSMutableArray*)getAllPersons{

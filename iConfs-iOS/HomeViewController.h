@@ -15,8 +15,9 @@
 
 @interface HomeViewController : UIViewController
 
-- (IBAction)updateButton:(UIBarButtonItem *)sender;
 - (IBAction)goToContacts:(UIButton *)sender;
+
+- (IBAction)updateButton:(UIButton *)sender;
 
 @property  (strong, nonatomic) Update * update;
 @end
