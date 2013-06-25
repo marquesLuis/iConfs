@@ -15,7 +15,7 @@
 @end
 
 @implementation AllNotesViewController
-@synthesize notesTableView;
+@synthesize notesTableView, addNewNote;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,7 +45,23 @@
     [self.navigationItem setLeftBarButtonItem:homeButton];
     
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
+    
+    
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
+    buttonItem.style = UIBarButtonItemStyleBordered;
+    
+    
+	self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: buttonItem, addNewNote, nil]; //segmentBarItem;
 }
+
+- (IBAction)search:(UIButton *)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
+    
+    SearchViewController *note =[storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    [[self navigationController] pushViewController:note animated:YES];
+    
+}
+
 - (IBAction)goBack:(UIBarButtonItem *)sender {
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }

@@ -12,5 +12,7 @@
 #import "NoteViewController.h"
 @interface AllNotesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *notesTableView;
+//@property (strong, nonatomic) IBOutlet UIBarButtonItem *newNote;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addNewNote;
 
 @end
