@@ -495,7 +495,7 @@
         note.date = n.date;
         
         
-    } else {
+    } else if([[segue identifier] isEqualToString:@"segue14"]){
         NSLog(@"New note");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;

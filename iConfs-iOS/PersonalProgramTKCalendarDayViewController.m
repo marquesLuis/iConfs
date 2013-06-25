@@ -297,9 +297,12 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if([[segue identifier] isEqualToString:@"segue6"]){
+
     EventUIViewController *second= (EventUIViewController*)segue.destinationViewController;
     second.event = [events objectAtIndex:eventSelected];
 
+    }
 }
 
 

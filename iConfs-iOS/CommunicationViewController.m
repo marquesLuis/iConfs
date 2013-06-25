@@ -33,7 +33,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+    UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:image]];
     isfeedback = YES;
     self.emailField.hidden = isfeedback;
     [self changeFeedMsgBox];

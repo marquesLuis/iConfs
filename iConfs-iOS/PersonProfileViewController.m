@@ -372,13 +372,13 @@
             note.date = n.date;
             note.noteID = n.noteID;
         } else {
-            NSLog(@"new note...");
+           /* NSLog(@"new note...");
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
             note.personID = self.personID;
             note.noteID = @"0";
-            note.date = @"0";
+            note.date = @"0";*/
         }
     }
 }
