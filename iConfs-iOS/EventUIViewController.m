@@ -113,16 +113,62 @@
 -(NSString*)displayAuthors{
     NSString * text = @"";
     NSMutableArray *authors = [self getAuthors];
-    for(Author *author in authors){
-        text = [text stringByAppendingString: author.name];
+    int size = authors.count-1;
+    for(int i = 0; i <= size; i++){
+        Author * author = [authors objectAtIndex:i];
+        if(!i)
+            text = author.name;
+        else
+            text = [text stringByAppendingFormat:@"; %@", author.name];
     }
+    
     return text;
+}
+
+-(Person *)getPerson:(NSString*)personId{
+    sqlite3_stmt *statement;
+    sqlite3 *peopleDB;
+    Person *person = [[Person alloc]init];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"people.db"];
+    
+    if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM PEOPLE WHERE SERVER_ID = %@", personId];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                NSString *firstName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                NSString *lastName = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                NSString *prefix = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                NSString *affiliation = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                NSString *emails = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                NSString *photo = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+                NSString *biography = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 7)];
+                NSString *calendarVersion = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 8)];
+                NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 9)];
+                
+                [person setFirstName:firstName];
+                [person setLastName:lastName];
+                [person setPrefix:prefix];
+                [person setAffiliation:affiliation];
+                [person setEmail:emails];
+                [person setBiography:biography];
+                [person setCalendar_version:calendarVersion];
+                [person setDate:date];
+                [person setPhoto:photo];
+            }
+        }
+        sqlite3_close(peopleDB);
+    }
+    return person;
 }
 
 -(NSMutableArray *)getAuthors{
     sqlite3_stmt *statement;
     sqlite3 *peopleDB;
-    Author *author = [[Author alloc]init];
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"author.db"];
@@ -135,15 +181,25 @@
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
-                NSString *name = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
-                NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                Author *author = [[Author alloc]init];
+
+                NSString * personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
+                NSString * name;
+                if([personID isEqualToString:@"0"]){
+                    name = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
+                } else {
+                    Person * p = [self getPerson:personID];
+                    name = [p.lastName stringByAppendingFormat:@", %@", p.firstName ];
+                }
+                NSLog(@"%@", name);
                 [author setEventID:self.event.eventID];
                 [author setName:name];
                 [author setPersonID:personID];
                 [authors addObject:author];
             }
+            sqlite3_finalize(statement);
+
         }
-        sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
     return authors;
@@ -265,14 +321,19 @@
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
     y = 80;
-    CGRect LabelFrameTitle = CGRectMake(0, 5, self.view.frame.size.width, 30);
+    CGRect LabelFrameTitle = CGRectMake(10, 5, self.view.frame.size.width-20, 30);
     CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
     CGRect LabelFrameRoom = CGRectMake(200, 45, 80, 30);
    
     
     //title
     UITextView * title = [[UITextView alloc] initWithFrame:LabelFrameTitle];
-    title.backgroundColor = [UIColor clearColor];
+   // title.backgroundColor = [UIColor clearColor];
+     title.backgroundColor =[UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+    title.textColor = [UIColor whiteColor];
+    title.textAlignment = NSTextAlignmentCenter;
+    [[title layer] setCornerRadius:5]; // radius of rounded corners
+    [title setClipsToBounds: YES]; //clip text within the bounds
     [title setEditable:NO];
     title.text = self.event.title;
     title.font = [UIFont boldSystemFontOfSize:20.0f];
@@ -280,7 +341,10 @@
     
     //date
     UILabel * date = [[UILabel alloc] initWithFrame:LabelFrameDate];
-    date.backgroundColor = [UIColor clearColor];
+    date.backgroundColor =  [UIColor lightTextColor];
+    [[date layer] setCornerRadius:5]; // radius of rounded corners
+    [date setClipsToBounds: YES]; //clip text within the bounds
+
     date.text = [@"Date "  stringByAppendingString: self.event.date];
     [date setFont:[UIFont fontWithName:@"Arial" size:14]];
     [headerView addSubview:date];
@@ -301,7 +365,7 @@
     NSString * allAuthors = [self displayAuthors];
     if(![allAuthors isEqualToString:@""]){
     
-        CGRect LabelFrameAuthor = CGRectMake(10, 80, self.view.frame.size.width-150, 30);
+        CGRect LabelFrameAuthor = CGRectMake(10, 90, self.view.frame.size.width-20, 20);
         CGRect LabelFrameAuthors = CGRectMake(10, 110, self.view.frame.size.width-20, 40);
 
         
@@ -310,8 +374,8 @@
         [authors setEditable:NO];
         authors.scrollEnabled = YES;
         authors.layer.cornerRadius = 5.0f;
-        authors.backgroundColor = [UIColor clearColor];
         authors.clipsToBounds = YES;
+        authors.backgroundColor = [UIColor lightTextColor];
         authors.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
         [authors setTextAlignment: NSTextAlignmentJustified];
         [authors setText:allAuthors];
@@ -319,7 +383,10 @@
         
         //author label
         UILabel * author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
-        author.backgroundColor = [UIColor clearColor];
+        author.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        author.textColor = [UIColor whiteColor];
+        author.layer.cornerRadius = 5.0f;
+        author.clipsToBounds = YES;
         [author setText: @"Authors:"];
         author.font = [UIFont boldSystemFontOfSize:15.0f];
         [headerView addSubview:author];
@@ -328,40 +395,38 @@
     
     if(![self.event.description isEqualToString:@""]){
         
-        CGRect LabelFrameDescription = CGRectMake(10, y, 149, 25);
+        CGRect LabelFrameDescription = CGRectMake(10, y+5, self.view.frame.size.width-20, 20);
         y+=25;
-        CGRect LabelFrameDescriptionTable = CGRectMake(2, y, self.view.frame.size.width-20, 175);
+        CGRect LabelFrameDescriptionTable = CGRectMake(10, y, self.view.frame.size.width-20, 175);
         //description label
         UILabel * description = [[UILabel alloc] initWithFrame:LabelFrameDescription];
-        description.backgroundColor = [UIColor clearColor];
+        description.textColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+
+        description.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        description.textColor = [UIColor whiteColor];
+        description.layer.cornerRadius = 5.0f;
+        description.clipsToBounds = YES;
         description.font = [UIFont boldSystemFontOfSize:15.0f];
         [description setText: @"Description"];
         [headerView addSubview:description];
         
         //description
         UITextView * descriptionText = [[UITextView alloc] initWithFrame:LabelFrameDescriptionTable];
-        
-        
-
-        
         [descriptionText setEditable:NO];
         descriptionText.scrollEnabled = YES;
         descriptionText.layer.cornerRadius = 5.0f;
-        descriptionText.backgroundColor = [UIColor clearColor];
+        descriptionText.backgroundColor = [UIColor lightTextColor];
         descriptionText.clipsToBounds = YES;
+        
         descriptionText.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
         [descriptionText setTextAlignment: NSTextAlignmentJustified];
         [descriptionText setText:self.event.description];
-        NSLog(@"description text  : %f", descriptionText.frame.size.height);
-        NSLog(@"description text  : %f", descriptionText.contentSize.height);
-
         
         if(descriptionText.contentSize.height <= 175){
-            NSLog(@"description text  : %f", descriptionText.frame.size.height);
             CGRect frame = descriptionText.frame;
             frame.size.height = descriptionText.contentSize.height;
             descriptionText.frame = frame;
-            [descriptionText setFrame:CGRectMake(2, y, self.view.frame.size.width-20,descriptionText.contentSize.height) ];
+            [descriptionText setFrame:CGRectMake(10, y, self.view.frame.size.width-20,descriptionText.contentSize.height) ];
             y+=descriptionText.contentSize.height + 10;
 
         } else
@@ -370,13 +435,20 @@
         
         [headerView addSubview:descriptionText];
     }
-    CGRect LabelFrameNotes = CGRectMake(10, y, 149, 25);
+    CGRect LabelFrameNotes = CGRectMake(10, y, self.view.frame.size.width-20, 20);
     y+=25;
-    UILabel * notes = [[UILabel alloc] initWithFrame:LabelFrameNotes];
-    notes.backgroundColor = [UIColor clearColor];
-    notes.font = [UIFont boldSystemFontOfSize:15.0f];
-    [notes setText: @"My notes"];
-    [headerView addSubview:notes];
+
+    if(sections.count != 0){
+        UILabel * notes = [[UILabel alloc] initWithFrame:LabelFrameNotes];
+        notes.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        notes.textColor = [UIColor whiteColor];
+        notes.layer.cornerRadius = 5.0f;
+        notes.clipsToBounds = YES;
+        notes.font = [UIFont boldSystemFontOfSize:15.0f];
+        [notes setText: @"My notes"];
+        [headerView addSubview:notes];
+
+    }
     
     return headerView;
 }

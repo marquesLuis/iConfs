@@ -10,9 +10,10 @@
 
 @interface PersonProfileViewController () <UITableViewDelegate, UITableViewDataSource>{
     NSString * pendingID;
+    int height;
 }
-    @property (nonatomic, strong)  Person * personProfile;
-    @property (nonatomic, strong) NSMutableArray * personNetworking;
+@property (nonatomic, strong)  Person * personProfile;
+@property (nonatomic, strong) NSMutableArray * personNetworking;
 @property (nonatomic, strong) NSMutableArray * notes;
 @property (nonatomic, strong) UIToolbar *t;
 @property (nonatomic, strong) NSMutableArray * info;
@@ -26,7 +27,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-       
+        
     }
     return self;
 }
@@ -37,12 +38,14 @@
     
     self.title = @"Profile";
     self.navigationItem.backBarButtonItem.title = @"Back";
-    
+    height = 700;
+
     personProfile = [self getPerson:personID];
-   // NSString * areas = [self getAreas:personID];
+    // NSString * areas = [self getAreas:personID];
+    personNetworking = [[NSMutableArray alloc] init];
+    [self displayNetworking:personID];
     
-    
-	 //title ; date; authors ; description; notes
+    //title ; date; authors ; description; notes
     self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
@@ -85,7 +88,7 @@
             }
             sqlite3_close(db);
         }
-
+        
     }
 }
 
@@ -126,7 +129,7 @@
             while (sqlite3_step(statement)==SQLITE_ROW) {
                 NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 [areas addObject:area];
-
+                
             }
         }
         sqlite3_close(db);
@@ -149,7 +152,7 @@
         for (NSString *areaId in areas){
             NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM Area WHERE SERVER_ID = %@", areaId];
             const char* query_sql = [querySql UTF8String];
-        
+            
             if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
                 while (sqlite3_step(statement)==SQLITE_ROW) {
                     NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
@@ -265,11 +268,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     
     cell  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ProductCellIdentifier];
-
+    
     switch (indexPath.section) {
         case 0:
             [self configureNetworkingCell:cell atIndexPath:indexPath];
-
+            
             break;
         case 1:
             [self configureNoteCell:cell atIndexPath:indexPath];
@@ -278,7 +281,7 @@
             [self configurePersonalInfoCell:cell atIndexPath:indexPath];
         default:
             break;
-    
+            
     }
     return cell;
 }
@@ -312,7 +315,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     // networking section
     if(indexPath.section == 0){
         [self performSegueWithIdentifier:@"segue19" sender:nil];
@@ -323,7 +326,7 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
 }
 
 
@@ -351,7 +354,7 @@
         network.photoPath = person.photo;
         network.networkingDescriptionContent = networking.text;
         network.personId = networking.personID;
-    
+        
     } else {
         
         if([[segue identifier] isEqualToString:@"segue18"]){
@@ -395,9 +398,9 @@
     
     NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, self.addNote, flexibleSpace, nil];
     /*t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
-    t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
-    [t setItems: [NSArray arrayWithObjects:buttonItems,  nil]];
-    [self.view addSubview:t];*/
+     t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+     [t setItems: [NSArray arrayWithObjects:buttonItems,  nil]];
+     [self.view addSubview:t];*/
     self.toolbar = [[UIToolbar alloc] init];
     self.toolbar.frame = CGRectMake(0, 460, self.view.frame.size.width, 44);
     [self.toolbar setItems:buttonItems];
@@ -408,7 +411,7 @@
 
 
 -(BOOL)belongsToDB:(NSString*)table withClause:(NSString*)clause{
-
+    
     sqlite3_stmt *statement;
     sqlite3 *peopleDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -429,7 +432,7 @@
                 break;
             }
             sqlite3_finalize(statement);
-
+            
         }
         sqlite3_close(peopleDB);
     }
@@ -498,91 +501,106 @@
 {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
     
-   if(section == 0){
+    if(section == 0){
         // person label name
-        UILabel *labelName = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 160, 25)];
+        UILabel *labelName = [[UILabel alloc] initWithFrame:CGRectMake(150, 20, 160, 20)];
         labelName.text = @"Name:";
-        labelName.backgroundColor = [UIColor clearColor];
+        labelName.layer.cornerRadius = 5.0f;
+        labelName.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        labelName.textColor = [UIColor whiteColor];
+        labelName.clipsToBounds = YES;
         [headerView addSubview:labelName];
         
         // person name
-        UITextView *name = [[UITextView alloc] initWithFrame:CGRectMake(150, 45, 160, 25)];
+        UITextView *name = [[UITextView alloc] initWithFrame:CGRectMake(150, 40, 160, 20)];
         [name setEditable:NO];
+        name.layer.cornerRadius = 5.0f;
+        name.clipsToBounds = YES;
         NSString * n = [[[[personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:personProfile.lastName];
         [name setText:n];
         name.scrollEnabled = YES;
         [headerView addSubview:name];
-       
-       
-       
-       
-       // if contact show private info
-       if([self belongsToDB:@"contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM CONTACT WHERE PERSON_ID = %@", self.personID]]){
-        // do nothing
-       }
-       // if is pending contact
-       else if([self belongsToDB:@"pending_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM PENDING_CONTACT WHERE PERSON_ID = %@", self.personID]]) {
-           
-           UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-           addContact.frame = CGRectMake(150, 130, 75, 25);
-           [addContact setTitle: @"Accept" forState:UIControlStateNormal];
-           
-           [addContact addTarget:self
-                          action:@selector(acceptContact:)
-                forControlEvents:UIControlEventTouchDown];
-           
-           [headerView addSubview:addContact];
-           UIButton *rejectContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-           rejectContact.frame = CGRectMake(225, 130, 75, 25);
-           [rejectContact setTitle: @"Reject" forState:UIControlStateNormal];
-           
-           [rejectContact addTarget:self
-                          action:@selector(rejectContact:)
-                forControlEvents:UIControlEventTouchDown];
-           
-           [headerView addSubview:rejectContact];
-           
-       }
-       // if is a rejected or an asked contact
-       else if([self belongsToDB:@"asked_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT WHERE PERSON_ID = %@", self.personID]]){
-           // do nothing
-       }
-       // only option add contact
-       else {
-           UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-           addContact.frame = CGRectMake(150, 130, 150, 25);
-           [addContact setTitle: @"Add contact" forState:UIControlStateNormal];
-           
-           [addContact addTarget:self
-                          action:@selector(addContact:)
-                forControlEvents:UIControlEventTouchDown];
-           
-           [headerView addSubview:addContact];
-
-       }
-       
-       // person label email
-        UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 130, 100, 25)];
+        
+        
+        
+        
+        // if contact show private info
+        if([self belongsToDB:@"contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM CONTACT WHERE PERSON_ID = %@", self.personID]]){
+            // do nothing
+        }
+        // if is pending contact
+        else if([self belongsToDB:@"pending_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM PENDING_CONTACT WHERE PERSON_ID = %@", self.personID]]) {
+            
+            UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            addContact.frame = CGRectMake(150, 120, 75, 30);
+            [addContact setTitle: @"Accept" forState:UIControlStateNormal];
+            
+            [addContact addTarget:self
+                           action:@selector(acceptContact:)
+                 forControlEvents:UIControlEventTouchDown];
+            
+            [headerView addSubview:addContact];
+            UIButton *rejectContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            rejectContact.frame = CGRectMake(225, 120, 75, 30);
+            [rejectContact setTitle: @"Reject" forState:UIControlStateNormal];
+            
+            [rejectContact addTarget:self
+                              action:@selector(rejectContact:)
+                    forControlEvents:UIControlEventTouchDown];
+            
+            [headerView addSubview:rejectContact];
+            
+        }
+        // if is a rejected or an asked contact
+        else if([self belongsToDB:@"asked_contact.db" withClause:[@"" stringByAppendingFormat:@"SELECT * FROM ASKED_CONTACT WHERE PERSON_ID = %@", self.personID]]){
+            // do nothing
+        }
+        // only option add contact
+        else {
+            UIButton *addContact = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            addContact.frame = CGRectMake(150, 120, 150, 30);
+            [addContact setTitle: @"Add contact" forState:UIControlStateNormal];
+            
+            [addContact addTarget:self
+                           action:@selector(addContact:)
+                 forControlEvents:UIControlEventTouchDown];
+            
+            [headerView addSubview:addContact];
+            
+        }
+        
+        // person label email
+        UILabel *labelEmail = [[UILabel alloc] initWithFrame:CGRectMake(15, 160, self.view.frame.size.width-25, 20)];
         labelEmail.text = @"Email:";
-        labelEmail.backgroundColor = [UIColor clearColor];
+        labelEmail.layer.cornerRadius = 5.0f;
+        labelEmail.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        labelEmail.textColor = [UIColor whiteColor];
+        labelEmail.clipsToBounds = YES;
         [headerView addSubview:labelEmail];
         //10
         // person email
-        UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 160, 295, 25)];
+        UITextView *email = [[UITextView alloc] initWithFrame:CGRectMake(15, 180, self.view.frame.size.width-25, 20)];
         [email setEditable:NO];
         [email setText:personProfile.email];
         email.scrollEnabled = YES;
+        email.layer.cornerRadius = 5.0f;
+        email.clipsToBounds = YES;
         [headerView addSubview:email];
         
         // person label institution
-        UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 160, 25)];
+        UILabel *labelIns = [[UILabel alloc] initWithFrame:CGRectMake(150, 70, 160, 20)];
         labelIns.text = @"Institution:";
-        labelIns.backgroundColor = [UIColor clearColor];
+        labelIns.layer.cornerRadius = 5.0f;
+        labelIns.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        labelIns.textColor = [UIColor whiteColor];
+        labelIns.clipsToBounds = YES;
         [headerView addSubview:labelIns];
         
         // person institution
-        UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 95, 160, 25)];
+        UITextView *institution = [[UITextView alloc] initWithFrame:CGRectMake(150, 90, 160, 20)];
         [institution setEditable:NO];
+        institution.layer.cornerRadius = 5.0f;
+        institution.clipsToBounds = YES;
         [institution setText:personProfile.affiliation];
         institution.scrollEnabled = YES;
         [headerView addSubview:institution];
@@ -599,66 +617,102 @@
          [interests setBackgroundColor:[UIColor colorWithRed:(224/255.f) green:(238/255.f) blue:(238/255.f) alpha:1.0f]];
          [scroll addSubview:interests];
          */
-        
-        UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, 170, 295, 25)];
-        personalDescription.text = @"Personal description:";
-        personalDescription.backgroundColor = [UIColor clearColor];
-        
-        [headerView addSubview:personalDescription];
-        
-        UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, 195, 295, 200)];
-        [biography setEditable:NO];
-        biography.scrollEnabled = YES;
-        
-        [biography setText:personProfile.biography];
-        [headerView addSubview:biography];
-        
-        personNetworking = [[NSMutableArray alloc] init];
-        [self displayNetworking:personID];
-        
-        UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, 395, 295, 25)];
-        networking.text = @"Networking:";
-        networking.backgroundColor = [UIColor clearColor];        
-        [headerView addSubview:networking];
+        height = 210;
+        if(![personProfile.biography isEqualToString:@""]){
+            
+            UILabel *personalDescription = [[UILabel alloc] initWithFrame:CGRectMake(15, height, 295, 20)];
+            personalDescription.text = @"Personal description:";
+            personalDescription.layer.cornerRadius = 5.0f;
+            personalDescription.clipsToBounds = YES;
+            personalDescription.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+            personalDescription.textColor = [UIColor whiteColor];
+            height+=20;
+            [headerView addSubview:personalDescription];
+            
+            UITextView *biography =  [[UITextView alloc] initWithFrame:CGRectMake(15, height, self.view.frame.size.width-25, 200)];
+            [biography setEditable:NO];
+            biography.scrollEnabled = YES;
+            [biography setText:personProfile.biography];
+            biography.layer.cornerRadius = 5.0f;
+            biography.clipsToBounds = YES;
+            
+            if(biography.contentSize.height <= 200){
+                CGRect frame = biography.frame;
+                frame.size.height = biography.contentSize.height;
+                biography.frame = frame;
+                
+                [biography setFrame:CGRectMake(15, height, self.view.frame.size.width-25,biography.contentSize.height) ];
+                height+=biography.contentSize.height + 10;
+            } else
+                height+=210;
+            [headerView addSubview:biography];
+        }
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,30,100,90)];
-       imageView.contentMode  = UIViewContentModeScaleAspectFit;
-
-       UIImage * imageFromURL;
-       if([personProfile.photo isEqualToString:@""])
-           imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
-       else
-           imageFromURL = [UIImage imageWithContentsOfFile:personProfile.photo];
-       
+        imageView.contentMode  = UIViewContentModeScaleAspectFit;
+        
+        UIImage * imageFromURL;
+        NSLog(@"photo:  %@", personProfile.photo);
+                NSLog(@"photo:  %d", personProfile.photo == nil);
+        if([personProfile.photo isEqualToString:@""]){
+            imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
+            NSLog(@"hey");
+        }        else
+            imageFromURL = [UIImage imageWithContentsOfFile:personProfile.photo];
+        
         
         [imageView setImage:imageFromURL];
         [headerView addSubview:imageView];
-    }
+
+        
+        if(personNetworking.count != 0){
+            UILabel *networking = [[UILabel alloc] initWithFrame:CGRectMake(15, height, 295, 20)];
+            networking.text = @"Networking:";
+            networking.layer.cornerRadius = 5.0f;
+            networking.clipsToBounds = YES;
+            networking.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+            networking.textColor = [UIColor whiteColor];
+            [headerView addSubview:networking];
+            height += 30;
+
+        }        
+}
     
     else if(section == 1){
-        UILabel *notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 25)];
-        notesLabel.text = @"My notes:";
-        notesLabel.backgroundColor = [UIColor clearColor];
-        [headerView addSubview:notesLabel];
+        if(notes.count != 0){
+            UILabel *notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 20)];
+            notesLabel.text = @"My notes:";
+            notesLabel.layer.cornerRadius = 5.0f;
+            notesLabel.clipsToBounds = YES;
+            notesLabel.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+            notesLabel.textColor = [UIColor whiteColor];
+            [headerView addSubview:notesLabel];
+        }
     } else if (section == 2){
-        UILabel *personalInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 25)];
-        personalInfoLabel.text = @"Personal information:";
-        personalInfoLabel.backgroundColor = [UIColor clearColor];
-        [headerView addSubview:personalInfoLabel];
+        
+        if(info.count != 0){
+            UILabel *personalInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 295, 25)];
+            personalInfoLabel.text = @"Personal information:";
+            personalInfoLabel.layer.cornerRadius = 5.0f;
+            personalInfoLabel.clipsToBounds = YES;
+            personalInfoLabel.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+            personalInfoLabel.textColor = [UIColor whiteColor];
+            [headerView addSubview:personalInfoLabel];
+        }
     }
-
+    
     return headerView;
 }
 
 
 
 -(void)addContact:(UIButton *)sender {
-
+    
     [self insertTo:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL" definition: @"PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
     [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition: @"PERSON_ID"
             values: [@"" stringByAppendingFormat:@"'%@'", self.personID]];
-   
+    
     Update *update = [[Update alloc] initDB];
     [update updateWithoutMessage];
     
@@ -679,7 +733,7 @@
 }
 
 -(void)acceptContact:(UIButton *)sender {
-
+    
     [self removeFrom:@"pending_contact.db" table:@"PENDING_CONTACT" attribute:@"PENDING_SERVER_ID" withID:[pendingID intValue]];
     [self insertTo:@"contact_local.db" table:@"CONTACT_LOCAL" definition: @"PERSON_ID, PENDING_SERVER_ID, REJECTED_SERVER_ID"
             values: [@"" stringByAppendingFormat:@"'%@', '%@', '0'", self.personID, pendingID]];
@@ -696,11 +750,11 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-   return 30;
+    return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if(section == 0)
-        return 425.0f;
+        return height;
     return 40.0f;
 }
 
