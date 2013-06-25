@@ -366,12 +366,16 @@
             note.isLocal = n.isLocal;
             note.content = n.content;
             note.eventID = n.eventID;
+            note.date = n.date;
+            note.noteID = n.noteID;
         } else {
             NSLog(@"new note...");
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
             note.personID = self.personID;
+            note.noteID = @"0";
+            note.date = @"0";
         }
     }
 }
@@ -438,7 +442,7 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:table];
-    NSMutableArray* array = [[NSMutableArray alloc]init];
+    NSMutableArray* allNotes = [[NSMutableArray alloc]init];
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
         
@@ -455,32 +459,36 @@
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
-
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                    
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
-                    [array addObject:note];
-                }else if([table isEqualToString:@"notes_local.db"]){
+                    [note setDate:lastdate];
+                    [allNotes addObject:note];
+                }else {
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
                     
                     [note setContent:content];
                     [note setIsLocal:YES];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
-                    [array addObject:note];
-                } 
+                    [note setDate:lastdate];
+                    [allNotes addObject:note];
+                }
             }
         }
         sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
-    return array;
+    return allNotes;
 }
 
 
@@ -643,30 +651,6 @@
 }
 
 
-/*
- //tabela q contem os ids de todos os contactos q vieram do servidor (server id
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT( PERSON_ID INTEGER PRIMARY KEY)" WithName:@"contact.db"];
- 
- //tabela q contem os ids dos contactos aceites no ios desde a ultima actualizacao
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY, PENDING_SERVER_ID INTEGER, REJECTED_SERVER_ID INTEGER)" WithName:@"contact_local.db"];
- 
- //tabela q contem os ids dos contactos pedidos a outros (servidor)
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact.db"];
- 
- //tabela q contem os ids dos contactos pedidos a outros (ios)
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ASKED_CONTACT_LOCAL(PERSON_ID INTEGER PRIMARY KEY)" WithName:@"asked_contact_local.db"];
- 
- //tabela q contem os pedidos pendentes que ainda n foram aceites/rejeitados
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS PENDING_CONTACT( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"pending_contact.db"];
- 
- //tabela q contem os pedidos rejeitados que ja foram ao servidor
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT( REJECTED_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact.db"];
- 
- //tabela q contem os pedidos rejeitados no ios
- [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS REJECTED_CONTACT_LOCAL( PENDING_SERVER_ID INTEGER PRIMARY KEY, PERSON_ID INTEGER)" WithName:@"rejected_contact_local.db"];
- 
- 
- */
 
 -(void)addContact:(UIButton *)sender {
 
@@ -759,6 +743,8 @@
     note.hidePersonButton = YES;
     note.hideSessionButton = NO;
     note.personID = self.personID;
+    note.date = @"0";
+    note.noteID = @"0";
     [[self navigationController] pushViewController:note animated:YES];
 }
 

@@ -64,6 +64,8 @@ return self;
         self.noteTextView.text = self.content;
         isPlaceholder = NO;
         self.title = @"Edit note";
+        
+        
 
         if(self.eventID){
             [self.aboutSessionButton setTitle:[self getEventTitle] forState:UIControlStateNormal];
@@ -122,12 +124,12 @@ return self;
 
 - (IBAction)addNote:(UIBarButtonItem *)sender {
     if(noteTextView.text.length == 0 || isPlaceholder){
-        [self alertMessages:@"Note doesn't saved" withMessage:@"Please write your note"];
+        [self alertMessages:@"Note not saved" withMessage:@"Please write your note"];
         return;
     }
     
     NSLog(@"saving note in notes_local.db...");
-    NSString *values = [@"" stringByAppendingFormat:@" '0' , '%@'  ,  '%@' , ", [self getPersonID], noteTextView.text];
+    NSString *values = [@"" stringByAppendingFormat:@" '%@' , '%@'  ,  '%@' , ", self.noteID, [self getPersonID], noteTextView.text];
 
     if(_personChosen)
         values = [values stringByAppendingFormat:@" '%@',  ", _personChosen.selectValue];
@@ -137,22 +139,21 @@ return self;
         values = [values stringByAppendingFormat:@" '0', "];
     
     if(_sessionChosen)
-        values = [values stringByAppendingFormat:@" '%@', '0'", _sessionChosen.selectValue];
+        values = [values stringByAppendingFormat:@" '%@', '%@'", _sessionChosen.selectValue, self.date];
     else if(self.eventID)
-        values = [values stringByAppendingFormat:@" '%@', '0'", self.eventID];
+        values = [values stringByAppendingFormat:@" '%@', '%@'", self.eventID, self.date];
     else
-        values = [values stringByAppendingFormat:@" '0' , '0' "];
+        values = [values stringByAppendingFormat:@" '0' , '%@' ", self.date];
     
     
     [self insertTo:@"notes_local.db" table:@"NOTES_LOCAL" definition: @"SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE"
  values:values];
     
+    NSLog(@"%@", self.noteID);
+    
     //remove old note
-    if(self.isLocal){
-        [self removeNote:YES withId:self.noteID];
-    } else {
-        [self removeNote:NO withId:self.noteID];
-    }
+    if(![self.date isEqualToString:@"0"])
+        [self removeNote:self.isLocal withId:self.noteID];
     
     //update
     Update *update = [[Update alloc] initDB];
@@ -384,6 +385,7 @@ return self;
 
 
 -(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
+    NSLog(@"noteVc");
     sqlite3 *notesLocalDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
@@ -391,6 +393,7 @@ return self;
     if (sqlite3_open([dbPathString UTF8String], &notesLocalDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
+        NSLog(@"insert : %@", querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notesLocalDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
@@ -470,13 +473,16 @@ return self;
     if(isLocal){
         [self removeFrom:@"notes_local.db" table:@"NOTES_LOCAL" attribute:@"ID" withID:[noteID intValue]];
     } else {
+        //[self insertTo:@"deleted_local.db" table:@"DELETED_LOCAL" definition:@"SERVER_ID" values:noteID];
         [self removeFrom:@"notes.db" table:@"NOTES" attribute:@"SERVER_ID" withID:[noteID intValue]];
-
+        Update *update = [[Update alloc] initDB];
+        [update updateWithoutMessage];
     }
     
 }
 
 -(void) removeFrom: (NSString *) db_file table: (NSString *) table_name attribute: (NSString *) attribute withID: (int) server_id{
+    NSLog(@"noteVC");
     sqlite3 *notificationDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
@@ -485,6 +491,7 @@ return self;
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
+        NSLog(@"delete : %@", querySql);
         const char* query_sql = [querySql UTF8String];
         
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){

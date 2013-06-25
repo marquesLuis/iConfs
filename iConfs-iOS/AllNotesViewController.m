@@ -72,7 +72,7 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:table];
-    NSMutableArray* array = [[NSMutableArray alloc]init];
+    NSMutableArray* allNotes = [[NSMutableArray alloc]init];
     
     if (sqlite3_open([dbPathString UTF8String], &peopleDB)==SQLITE_OK) {
         
@@ -89,33 +89,39 @@
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
                     
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
-                    [array addObject:note];
+                    [note setDate:lastdate];
+                    [allNotes addObject:note];
                 }else {
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
                     
                     [note setContent:content];
                     [note setIsLocal:YES];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
-                    [array addObject:note];
+                    [note setDate:lastdate];
+                    [allNotes addObject:note];
                 }
             }
         }
         sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
-    return array;
+    return allNotes;
 }
+
+
 
 
 - (IBAction)goToRoom:(UIButton *)sender {
@@ -173,17 +179,21 @@
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = NO;
-        
+
         Note *n = [notes objectAtIndex:[sender integerValue]];
         note.noteID = n.noteID;
         note.isLocal = n.isLocal;
         note.content = n.content;
         note.personID = n.personID;
         note.eventID = n.eventID;
+        note.noteID = n.noteID;
+        note.date = n.date;
     } else if([[segue identifier] isEqualToString:@"segue11"]){
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = NO;
+        note.noteID = @"0";
+        note.date = @"0";
     }
 
 }

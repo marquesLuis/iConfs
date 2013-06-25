@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSString * content;
 @property (nonatomic, strong) NSString * personID;
 @property (nonatomic, strong) NSString * eventID;
+@property (nonatomic, strong) NSString * date;
 
 @end

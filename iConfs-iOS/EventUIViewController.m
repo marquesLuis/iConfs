@@ -189,24 +189,28 @@
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
-                    
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
+
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
+                    [note setDate:lastdate];
                     [notes addObject:note];
                 }else {
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
-                    
+                    NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
+
                     [note setContent:content];
                     [note setIsLocal:YES];
                     [note setNoteID:serverID];
                     [note setPersonID:personId];
                     [note setEventID:eventID];
+                    [note setDate:lastdate];
                     [notes addObject:note];
                 }
             }
@@ -216,6 +220,9 @@
     }
     return notes;
 }
+
+
+
 
 
 - (IBAction)goToRoom:(UIButton *)sender {
@@ -400,6 +407,8 @@
         ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
         map.localID = self.event.localID;
     } else if([[segue identifier] isEqualToString:@"segue15"]){
+        
+        NSLog(@"Edit note...");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = YES;
@@ -411,13 +420,17 @@
         note.content = n.content;
         note.personID = n.personID;
         note.eventID = n.eventID;
+        note.date = n.date;
         
         
     } else {
+        NSLog(@"New note");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = YES;
         note.eventID = self.event.eventID;
+        note.date = @"0";
+        note.noteID = @"0";
     }
 }
 

@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSString * personID;
 @property (strong, nonatomic) NSString * content;
 @property (strong, nonatomic) NSString * noteID;
+@property (strong, nonatomic) NSString * date;
 
 @property BOOL isLocal;
 
