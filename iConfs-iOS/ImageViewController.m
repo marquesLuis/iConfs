@@ -43,6 +43,9 @@
     picker.dataSource = self;
 	[self.view addSubview:picker];
     self.scrollView.delegate = self;
+    UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
+
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:image];
     
     [self navigationButtons];
 }

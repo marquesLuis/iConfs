@@ -150,7 +150,6 @@
     NSIndexPath *indexPath = [tableNotifications indexPathForSelectedRow];
     
     NotificationViewController * notif = (NotificationViewController*)segue.destinationViewController;
-    notif.notificationText = [[UITextView alloc] init];
     
     Notification *notification = [_arrayOfNotifications objectAtIndex:indexPath.row];
     notif.numNotification = indexPath.row;

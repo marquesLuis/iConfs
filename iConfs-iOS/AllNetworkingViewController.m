@@ -208,7 +208,6 @@
 
     NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
     NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
-    network.networkingDescription = [[UITextView alloc] init];
     network.personPhoto = [[UIImageView alloc] init];
     
     Networking *networking;

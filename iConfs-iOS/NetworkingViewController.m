@@ -14,7 +14,7 @@
 @end
 
 @implementation NetworkingViewController
-@synthesize networkingDescriptionContent, networkingTitle, networkingDescription, personPhoto, personName, photoPath, netTitle, namePerson, personId, numNetworking;
+@synthesize networkingDescriptionContent, networkingTitle, personPhoto, personName, photoPath, netTitle, namePerson, personId, numNetworking;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,11 +36,30 @@
     self.title = netTitle;
     networkingTitle.text = netTitle;
     self.navigationItem.backBarButtonItem.title = @"Back";
-    self.networkingDescription.backgroundColor = [UIColor clearColor];
-    [personName setTitle: namePerson forState: UIControlStateNormal];
-    [self.networkingDescription setEditable:NO];
-    self.networkingDescription.text = networkingDescriptionContent;
     
+    UITextView *description =  [[UITextView alloc] initWithFrame:CGRectMake(15, 145, self.view.frame.size.width-30, 350)];
+    [description setText:networkingDescriptionContent];
+    description.layer.cornerRadius = 5.0f;
+    description.clipsToBounds = YES;
+    [description setEditable:NO];
+    
+    
+    NSLog(@"%f", description.contentSize.height);
+    if(description.contentSize.height <= 350){
+        NSLog(@"hey");
+        CGRect frame = description.frame;
+        frame.size.height = description.contentSize.height;
+        description.frame = frame;
+        description.backgroundColor = [UIColor whiteColor];
+        [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,description.contentSize.height) ];
+    }
+    [self.view addSubview:description];
+    
+    [personName setTitle: namePerson forState: UIControlStateNormal];
+    networkingTitle.layer.cornerRadius = 5.0f;
+    networkingTitle.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+    networkingTitle.textColor = [UIColor whiteColor];
+    networkingTitle.clipsToBounds = YES;
     UIImage * imageFromURL;
     if([photoPath isEqualToString:@""])
         imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];

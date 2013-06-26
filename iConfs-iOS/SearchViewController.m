@@ -411,7 +411,6 @@
     if([[segue identifier] isEqualToString:@"segue25"]){
         NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
         
-        network.networkingDescription = [[UITextView alloc] init];
         network.personPhoto = [[UIImageView alloc] init];
         
         NSMutableArray * n = [[indices objectForKey:[[self sortedIndices] objectAtIndex:section]] objectAtIndex:row];

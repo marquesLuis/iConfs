@@ -14,7 +14,7 @@
 } @end
 
 @implementation NotificationViewController
-@synthesize notificationTitle, notificationText, notificationContent, notificationDateContent;
+@synthesize notificationTitle, notificationContent, notificationDateContent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,15 +32,38 @@
     
     self.notificationName.text = notificationTitle;
     self.notificationName.font = [UIFont boldSystemFontOfSize:16.0f];
-    [self.notificationText setEditable:NO];
-    self.notificationText.backgroundColor = [UIColor clearColor];
-    self.notificationText.text = notificationContent;
     self.notificationDate.text = notificationDateContent;
     [self navigationButtons];
     [self drawLine];
     UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:image]];
+    
+    
+    
+     UITextView *description =  [[UITextView alloc] initWithFrame:CGRectMake(15, 60, self.view.frame.size.width-25, 350)];
+    [description setText:notificationContent];
+    description.layer.cornerRadius = 5.0f;
+    description.clipsToBounds = YES;
+    [description setEditable:NO];
+
+    
+    NSLog(@"%f", description.contentSize.height);
+    if(description.contentSize.height <= 350){
+        NSLog(@"hey");
+        CGRect frame = description.frame;
+        frame.size.height = description.contentSize.height;
+        description.frame = frame;
+        description.backgroundColor = [UIColor whiteColor];
+        [description setFrame:CGRectMake(15, 100, self.view.frame.size.width-25,description.contentSize.height) ];
+    } 
+    
+    [self.view addSubview:description];
+    self.notificationName.layer.cornerRadius = 5.0f;
+    self.notificationName.clipsToBounds = YES;
+    self.notificationName.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+    self.notificationName.textColor = [UIColor whiteColor];
 }
+
 
 -(void)drawLine{
     UIBezierPath *linePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0,self.view.frame.size.width, 1)];

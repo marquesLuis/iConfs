@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *notificationName;
 
 @property (strong, nonatomic) IBOutlet UILabel *notificationDate;
-@property (strong, nonatomic) IBOutlet UITextView *notificationText;
+//@property (strong, nonatomic) IBOutlet UITextView *notificationText;
 
 @property int numNotification;
 

@@ -21,7 +21,6 @@
 @property (strong, nonatomic) NSString * photoPath;
 @property (strong, nonatomic) NSString * personId;
 @property (strong, nonatomic) NSString * networkingId;
-@property (strong, nonatomic) IBOutlet UITextView *networkingDescription;
 @property (strong, nonatomic) IBOutlet UIImageView *personPhoto;
 @property int numNetworking;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
