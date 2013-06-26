@@ -188,4 +188,11 @@
     [picker reloadAllComponents];
 }
 
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL)shouldAutorotate{
+    return NO;
+}
 @end

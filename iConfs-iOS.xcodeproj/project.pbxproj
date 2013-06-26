@@ -30,6 +30,8 @@
 		62AF25C417738ACB00B27B8D /* PersonalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AF25C317738ACB00B27B8D /* PersonalInfo.m */; };
 		62AF25CA1774AB1400B27B8D /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AF25C91774AB1400B27B8D /* SearchViewController.m */; };
 		62AF25D5177A464A00B27B8D /* updateIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AF25D4177A464A00B27B8D /* updateIcon.png */; };
+		62AF25D8177A678500B27B8D /* InfoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 62AF25D7177A678500B27B8D /* InfoIcon.png */; };
+		62AF25DB177A712100B27B8D /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AF25DA177A712000B27B8D /* InfoViewController.m */; };
 		62C37301176F5B2800557724 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 62C37300176F5B2800557724 /* Note.m */; };
 		62C3730F1770A24300557724 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C3730E1770A24300557724 /* Home.png */; };
 		62C373111770D47800557724 /* defaultTableViewBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 62C373101770D47800557724 /* defaultTableViewBackground.png */; };
@@ -158,6 +160,9 @@
 		62AF25C81774AB1400B27B8D /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		62AF25C91774AB1400B27B8D /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		62AF25D4177A464A00B27B8D /* updateIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = updateIcon.png; sourceTree = "<group>"; };
+		62AF25D7177A678500B27B8D /* InfoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InfoIcon.png; sourceTree = "<group>"; };
+		62AF25D9177A711F00B27B8D /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		62AF25DA177A712000B27B8D /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		62C372FF176F5B2800557724 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		62C37300176F5B2800557724 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		62C3730E1770A24300557724 /* Home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Home.png; sourceTree = "<group>"; };
@@ -456,6 +461,8 @@
 				9DBF86631755FD6E00845BD7 /* Supporting Files */,
 				62AF25C81774AB1400B27B8D /* SearchViewController.h */,
 				62AF25C91774AB1400B27B8D /* SearchViewController.m */,
+				62AF25D9177A711F00B27B8D /* InfoViewController.h */,
+				62AF25DA177A712000B27B8D /* InfoViewController.m */,
 			);
 			path = "iConfs-iOS";
 			sourceTree = "<group>";
@@ -467,6 +474,7 @@
 				62C373101770D47800557724 /* defaultTableViewBackground.png */,
 				9D877CB6176FCF6600894D5C /* defaultPerson.jpg */,
 				621A59FF175E18B100B02EEC /* Contacts.jpg */,
+				62AF25D7177A678500B27B8D /* InfoIcon.png */,
 				62AF25D4177A464A00B27B8D /* updateIcon.png */,
 				621A5A00175E18B100B02EEC /* maps.jpg */,
 				621A5A01175E18B100B02EEC /* Networking.jpg */,
@@ -623,6 +631,7 @@
 				62C3730F1770A24300557724 /* Home.png in Resources */,
 				62C373111770D47800557724 /* defaultTableViewBackground.png in Resources */,
 				62AF25D5177A464A00B27B8D /* updateIcon.png in Resources */,
+				62AF25D8177A678500B27B8D /* InfoIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +709,7 @@
 				9D877CFB1774CF7600894D5C /* NSData+CommonCrypto.m in Sources */,
 				9D877CFC1774CF7600894D5C /* NSString+Base64.m in Sources */,
 				9D0349761777359D007801DE /* NSString+HTML.m in Sources */,
+				62AF25DB177A712100B27B8D /* InfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

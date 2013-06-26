@@ -450,7 +450,13 @@
         }
         
     } else
-        NSLog(@"Error while attachingggggggg '%s'", sqlite3_errmsg(notificationDB));
+        NSLog(@"Error while attaching '%s'", sqlite3_errmsg(notificationDB));
+}
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
+-(BOOL)shouldAutorotate{
+    return NO;
+}
 @end

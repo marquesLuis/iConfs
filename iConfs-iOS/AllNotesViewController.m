@@ -287,6 +287,12 @@
         sqlite3_close(notesLocalDB);
     }
 }
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
 
+-(BOOL)shouldAutorotate{
+    return NO;
+}
 
 @end

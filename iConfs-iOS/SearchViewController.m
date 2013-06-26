@@ -587,5 +587,11 @@
                                           otherButtonTitles:nil];
     [alert show];
 }
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
 
+-(BOOL)shouldAutorotate{
+    return NO;
+}
 @end

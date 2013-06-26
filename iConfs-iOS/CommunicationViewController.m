@@ -40,6 +40,16 @@
     [self changeFeedMsgBox];
     [self treatKeyboard];
     [self navigationButtons];
+    
+}
+
+
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL)shouldAutorotate{
+    return NO;
 }
 
 
@@ -168,28 +178,8 @@
     [self.emailField resignFirstResponder];
 }
 
-/*
- * Placeholder
- */
 
-/*- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
- {
- NSLog(@"hey");
- self.feedback.text = @"";
- self.feedback.textColor = [UIColor blackColor];
- return YES;
- }
- 
- -(void) textViewDidChange:(UITextView *)textView
- {
- 
- if(self.feedback.text.length == 0){
- self.feedback.textColor = [UIColor lightGrayColor];
- self.feedback.text = @"Write here anything you wish to share with the organization. Complaints, suggestions or your best wishes. Be aware this is anonymous so if you wish leave your name.";
- [self.view resignFirstResponder];
- }
- }
- */
+
 
 
 - (IBAction)feedbackOrMessageButton:(UISegmentedControl *)sender {
