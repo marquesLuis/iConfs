@@ -16,6 +16,7 @@
 @interface HomeViewController : UIViewController
 
 - (IBAction)goToContacts:(UIButton *)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *logout;
 
 - (IBAction)updateButton:(UIButton *)sender;
 

@@ -13,7 +13,7 @@
 @end
 
 @implementation HomeViewController
-@synthesize update;
+@synthesize update, logout;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +30,18 @@
 	// Do any additional setup after loading the view.
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.update = [[Update alloc] initDB];
+    
+    [self navigationButtons];
 }
+
+
+-(void)navigationButtons{
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(updateButton:)];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: logout, homeButton, nil]; 
+}
+
 
 - (void)didReceiveMemoryWarning
 {

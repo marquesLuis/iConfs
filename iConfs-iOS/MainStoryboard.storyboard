@@ -107,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S0M-QI-1zM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="976" y="-938"/>
+            <point key="canvasLocation" x="276" y="-954"/>
         </scene>
         <!--Home View Controller - HomePageIConfs-->
         <scene sceneID="IgL-MN-Lgp">
@@ -288,23 +288,23 @@
                             </toolbar>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fM-mC-s4d">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="updateIcon.png">
+                                <state key="normal" image="Search-Search-icon.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.97641389270000001" green="0.97641389270000001" blue="0.97641389270000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="updateButton:" destination="9qT-Qf-qzL" eventType="touchUpInside" id="lzW-2W-jrp"/>
+                                    <segue destination="ava-bD-PPQ" kind="push" id="syd-V4-SEh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Update" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1t-zj-Vj6">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1t-zj-Vj6">
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="About" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xg6-Od-O6A">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Help" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xg6-Od-O6A">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="42" id="xIA-ho-sm0"/>
                                 </constraints>
@@ -314,7 +314,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oso-vx-qx6">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="InfoIcon.png">
+                                <state key="normal" image="help.jpg">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -389,29 +389,27 @@
                     </view>
                     <navigationItem key="navigationItem" title="iConfs" id="IIK-dc-mJ7">
                         <barButtonItem key="backBarButtonItem" title="Back" id="azD-ka-4WH"/>
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="b7b-Yd-ODX">
+                        <barButtonItem key="rightBarButtonItem" title="Logout" id="b7b-Yd-ODX">
                             <connections>
                                 <segue destination="MSP-a8-Vhu" kind="push" id="8hN-KL-ukg"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="wLY-6U-iQ7">
-                            <connections>
-                                <segue destination="ava-bD-PPQ" kind="push" id="9z8-tU-1BT"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="logout" destination="b7b-Yd-ODX" id="534-G5-Xal"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QdX-JP-ijD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1495" y="-216"/>
+            <point key="canvasLocation" x="1503" y="-42"/>
         </scene>
         <!--Networking View Controller-->
         <scene sceneID="Nyx-sv-VA1">
             <objects>
                 <viewController storyboardIdentifier="NetworkingViewController" id="Lf2-YB-DYM" customClass="NetworkingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FDa-dO-WKK">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVf-UX-OtY">
@@ -602,7 +600,7 @@
             <objects>
                 <viewController storyboardIdentifier="AllNotificationViewController" id="dJg-70-ExF" customClass="AllNotificationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K2u-Ba-JFn">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="t2Z-Lh-UbO">
@@ -651,14 +649,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hCl-cL-TkH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-94" y="685"/>
+            <point key="canvasLocation" x="322" y="673"/>
         </scene>
         <!--Notification View Controller - Notification-->
         <scene sceneID="QSx-AT-aDK">
             <objects>
                 <viewController storyboardIdentifier="NotificationViewController" id="lJj-qs-c5f" customClass="NotificationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aIq-VG-R5S">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-DU-T0g">
@@ -716,7 +714,7 @@
             <objects>
                 <viewController id="nTu-J4-A0h" customClass="AllNetworkingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gmq-er-5np">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="OYb-7Y-OOU">
@@ -924,14 +922,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bhY-z8-rq1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1397" y="330"/>
+            <point key="canvasLocation" x="1521" y="664"/>
         </scene>
         <!--Image View Controller - Maps-->
         <scene sceneID="D63-QF-twy">
             <objects>
                 <viewController id="6AR-Am-Pii" customClass="ImageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ooJ-QK-DGj">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="w3V-hJ-NmC"/>
@@ -1171,7 +1169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fn0-g6-vaY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1503" y="-690"/>
+            <point key="canvasLocation" x="1109" y="-1075"/>
         </scene>
         <!--All Notes View Controller - Notes-->
         <scene sceneID="sft-KW-qw5">
@@ -1333,25 +1331,24 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Au-EK-ev9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="619" y="-221"/>
+            <point key="canvasLocation" x="283" y="-249"/>
         </scene>
     </scenes>
     <resources>
         <image name="Contacts.jpg" width="50" height="50"/>
-        <image name="InfoIcon.png" width="256" height="256"/>
         <image name="Networking.jpg" width="50" height="50"/>
         <image name="Notes.jpg" width="50" height="50"/>
         <image name="Notifications.jpg" width="50" height="50"/>
         <image name="Organization.jpg" width="50" height="50"/>
         <image name="Schedule.jpg" width="50" height="50"/>
+        <image name="Search-Search-icon.png" width="256" height="256"/>
+        <image name="help.jpg" width="128" height="128"/>
         <image name="maps.jpg" width="50" height="50"/>
-        <image name="updateIcon.png" width="512" height="512"/>
     </resources>
     <classes>
         <class className="AllNetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1360,9 +1357,6 @@
         <class className="AllNotesViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
-                <relationship kind="action" name="search:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="addNewNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="notesTableView" candidateClass="UITableView"/>
             </relationships>
@@ -1370,7 +1364,6 @@
         <class className="AllNotificationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1388,9 +1381,6 @@
         <class className="EventUIViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="info" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
@@ -1403,6 +1393,7 @@
             <relationships>
                 <relationship kind="action" name="goToContacts:" candidateClass="UIButton"/>
                 <relationship kind="action" name="updateButton:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="logout" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="IConfsViewController" superclassName="UIViewController">
@@ -1416,13 +1407,15 @@
         <class className="ImageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
         </class>
         <class className="InfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="KNMultiItemSelector" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/KNMultiItemSelector.h"/>
@@ -1441,7 +1434,6 @@
         <class className="NetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
@@ -1454,7 +1446,6 @@
                 <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
                 <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
@@ -1463,7 +1454,6 @@
         <class className="NotificationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NotificationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="notificationDate" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="notificationName" candidateClass="UILabel"/>
@@ -1472,8 +1462,6 @@
         <class className="PersonProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1481,9 +1469,6 @@
         </class>
         <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-            </relationships>
         </class>
         <class className="SearchViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
@@ -1505,12 +1490,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="syd-V4-SEh"/>
         <segue reference="8hN-KL-ukg"/>
         <segue reference="H5z-u7-vJR"/>
-        <segue reference="9z8-tU-1BT"/>
-        <segue reference="hSP-JN-arM"/>
+        <segue reference="Ixr-QI-REd"/>
         <segue reference="83h-jB-Zo5"/>
+        <segue reference="yYa-b4-9nU"/>
         <segue reference="vap-t8-tVb"/>
-        <segue reference="mNJ-h0-X0J"/>
     </inferredMetricsTieBreakers>
 </document>
