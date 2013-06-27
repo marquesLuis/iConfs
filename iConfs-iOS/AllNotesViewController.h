@@ -14,5 +14,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *notesTableView;
 //@property (strong, nonatomic) IBOutlet UIBarButtonItem *newNote;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addNewNote;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *addNote;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end

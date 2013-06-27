@@ -12,13 +12,7 @@
 #import "Message.h"
 
 @interface CommunicationViewController : UIViewController
-/*- (IBAction)feedbackOrMessageButton:(UISegmentedControl *)sender;
 
-@property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UITextView *feedback;
-- (IBAction)sendButton:(id)sender;
-- (IBAction)clearButton:(UIButton *)sender;
-*/
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextView *feedback;
 - (IBAction)sendButton:(id)sender;

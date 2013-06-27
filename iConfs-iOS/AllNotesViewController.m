@@ -34,10 +34,30 @@
     [self.notesTableView setEditing:YES animated:YES];
     self.notesTableView.allowsSelectionDuringEditing = YES;
     [self updateNotes];
-    
+    [self createToolbar];
     [self navigationButtons];
 }
 
+- (void)createToolbar {
+    self.addNote = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, self.addNote, flexibleSpace, nil];
+    /*t = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 464, self.view.frame.size.width, 40)];
+     t.autoresizingMask |= UIViewAutoresizingFlexibleWidth;
+     [t setItems: [NSArray arrayWithObjects:buttonItems,  nil]];
+     [self.view addSubview:t];*/
+    self.toolbar = [[UIToolbar alloc] init];
+    self.toolbar.frame = CGRectMake(0, 460, self.view.frame.size.width, 44);
+    [self.toolbar setItems:buttonItems];
+    self.toolbar.hidden = NO;
+    [self.view addSubview:self.toolbar];
+}
+
+- (IBAction)addNote:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"segue11" sender:sender];
+
+}
 
 -(void)navigationButtons{
     
@@ -51,7 +71,7 @@
     buttonItem.style = UIBarButtonItemStyleBordered;
     
     
-	self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: buttonItem, addNewNote, nil]; //segmentBarItem;
+	self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects: buttonItem, nil]; //segmentBarItem;
 }
 
 - (IBAction)search:(UIButton *)sender {

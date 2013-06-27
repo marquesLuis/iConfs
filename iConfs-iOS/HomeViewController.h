@@ -12,6 +12,7 @@
 #import "sqlite3.h"
 #import "KNMultiItemSelector.h"
 #import "NetworkingTableViewController.h"
+#import "PersonalProgramTKCalendarDayViewController.h"
 
 @interface HomeViewController : UIViewController
 
@@ -19,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *logout;
 
 - (IBAction)updateButton:(UIButton *)sender;
+- (IBAction)goToProgram:(UIButton *)sender;
 
 @property  (strong, nonatomic) Update * update;
 @end

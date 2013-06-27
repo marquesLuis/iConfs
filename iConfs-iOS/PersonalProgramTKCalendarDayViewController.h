@@ -13,5 +13,7 @@
 #import <TapkuLibrary/TapkuLibrary.h>
 
 @interface PersonalProgramTKCalendarDayViewController : TKCalendarDayViewController<TKCalendarDayViewDelegate>
+@property (strong, nonatomic) IBOutlet UINavigationItem *navigationBar;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end

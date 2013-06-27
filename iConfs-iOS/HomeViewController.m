@@ -31,6 +31,8 @@
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.update = [[Update alloc] initDB];
     
+    
+    NSLog(@"HomeVC %d", self.interfaceOrientation);
     [self navigationButtons];
 }
 
@@ -81,6 +83,8 @@
 - (IBAction)updateButton:(UIButton *)sender {
     [self.update update];
 }
+
+
 
 -(NSMutableArray*)getAllPersons{
     NSMutableArray * items = [NSMutableArray array];
@@ -179,5 +183,7 @@
 -(BOOL)shouldAutorotate{
     return NO;
 }
+
+
 
 @end
