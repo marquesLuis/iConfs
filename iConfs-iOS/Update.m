@@ -115,6 +115,8 @@
         NSString *string = [[NSString alloc]  initWithBytes:[returnData bytes]
                                                      length:[returnData length] encoding:NSUTF8StringEncoding];
         string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"&newline;"]];
+       // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\n" withString:@"&newline;"]];
+       // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r" withString:@"&newline;"]];
         NSLog(@"String result:");
         NSLog(@"%@", string);
         //NSArray *array= [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:&error];
@@ -578,7 +580,10 @@
     if(updated){
         for(NSString *key in updated.allKeys){
             NSMutableDictionary *notif = [updated objectForKey:key];
-            NSString * values = [@"" stringByAppendingFormat: @"'%@', '%@', '%@', '%d'",[notif objectForKey:@"title"],[notif objectForKey:@"content"],[notif objectForKey:@"updated_at"], [[notif objectForKey:@"id"] integerValue]];
+            NSString * content = [notif objectForKey:@"content"];
+            if ([content length])
+                content = [self cleanString:content];
+            NSString * values = [@"" stringByAppendingFormat: @"'%@', '%@', '%@', '%d'",[notif objectForKey:@"title"],content,[notif objectForKey:@"updated_at"], [[notif objectForKey:@"id"] integerValue]];
             [self updateRowFrom:notif_db_file table:notif_table_name whereAttribute:@"SERVER_ID" equalsID:[[notif objectForKey:@"id"] integerValue] definition:@"TITLE, NOTIFICATION, DATE, SERVER_ID" values:values];
         }
     }
@@ -590,7 +595,11 @@
 
 - (NSString *)readEvent:(NSMutableDictionary *)event {
     NSString * title = [event objectForKey:@"title"];
+    if ([title length])
+        title = [self cleanString:title];
     NSString * description = [event objectForKey:@"description"];
+    if ([description length])
+        description = [self cleanString:description];
     int server_id = [[event objectForKey:@"id"]integerValue];
     NSString * kind = [event objectForKey:@"kind"];
     NSString * begin = [event objectForKey:@"begin"];
@@ -741,6 +750,8 @@
     }
     
     NSString * bio = [person objectForKey:@"bio"];
+    if ([bio length])
+        bio = [self cleanString:bio];
     NSString * date = [person objectForKey:@"last_date"];
     
     return [@"" stringByAppendingFormat:@"'%@','%@','%@','%@','%@','%@','%@','%d','%@'", first, last, pre, aff, email, photo, bio, server_id, date];
@@ -749,7 +760,11 @@
 - (NSString *) readInfo: (NSMutableDictionary *)info{
     int server_id = [[info objectForKey:@"server_id"] integerValue];
     NSString * type = [info objectForKey:@"type"];
+    if ([type length])
+        type = [self cleanString:type];
     NSString * value = [info objectForKey:@"value"];
+    if ([value length])
+        value = [self cleanString:value];
     int person_id = [[info objectForKey:@"person_id"] integerValue];
     
     return [@"" stringByAppendingFormat:@"'%d', '%@', '%@', '%d'", server_id, type, value, person_id];
@@ -915,6 +930,8 @@
 
 - (NSString *) readLocal:(NSMutableDictionary *)local{
     NSString * title = [local objectForKey:@"title"];
+    if ([title length])
+        title = [self cleanString:title];
     int server_id = [[local objectForKey:@"server_id"] integerValue];
     NSString *tmp = [local objectForKey:@"image"];
     NSString *photo = @"";
@@ -957,6 +974,8 @@
     int server_id = [[note objectForKey:@"server_id"] integerValue];
     int owner_id = [[note objectForKey:@"person_id"] integerValue];
     NSString * content = [note objectForKey:@"content"];
+    if ([content length])
+        content = [self cleanString:content];
     NSString * ap = [note objectForKey:@"about_person"];
     int about_person = 0;
     if (ap)
