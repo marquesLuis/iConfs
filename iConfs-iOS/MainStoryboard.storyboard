@@ -1355,8 +1355,8 @@
         <image name="help.jpg" width="128" height="128"/>
         <image name="maps.jpg" width="50" height="50"/>
     </resources>
-<<<<<<< HEAD
-=======
+
+
     <classes>
         <class className="AllNetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
@@ -1516,7 +1516,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TKCalendarDayViewController.h"/>
         </class>
     </classes>
->>>>>>> bf9de2402ecd5ea5ee84e87e007736689337f914
+
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
