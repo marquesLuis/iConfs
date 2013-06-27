@@ -19,7 +19,7 @@
     UITextView * descriptionText;
     UILabel * notes;
     NSString * all_authors;
-
+    
 }
 
 @end
@@ -39,47 +39,33 @@
 {
     [super viewDidLoad];
     
-    y = 700;
+    y = 900;
     
-    //title ; date; authors ; description; notes
-    //self.info = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
     self.info.dataSource = self;
     self.info.delegate = self;
     [self.view addSubview:self.info];
     self.title = @"Session";
     
-    // [self displayAuthors];
-    
     [self.info setEditing:YES animated:YES];
     self.info.allowsSelectionDuringEditing = YES;
     [self updateNotes];
-    /*   self.sessionTitle.font = [UIFont fontWithName:@"Helvetica" size:14.0];    // For setting font style with size
-     labelName.textColor = [UIColor whiteColor];        //For setting text color
-     labelName.backgroundColor = [UIColor clearColor];  // For setting background color
-     //    labelName.textAlignment = UITextAlignmentCenter;   // For setting the horizontal text alignment
-     labelName.numberOfLines = 2;                       // For setting allowed number of lines in a label
-     //  labelName.lineBreakMode = UILineBreakModeWordWrap;*/
     
-    
-    
-    
-    /**Author
-     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AUTHOR( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, NAME TEXT, PERSON_ID INTEGER)" WithName:@"author.db"];
-     */
-    
-    
-    //self.event.title = [[[[_personProfile.prefix stringByAppendingString:@" " ]stringByAppendingString:_personProfile.firstName]stringByAppendingString:@" "]stringByAppendingString:_personProfile.lastName];;
-    
-    
-	// Do any additional setup after loading the view.
-    /*_personProfile = [self getPerson:personID];
-     NSString * areas = [self getAreas:personID];
-     
-     
-     */
     
     [self createToolbar];
     [self navigationButtons];
+    
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(changePosition:) name: UIDeviceOrientationDidChangeNotification object: nil];
+    
+    title = [[UITextView alloc]init];
+    date = [[UILabel alloc]init];
+    authors = [[UITextView alloc]init];
+    author = [[UILabel alloc]init];
+    description = [[UILabel alloc]init];
+    descriptionText = [[UITextView alloc]init];
+    notes = [[UILabel alloc]init];
+    roomButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 }
 
 
@@ -94,10 +80,6 @@
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
-
-
-
-
 -(void)updateNotes{
     NSMutableArray * server = [self getNotes:@"notes.db" withClause:[@"" stringByAppendingFormat: @"SELECT * FROM NOTES WHERE ABOUT_SESSION = %@", self.event.eventID]];
     
@@ -110,7 +92,7 @@
 - (void)createToolbar {
     self.addNoteButton = [[UIBarButtonItem alloc] initWithTitle:@"Add note" style:UIBarButtonItemStyleBordered target:self action:@selector(addNote:)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-
+    
     NSArray *buttonItems = [NSArray arrayWithObjects:flexibleSpace, self.addNoteButton, flexibleSpace, nil];
     [self.toolbar setItems:buttonItems];
 }
@@ -188,7 +170,7 @@
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
                 Author *auth = [[Author alloc]init];
-
+                
                 NSString * personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                 NSString * name;
                 if([personID isEqualToString:@"0"]){
@@ -203,7 +185,7 @@
                 [allAuthors addObject:auth];
             }
             sqlite3_finalize(statement);
-
+            
         }
         sqlite3_close(peopleDB);
     }
@@ -217,14 +199,6 @@
 }
 
 
-//Notes
-/*[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES( SERVER_ID INTEGER PRIMARY KEY, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes.db"];
-
-[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notes_status.db"];
-
-[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTES_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER, OWNER_ID INTEGER, CONTENT TEXT, ABOUT_PERSON INTEGER, ABOUT_SESSION INTEGER, LAST_DATE TEXT)" WithName:@"notes_local.db"];
-
-[self createOrOpenDB:"CREATE TABLE IF NOT EXISTS DELETED_LOCAL( ID INTEGER PRIMARY KEY AUTOINCREMENT, SERVER_ID INTEGER)" WithName:@"deleted_local.db"];*/
 
 
 -(NSMutableArray *)getNotes:(NSString*)table withClause:(NSString*)clause{
@@ -242,16 +216,16 @@
         
         if (sqlite3_prepare(peopleDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
-
+                
                 Note *note = [[Note alloc]init];
-
+                
                 if([table isEqualToString:@"notes.db"]){
                     NSString *content = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                     NSString *serverID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                     NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
-
+                    
                     [note setContent:content];
                     [note setIsLocal:NO];
                     [note setNoteID:serverID];
@@ -265,7 +239,7 @@
                     NSString *personId = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 4)];
                     NSString *eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 5)];
                     NSString *lastdate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 6)];
-
+                    
                     [note setContent:content];
                     [note setIsLocal:YES];
                     [note setNoteID:serverID];
@@ -289,20 +263,21 @@
 - (IBAction)goToRoom:(UIButton *)sender {
     if([self shouldPerformSegueWithIdentifier:@"segue12" sender:sender])
         [self performSegueWithIdentifier:@"segue12" sender:sender];
-
+    
+    
 }
 
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{ 
+{
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{ 
+{
     // Return the number of rows in the section.
     return [sections  count];
 }
@@ -315,7 +290,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProductCellIdentifier];
     
-   
+    
     Note * note = [sections objectAtIndex:indexPath.row];
     cell.textLabel.text =  note.content;
     return cell;
@@ -329,7 +304,7 @@
     
     
     //title
-     title.backgroundColor =[UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+    title.backgroundColor =[UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
     title.textColor = [UIColor whiteColor];
     title.textAlignment = NSTextAlignmentCenter;
     [[title layer] setCornerRadius:5]; // radius of rounded corners
@@ -343,24 +318,24 @@
     date.backgroundColor =  [UIColor lightTextColor];
     [[date layer] setCornerRadius:5]; // radius of rounded corners
     [date setClipsToBounds: YES]; //clip text within the bounds
-
+    
     date.text = [@"Date "  stringByAppendingString: self.event.date];
     [date setFont:[UIFont fontWithName:@"Arial" size:14]];
     [headerView addSubview:date];
     
     //room
-    roomButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
     [roomButton setTitle: @"Local" forState:UIControlStateNormal];
     
     [roomButton addTarget:self
-                     action:@selector(goToRoom:)
-           forControlEvents:UIControlEventTouchDown];
+                   action:@selector(goToRoom:)
+         forControlEvents:UIControlEventTouchDown];
     
     if(![self.event.localID  isEqualToString:@"0"])
         [headerView addSubview:roomButton];
     
     if(![all_authors isEqualToString:@""]){
-    
+        
         //authors
         [authors setEditable:NO];
         authors.scrollEnabled = YES;
@@ -386,7 +361,7 @@
         
         //description label
         description.textColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
-
+        
         description.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
         description.textColor = [UIColor whiteColor];
         description.layer.cornerRadius = 5.0f;
@@ -410,8 +385,7 @@
         
         [headerView addSubview:descriptionText];
     }
-    y+=25;
-
+    
     if(sections.count != 0){
         notes.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
         notes.textColor = [UIColor whiteColor];
@@ -420,10 +394,10 @@
         notes.font = [UIFont boldSystemFontOfSize:15.0f];
         [notes setText: @"My notes"];
         [headerView addSubview:notes];
-
+        
     }
     
-
+    
     return headerView;
 }
 
@@ -432,6 +406,7 @@
     return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    NSLog(@"%d", y);
     return y;
 }
 
@@ -450,7 +425,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([[segue identifier] isEqualToString:@"segue12"]){
-        ImageViewController *map = (ImageViewController*)segue.destinationViewController;    
+        ImageViewController *map = (ImageViewController*)segue.destinationViewController;
         map.localID = self.event.localID;
     } else if([[segue identifier] isEqualToString:@"segue15"]){
         
@@ -459,7 +434,7 @@
         note.hidePersonButton = NO;
         note.hideSessionButton = YES;
         note.eventID = self.event.eventID;
-
+        
         Note *n = [sections objectAtIndex:[sender integerValue]];
         note.noteID = n.noteID;
         note.isLocal = n.isLocal;
@@ -509,7 +484,7 @@
     }
     else {
         [self performSegueWithIdentifier:@"segue15" sender: [NSNumber numberWithInteger:indexPath.row]];
-
+        
     }
 }
 
@@ -556,36 +531,92 @@
 }
 
 -(NSUInteger)supportedInterfaceOrientations{
+    NSLog(@"supportedInterfaceOrientations");
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft;
 }
 
 -(BOOL)shouldAutorotate{
-    
+    NSLog(@"shouldAutorotate");
+
     return YES;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self changePosition:self.interfaceOrientation];
 }
 
 -(void) changePosition:(UIInterfaceOrientation)orientation{
     
     y = 80;
-
+    
     NSLog(@"changePosition");
-    if(UIInterfaceOrientationIsLandscape(orientation)){
+    NSLog(@"%d", self.interfaceOrientation);
+
+    if( self.interfaceOrientation == 3 || self.interfaceOrientation == 4 ){
+        NSLog(@"UIInterfaceOrientationIsLandscape");
+        CGRect LabelFrameTitle = CGRectMake(10, 5, 550, 30);
+        CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
+        CGRect LabelFrameRoom = CGRectMake(460, 45, 80, 30);
+        [title setFrame:LabelFrameTitle];
+        [date setFrame:LabelFrameDate];
+        [roomButton setFrame: LabelFrameRoom];
+        
+        all_authors = [self displayAuthors];
+        if(![all_authors isEqualToString:@""]){
+            CGRect LabelFrameAuthor = CGRectMake(10, 90, 550, 20);
+            CGRect LabelFrameAuthors = CGRectMake(10, 110, 550, 40);
+            y = 160;
+            [authors setFrame:LabelFrameAuthors];
+            [author setFrame:LabelFrameAuthor];
+        }
+        
+        
+        
+        
+        if(![self.event.description isEqualToString:@""]){
+            CGRect LabelFrameDescription = CGRectMake(10, y+5, 550, 20);
+            y+=25;
+            CGRect LabelFrameDescriptionTable = CGRectMake(10, y, 550, 175);
+            
+            [description setFrame:LabelFrameDescription];
+            [descriptionText setFrame:LabelFrameDescriptionTable];
+            [descriptionText setText:self.event.description];
+            if(descriptionText.contentSize.height <= 175){
+                CGRect frame = descriptionText.frame;
+                frame.size.height = descriptionText.contentSize.height;
+                descriptionText.frame = frame;
+                [descriptionText setFrame:CGRectMake(10, y, self.view.frame.size.width-20,descriptionText.contentSize.height) ];
+                y+=descriptionText.contentSize.height+15;
+                
+            } else
+                y+=190;
+            
+            
+        }
+        if(sections.count != 0){
+            CGRect LabelFrameNotes = CGRectMake(10, y, 550, 20);
+            notes = [[UILabel alloc] initWithFrame:LabelFrameNotes];
+        }
+        y+=25;
+        
         
     } else {
+        NSLog(@"UIInterfaceOrientationIsPortrait");
+        
         CGRect LabelFrameTitle = CGRectMake(10, 5, self.view.frame.size.width-20, 30);
         CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
         CGRect LabelFrameRoom = CGRectMake(200, 45, 80, 30);
-        title = [[UITextView alloc]initWithFrame:LabelFrameTitle];
-        date = [[UILabel alloc]initWithFrame:LabelFrameDate];
-        roomButton.frame = LabelFrameRoom;
+        [title setFrame:LabelFrameTitle];
+        [date setFrame:LabelFrameDate];
+        [roomButton setFrame: LabelFrameRoom];
         
         all_authors = [self displayAuthors];
         if(![all_authors isEqualToString:@""]){
             CGRect LabelFrameAuthor = CGRectMake(10, 90, self.view.frame.size.width-20, 20);
             CGRect LabelFrameAuthors = CGRectMake(10, 110, self.view.frame.size.width-20, 40);
             y = 160;
-            authors = [[UITextView alloc]initWithFrame:LabelFrameAuthors];
-            author = [[UILabel alloc] initWithFrame:LabelFrameAuthor];
+            [authors setFrame:LabelFrameAuthors];
+            [author setFrame:LabelFrameAuthor];
         }
         
         
@@ -596,38 +627,36 @@
             y+=25;
             CGRect LabelFrameDescriptionTable = CGRectMake(10, y, self.view.frame.size.width-20, 175);
             
-            description = [[UILabel alloc] initWithFrame:LabelFrameDescription];
-            descriptionText = [[UITextView alloc]initWithFrame:LabelFrameDescriptionTable];
+            [description setFrame:LabelFrameDescription];
+            [descriptionText setFrame:LabelFrameDescriptionTable];
             [descriptionText setText:self.event.description];
             if(descriptionText.contentSize.height <= 175){
                 CGRect frame = descriptionText.frame;
                 frame.size.height = descriptionText.contentSize.height;
                 descriptionText.frame = frame;
                 [descriptionText setFrame:CGRectMake(10, y, self.view.frame.size.width-20,descriptionText.contentSize.height) ];
-                y+=descriptionText.contentSize.height + 10;
+                y+=descriptionText.contentSize.height+15;
                 
             } else
-                y+=185;
+                y+=190;
             
             
+        }
+        
+        
+        if(sections.count != 0){
+            NSLog(@"notes...");
+            CGRect LabelFrameNotes = CGRectMake(10, y, self.view.frame.size.width-20, 20);
+            [notes setFrame:LabelFrameNotes];
         }
         y+=25;
-
-        if(sections.count != 0){
-            CGRect LabelFrameNotes = CGRectMake(10, y, self.view.frame.size.width-20, 20);
-            notes = [[UILabel alloc] initWithFrame:LabelFrameNotes];
-            notes.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
-            notes.textColor = [UIColor whiteColor];
-            notes.layer.cornerRadius = 5.0f;
-            notes.clipsToBounds = YES;
-            notes.font = [UIFont boldSystemFontOfSize:15.0f];
-            [notes setText: @"My notes"];            
-        }
+        
+        NSLog(@"%d", y);
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [self changePosition:self.interfaceOrientation];
-}
+
+
+
 
 @end

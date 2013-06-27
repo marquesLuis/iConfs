@@ -8,11 +8,14 @@
 
 #import "PersonalProgramTKCalendarDayViewController.h"
 
+#define PERSONAL 0
+#define COMPLETE 1
 @interface PersonalProgramTKCalendarDayViewController ()<TKCalendarDayViewDelegate> {
     NSString * beginDate;
     NSString * endDate;
     NSMutableArray *events;
     int eventSelected;
+    UISegmentedControl * options;
 }
 
 @end
@@ -35,7 +38,6 @@
 {
     [super viewDidLoad];
     
-    
     [self getBeginAndEnd];
     events = [[NSMutableArray alloc]init];
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
@@ -45,12 +47,29 @@
     self.dayView.date = date;
     
     
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+  //  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     
-    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
+   // [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
     [self navigationButtons];
+    [self updateToolbar];
+    
+    options.selectedSegmentIndex = PERSONAL;
+
 }
 
+-(void) updateToolbar{
+    NSArray *itemArray = [NSArray arrayWithObjects: [@"" stringByAppendingFormat: @"Personal"], [@"" stringByAppendingFormat: @"Complete"], nil];
+    options  = [[UISegmentedControl alloc] initWithItems:itemArray];
+    options.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
+    options.segmentedControlStyle = UISegmentedControlStyleBar;
+    [options addTarget:self action:@selector(valueChanged:) forControlEvents: UIControlEventValueChanged];
+    options.segmentedControlStyle = UISegmentedControlStyleBar;
+	options.momentary = NO;
+	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:options];
+    buttonItem.style = UIBarButtonItemStyleBordered;
+    
+    [self.toolbar setItems: [NSArray arrayWithObjects:buttonItem,  nil]];
+}
 
 -(void)navigationButtons{
     
@@ -63,31 +82,15 @@
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
-/*-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-    
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    NSLog(@"change position");
-    [self.dayView reloadData];
-}*/
 
 
 
-- (void)deviceOrientationDidChange:(NSNotification *)notification
+
+/*- (void)deviceOrientationDidChange:(NSNotification *)notification
 {
     NSLog(@"deviceOrientationDidChange");
     [self.dayView reloadData];
     
-}
-
-
-/*- (BOOL)supportedInterfaceOrientations:(UIInterfaceOrientation)interfaceOrientation
-{
-    NSLog(@"interfaces supported");
-    // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait)
-    || (interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-    ||(interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }*/
 
 
@@ -97,7 +100,6 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"calendar.db"];
-            NSLog(@"2");
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
         NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM CALENDAR"];
@@ -105,10 +107,8 @@
         NSLog(@"3");
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
-                        NSLog(@"4");
                 beginDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                 endDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
-                NSLog(@"%@", beginDate);
                 
             }
         }
@@ -135,18 +135,31 @@
     }
 }
 
+- (void)valueChanged:(UISegmentedControl *)segment {
+    NSLog(@"valueChanged");
+    //get index position for the selected control
+    NSInteger selectedIndex = [segment selectedSegmentIndex];
+    if(selectedIndex == PERSONAL) {
+        options.selectedSegmentIndex = PERSONAL;
+    }else if (selectedIndex == COMPLETE){
+            options.selectedSegmentIndex = COMPLETE;
+    } 
+    
+    [self calendarDayTimelineView:self.dayView eventsForDate:self.dayView.date];
+    [self.dayView reloadData];
+}
+
 #pragma mark TKCalendarDayViewDelegate
 - (NSArray *) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventsForDate:(NSDate *)eventDate{
-   // UIInterfaceOrientation orien = [[UIDevice currentDevice] orientation];
-    UIInterfaceOrientation orien = [UIApplication sharedApplication].statusBarOrientation;
-
+//    UIInterfaceOrientation orien = [UIApplication sharedApplication].statusBarOrientation;
+    NSLog(@"calendarDayTimelineView");
     sqlite3 *db;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     
-    if(UIInterfaceOrientationIsPortrait(orien)){
-        self.title = @"Personal Program";
-
+    if(options.selectedSegmentIndex == PERSONAL){
+        self.title = @"Program";
+        NSLog(@"personal");
         NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
         NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
         [events removeAllObjects];
@@ -193,7 +206,8 @@
     } else {
         NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
         [events removeAllObjects];
-        self.title = @"Complete Program";
+                NSLog(@"complete");
+        self.title = @"Program";
         if (sqlite3_open([dbPathEvents UTF8String], &db)==SQLITE_OK) {
             sqlite3_stmt *myStatment;
             NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM EVENTS"];
@@ -232,25 +246,64 @@
 	for(Event *ev in events){
 
 		TKCalendarDayEventView *event = [calendarDayTimeline dequeueReusableEventView];
-		if(event == nil) event = [TKCalendarDayEventView eventView];
+		if(event == nil)
+            event = [TKCalendarDayEventView eventView];
         event.identifier = [NSNumber numberWithInt:i];
         
 		event.titleLabel.text = ev.title;
         
+        NSMutableArray * colors = [self getColorFromEvent:ev.kind];
+        
+        [event setBackgroundColor:[colors objectAtIndex:0]];
+        event.layer.borderColor = [[colors objectAtIndex:1] CGColor];
+        event.titleLabel.textColor = [colors objectAtIndex:2] ;
 		event.locationLabel.text = [self getLocal:ev.localID];
 		event.startDate = [self convertNSStringToNSDate:ev.begin];
         
-		
+
 		event.endDate = [self convertNSStringToNSDate:ev.end];
         
 		[ret addObject:event];
         i++;
-       // NSLog(@"%d", i);
 		
 	}
 	return ret;
 }
 
+-(NSMutableArray*)getColorFromEvent:(NSString*)event{
+    NSMutableArray * res = [NSMutableArray arrayWithCapacity:3];
+    UIColor * background = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
+    UIColor * border = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
+    UIColor * text = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
+    //'Workshop', 'Paper Session', 'Keynote', 'Social Event', 'Demo', 'Tutorial'
+    if([event isEqualToString:@"Workshop"]){
+        
+    } else if([event isEqualToString:@"Paper Session"]){
+       // 72	118	255
+        background = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
+        text = [UIColor whiteColor];
+        border = [UIColor blackColor];
+        
+    } else if([event isEqualToString:@"Keynote"]){
+        //255	215	0
+        background = [UIColor  colorWithRed:1 green:(215.f/255.f) blue:0 alpha:1];
+        text = [UIColor orangeColor];
+        border = [UIColor blackColor];
+    } else if([event isEqualToString:@"Social Event"]){
+        background = [UIColor colorWithRed:(50.f/255.f) green:(205.f/255.f) blue:(50.f/255.f) alpha:1];
+        text = [UIColor whiteColor];
+        border = [UIColor blackColor];
+        
+    } else if([event isEqualToString:@"Demo"]){
+        
+    } else if([event isEqualToString:@"Tutorial"]){
+        
+    }
+    [res addObject:background];
+    [res addObject:border];
+    [res addObject:text];
+        return res;
+}
 
 -(NSString *)getLocal:(NSString*)localID{
     sqlite3_stmt *statement;
@@ -304,8 +357,5 @@
 
     }
 }
-
-
-
 
 @end
