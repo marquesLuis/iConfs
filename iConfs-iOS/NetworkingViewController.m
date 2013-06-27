@@ -42,13 +42,23 @@
     description.layer.cornerRadius = 5.0f;
     description.clipsToBounds = YES;
     [description setEditable:NO];
-    
-    UITextView *aux =  [[UITextView alloc] initWithFrame:CGRectMake(15, 145, self.view.frame.size.width-30, 100)];
-    [aux setText:networkingDescriptionContent];
-    NSLog(@"%f", description.contentSize.height);
-    NSLog(@"%f", aux.contentSize.height);
+    description.backgroundColor = [UIColor lightTextColor];
 
-    if(description.contentSize.height <= 100){
+    [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,description.contentSize.height) ];
+    NSLog(@"description content : %f", description.contentSize.height);
+    
+    if(description.contentSize.height <= 300){
+        CGRect frame = description.frame;
+        frame.size.height = description.contentSize.height;
+        description.frame = frame;
+    } else {
+        [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,300) ];
+    }
+    [self.view addSubview:description];
+    NSLog(@"description done : %f", description.frame.size.height);
+    
+
+   /* if(description.contentSize.height <= 100){
         NSLog(@"hey");
         CGRect frame = description.frame;
         frame.size.height = description.contentSize.height;
@@ -57,6 +67,10 @@
         [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,description.contentSize.height) ];
     }
     [self.view addSubview:description];
+    */
+    
+    
+    
     
     [personName setTitle: namePerson forState: UIControlStateNormal];
     networkingTitle.layer.cornerRadius = 5.0f;

@@ -635,16 +635,22 @@
             biography.layer.cornerRadius = 5.0f;
             biography.clipsToBounds = YES;
             
+            
+            
+            [biography setFrame:CGRectMake(15, height, self.view.frame.size.width-25,biography.contentSize.height) ];
+            NSLog(@"biography content : %f", biography.contentSize.height);
+            
             if(biography.contentSize.height <= 200){
                 CGRect frame = biography.frame;
                 frame.size.height = biography.contentSize.height;
                 biography.frame = frame;
-                
-                [biography setFrame:CGRectMake(15, height, self.view.frame.size.width-25,biography.contentSize.height) ];
                 height+=biography.contentSize.height + 10;
-            } else
+            } else {
+                [biography setFrame:CGRectMake(15, height, self.view.frame.size.width-25,200) ];
                 height+=210;
+            }
             [headerView addSubview:biography];
+            NSLog(@"biography done : %f", biography.frame.size.height);
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,30,100,90)];

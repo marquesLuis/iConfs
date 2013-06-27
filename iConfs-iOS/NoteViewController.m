@@ -129,7 +129,8 @@ return self;
     }
     
     NSLog(@"saving note in notes_local.db...");
-    NSString *values = [@"" stringByAppendingFormat:@" '%@' , '%@'  ,  '%@' , ", self.noteID, [self getPersonID], noteTextView.text];
+    NSString* content = [NSString stringWithFormat:@"%@", [noteTextView.text stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"]];
+    NSString *values = [@"" stringByAppendingFormat:@" '%@' , '%@'  ,  '%@' , ", self.noteID, [self getPersonID], content];
 
     if(_personChosen)
         values = [values stringByAppendingFormat:@" '%@',  ", _personChosen.selectValue];

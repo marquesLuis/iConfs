@@ -45,19 +45,26 @@
     description.layer.cornerRadius = 5.0f;
     description.clipsToBounds = YES;
     [description setEditable:NO];
+    description.backgroundColor = [UIColor lightTextColor];
 
     
-    NSLog(@"%f", description.contentSize.height);
+    
+    [description setFrame:CGRectMake(15, 100, self.view.frame.size.width-25,description.contentSize.height) ];
+    NSLog(@"description content : %f", description.contentSize.height);
+    
     if(description.contentSize.height <= 350){
-        NSLog(@"hey");
         CGRect frame = description.frame;
         frame.size.height = description.contentSize.height;
         description.frame = frame;
-        description.backgroundColor = [UIColor whiteColor];
-        [description setFrame:CGRectMake(15, 100, self.view.frame.size.width-25,description.contentSize.height) ];
-    } 
-    
+    } else {
+        [description setFrame:CGRectMake(15, 100, self.view.frame.size.width-25,350) ];
+    }
     [self.view addSubview:description];
+    NSLog(@"description done : %f", description.frame.size.height);
+    
+    
+    
+    
     self.notificationName.layer.cornerRadius = 5.0f;
     self.notificationName.clipsToBounds = YES;
     self.notificationName.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
