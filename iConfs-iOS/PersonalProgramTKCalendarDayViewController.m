@@ -58,6 +58,7 @@
 }
 
 -(void) updateToolbar{
+    NSLog(@"update");
     NSArray *itemArray = [NSArray arrayWithObjects: [@"" stringByAppendingFormat: @"Personal"], [@"" stringByAppendingFormat: @"Complete"], nil];
     options  = [[UISegmentedControl alloc] initWithItems:itemArray];
     options.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
