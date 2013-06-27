@@ -44,6 +44,7 @@
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
     dateFormatter1.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
     NSDate *date = [dateFormatter1 dateFromString:beginDate];NSLog(@"date : %@", date);
+    [self.dayView setFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (self.navigationController.toolbar.frame.size.height))];
     self.dayView.date = date;
     
     
