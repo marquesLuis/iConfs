@@ -9,11 +9,6 @@
 #import "IConfsViewController.h"
 #import "Update.h"
 
-//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('1','0','3','IOS MSG UM','0','0', '0');
-//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('2','2','3','Talked to him in the coffee break ALTERADO NO IOS','4','0', '2013-06-14 14:16:46.058288000');
-//INSERT INTO NOTES_LOCAL(ID, SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE) VALUES ('4','1','3','(ALTERADO no iOS) Must not forget to bring my IPhone.','0','0', '2013-06-14 14:16:46.051950000');
-
-//INSERT INTO DELETED_LOCAL(ID, SERVER_ID) VALUES ('1', '2');
 
 @interface IConfsViewController (){
 } @end
@@ -50,7 +45,6 @@
 -(void) viewWillAppear:(BOOL)animated{
     self.toolbar.hidesBackButton = YES;
 }
-#warning toolbar no iconfs?
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -250,7 +244,7 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS ATTENDING_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"attending_status.db"];
     
     //Author
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AUTHOR( SERVER_ID INTEGER PRIMARY KEY, EVENT_ID INTEGER, NAME TEXT, PERSON_ID INTEGER)" WithName:@"author.db"];  
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS AUTHOR( SERVER_ID INTEGER , EVENT_ID INTEGER, NAME TEXT, PERSON_ID INTEGER, ID INTEGER PRIMARY KEY AUTOINCREMENT)" WithName:@"author.db"];  
     
     //Localization
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS LOCATION( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, IMG TEXT, SERVER_ID INTEGER)" WithName:@"location.db"];
@@ -356,18 +350,7 @@
     }
 }
 
-/*- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    
-    CGRect navigationToolbarFrame = self.navigationController.navigationBar.frame;
-    [UIView animateWithDuration:duration animations:^{
-        self.emailField.frame = CGRectMake(0, 52, 150, 40);//customToolbarFrame;
-        self.passwordField.frame = CGRectMake(0, 102, self.view.frame.size.width, 40);//customToolbarFrame;
-        self.
-    }];
-    
-    
-}*/
+
 -(NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }

@@ -47,10 +47,6 @@
     [self.dayView setFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (self.navigationController.toolbar.frame.size.height))];
     self.dayView.date = date;
     
-    
-  //  [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    
-   // [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceOrientationDidChange:) name: UIDeviceOrientationDidChangeNotification object: nil];
     [self navigationButtons];
     [self updateToolbar];
     
@@ -59,7 +55,6 @@
 }
 
 -(void) updateToolbar{
-    NSLog(@"update");
     NSArray *itemArray = [NSArray arrayWithObjects: [@"" stringByAppendingFormat: @"Personal"], [@"" stringByAppendingFormat: @"Complete"], nil];
     options  = [[UISegmentedControl alloc] initWithItems:itemArray];
     options.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
@@ -83,18 +78,6 @@
 - (IBAction)goBack:(UIBarButtonItem *)sender {
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
-
-
-
-
-
-/*- (void)deviceOrientationDidChange:(NSNotification *)notification
-{
-    NSLog(@"deviceOrientationDidChange");
-    [self.dayView reloadData];
-    
-}*/
-
 
 -(void)getBeginAndEnd{
     sqlite3_stmt *statement;
@@ -138,7 +121,6 @@
 }
 
 - (void)valueChanged:(UISegmentedControl *)segment {
-    NSLog(@"valueChanged");
     //get index position for the selected control
     NSInteger selectedIndex = [segment selectedSegmentIndex];
     if(selectedIndex == PERSONAL) {
@@ -260,6 +242,8 @@
         event.layer.borderColor = [[colors objectAtIndex:1] CGColor];
         event.titleLabel.textColor = [colors objectAtIndex:2] ;
 		event.locationLabel.text = [self getLocal:ev.localID];
+        event.locationLabel.textColor = [colors objectAtIndex:2] ;
+
 		event.startDate = [self convertNSStringToNSDate:ev.begin];
         
 

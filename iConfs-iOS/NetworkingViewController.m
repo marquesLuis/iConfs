@@ -37,15 +37,18 @@
     networkingTitle.text = netTitle;
     self.navigationItem.backBarButtonItem.title = @"Back";
     
-    UITextView *description =  [[UITextView alloc] initWithFrame:CGRectMake(15, 145, self.view.frame.size.width-30, 350)];
+    UITextView *description =  [[UITextView alloc] initWithFrame:CGRectMake(15, 145, self.view.frame.size.width-30, 100)];
     [description setText:networkingDescriptionContent];
     description.layer.cornerRadius = 5.0f;
     description.clipsToBounds = YES;
     [description setEditable:NO];
     
-    
+    UITextView *aux =  [[UITextView alloc] initWithFrame:CGRectMake(15, 145, self.view.frame.size.width-30, 100)];
+    [aux setText:networkingDescriptionContent];
     NSLog(@"%f", description.contentSize.height);
-    if(description.contentSize.height <= 350){
+    NSLog(@"%f", aux.contentSize.height);
+
+    if(description.contentSize.height <= 100){
         NSLog(@"hey");
         CGRect frame = description.frame;
         frame.size.height = description.contentSize.height;

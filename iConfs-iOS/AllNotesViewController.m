@@ -248,13 +248,16 @@
     
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Note * note = [notes objectAtIndex:indexPath.row];
+        NSLog(@"numero de notas: %d", notes.count);
         if(note.isLocal){
             [self removeFrom:@"notes_local.db" table:@"NOTES_LOCAL" attribute:@"ID" withID:[note.noteID intValue]];
+            NSLog(@"local");
         } else {
             [self insertTo:@"deleted_local.db" table:@"DELETED_LOCAL" definition:@"SERVER_ID" values:note.noteID];
             [self removeFrom:@"notes.db" table:@"NOTES" attribute:@"SERVER_ID" withID:[note.noteID intValue]];
             Update *update = [[Update alloc] initDB];
             [update updateWithoutMessage];
+            NSLog(@"server");
         }
         [notes removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject: indexPath] withRowAnimation:UITableViewRowAnimationLeft];
@@ -275,6 +278,7 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
+
         const char* query_sql = [querySql UTF8String];
         
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
@@ -289,6 +293,7 @@
 }
 
 -(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
+
     sqlite3 *notesLocalDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
