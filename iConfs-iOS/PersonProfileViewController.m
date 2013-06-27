@@ -265,9 +265,8 @@
 {
     static NSString *ProductCellIdentifier = @"ProductCellIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductCellIdentifier];
     
-    cell  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ProductCellIdentifier];
+    UITableViewCell *cell  = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ProductCellIdentifier];
     
     switch (indexPath.section) {
         case 0:

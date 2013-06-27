@@ -28,6 +28,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self navigationButtons];
+    self.content.backgroundColor = [UIColor lightTextColor];
+    UIImage    *image = [UIImage imageNamed:@"defaultTableViewBackground.png"];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:image]];
 }
 
 -(void)navigationButtons{

@@ -486,9 +486,23 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="..." translatesAutoresizingMaskIntoConstraints="NO" id="YAX-nZ-a12">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YAX-nZ-a12">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="270" id="03E-kX-qnS"/>
+                                    <constraint firstAttribute="width" constant="303" id="mJx-iV-faW"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">This application doesn’t update or download data all the time to save energy of your iPhone. 
+Data is only updated when you create, edit or remove notes, send feedback or a message to the organization, invite, accept or reject contacts. 
+You can also force the synchronization with the server by clicking on the arrow button on the main screen.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="17" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHa-U1-IKp">
@@ -498,18 +512,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UHa-U1-IKp" firstAttribute="bottom" secondItem="KPE-te-vid" secondAttribute="bottom" type="default" id="CbE-gG-cY0"/>
-                            <constraint firstItem="YAX-nZ-a12" firstAttribute="leading" secondItem="KPE-te-vid" secondAttribute="leading" type="default" id="FES-9Q-xg3"/>
+                            <constraint firstItem="YAX-nZ-a12" firstAttribute="top" secondItem="KPE-te-vid" secondAttribute="top" constant="9" id="EIr-V3-RHx"/>
                             <constraint firstItem="UHa-U1-IKp" firstAttribute="trailing" secondItem="KPE-te-vid" secondAttribute="trailing" type="default" id="FVY-1x-eQb"/>
+                            <constraint firstItem="YAX-nZ-a12" firstAttribute="centerX" secondItem="UHa-U1-IKp" secondAttribute="centerX" type="default" id="FzZ-TF-g7j"/>
                             <constraint firstItem="UHa-U1-IKp" firstAttribute="leading" secondItem="KPE-te-vid" secondAttribute="leading" type="default" id="Hvw-Ym-ld1"/>
-                            <constraint firstItem="YAX-nZ-a12" firstAttribute="top" secondItem="KPE-te-vid" secondAttribute="top" type="default" id="S2N-Eo-E7O"/>
-                            <constraint firstItem="UHa-U1-IKp" firstAttribute="top" secondItem="YAX-nZ-a12" secondAttribute="bottom" type="default" id="hy2-f9-mVa"/>
-                            <constraint firstItem="YAX-nZ-a12" firstAttribute="trailing" secondItem="KPE-te-vid" secondAttribute="trailing" type="default" id="juL-Ko-ZgM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Help" id="dkd-6r-IDC">
                         <barButtonItem key="backBarButtonItem" title="Back" id="gha-4i-WPP"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="content" destination="YAX-nZ-a12" id="ofh-kY-xSC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ryq-Yf-pbp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -670,7 +685,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLu-DU-T0g">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="5zC-GN-Fr1"/>
-                                    <constraint firstAttribute="width" constant="280" id="b1W-Xc-BL3"/>
+                                    <constraint firstAttribute="width" constant="129" id="9Uf-DG-iFo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -678,6 +693,7 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hC-3u-klw">
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="291" id="Aba-Wv-LyJ"/>
                                     <constraint firstAttribute="height" constant="21" id="Rxg-u1-SaR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -691,11 +707,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SLu-DU-T0g" firstAttribute="top" secondItem="3hC-3u-klw" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="CJc-Qt-x56"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="trailing" secondItem="3hC-3u-klw" secondAttribute="trailing" type="default" id="E2c-4m-f9z"/>
                             <constraint firstItem="3hC-3u-klw" firstAttribute="top" secondItem="aIq-VG-R5S" secondAttribute="top" constant="20" symbolic="YES" type="default" id="EAx-7w-hmm"/>
                             <constraint firstItem="SLu-DU-T0g" firstAttribute="leading" secondItem="3hC-3u-klw" secondAttribute="leading" type="default" id="IzH-nr-YkH"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" type="default" id="RpL-rn-Uq2"/>
-                            <constraint firstItem="SLu-DU-T0g" firstAttribute="leading" secondItem="aIq-VG-R5S" secondAttribute="leading" constant="15" id="WoJ-nC-dmD"/>
+                            <constraint firstItem="3hC-3u-klw" firstAttribute="centerX" secondItem="Jy5-0I-t6y" secondAttribute="centerX" type="default" id="lva-el-Xr6"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="bottom" secondItem="aIq-VG-R5S" secondAttribute="bottom" type="default" id="m6I-Xn-3aj"/>
                             <constraint firstItem="Jy5-0I-t6y" firstAttribute="trailing" secondItem="aIq-VG-R5S" secondAttribute="trailing" type="default" id="psz-3w-1Rk"/>
                         </constraints>
@@ -890,7 +905,7 @@
                                     <constraint firstAttribute="height" constant="274" id="wLT-Op-Wq2"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="AL9-N6-56v">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="KNSelectorItemCell" id="AL9-N6-56v">
                                         <rect key="frame" x="0.0" y="22" width="160" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1246,7 +1261,7 @@
             <objects>
                 <viewController storyboardIdentifier="NoteViewController" id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -1359,7 +1374,6 @@
         <class className="AllNetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1368,10 +1382,6 @@
         <class className="AllNotesViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotesViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
-                <relationship kind="action" name="search:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="addNewNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="notesTableView" candidateClass="UITableView"/>
@@ -1381,7 +1391,6 @@
         <class className="AllNotificationViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AllNotificationViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNotifications" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1390,7 +1399,6 @@
             <relationships>
                 <relationship kind="action" name="clearButton:" candidateClass="UIButton"/>
                 <relationship kind="action" name="feedbackOrMessageButton:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="sendButton:"/>
                 <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="feedback" candidateClass="UITextView"/>
@@ -1399,9 +1407,6 @@
         <class className="EventUIViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/EventUIViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goToRoom:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="addNoteButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="info" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
@@ -1429,7 +1434,6 @@
         <class className="ImageViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
@@ -1438,14 +1442,12 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
             <relationships>
                 <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="content" candidateClass="UITextView"/>
             </relationships>
         </class>
         <class className="KNMultiItemSelector" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/KNMultiItemSelector.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goHome:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goSearch:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="searchTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1457,7 +1459,6 @@
         <class className="NetworkingViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NetworkingViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="networkingTitle" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="personName" candidateClass="UIButton"/>
@@ -1470,7 +1471,6 @@
                 <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="addPerson:" candidateClass="UIButton"/>
                 <relationship kind="action" name="addSession:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="aboutPersonButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="aboutSessionButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="noteTextView" candidateClass="UITextView"/>
@@ -1488,8 +1488,6 @@
         <class className="PersonProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonProfileViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addNote:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="addNote" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tableNetworking" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1498,7 +1496,6 @@
         <class className="PersonalProgramTKCalendarDayViewController" superclassName="TKCalendarDayViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalProgramTKCalendarDayViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
@@ -1507,7 +1504,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SearchViewController.h"/>
             <relationships>
                 <relationship kind="action" name="doSearch:" candidateClass="UIButton"/>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="resultsOfSearch" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="searchBar" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
@@ -1525,10 +1521,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="8hN-KL-ukg"/>
         <segue reference="H5z-u7-vJR"/>
-        <segue reference="5s0-9K-Shm"/>
-        <segue reference="GRq-xq-KeO"/>
-        <segue reference="uOo-Dg-7po"/>
+        <segue reference="YTK-Nm-t1y"/>
         <segue reference="mNJ-h0-X0J"/>
         <segue reference="blc-fZ-HyN"/>
+        <segue reference="zvh-69-tNz"/>
+        <segue reference="Ia1-G5-ae0"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -112,10 +112,10 @@
     NSDate * end = [self convertNSStringTONSDateTOMinute:endDate];
     
     if([eventDate compare:begin] == NSOrderedAscending){
-        eventDate = begin;
+       // eventDate = begin;
          self.dayView.date = begin;
     } else if ([eventDate compare: end] == NSOrderedDescending){
-        eventDate = end;
+       // eventDate = end;
          self.dayView.date = end;
     }
 }
@@ -182,10 +182,13 @@
                         e.localID = local;
                         [events addObject:e];
                     }
+                    sqlite3_finalize(myStatment);
                 
                 } else
                         NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
             }
+            sqlite3_close(db);
+
         }
     } else {
         NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
@@ -220,6 +223,7 @@
                     [events addObject:e];
                     
                 }
+                sqlite3_finalize(myStatment);
             }
             sqlite3_close(db);
         }
@@ -306,6 +310,7 @@
                 
                 
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }

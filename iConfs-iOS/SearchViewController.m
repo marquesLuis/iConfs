@@ -88,6 +88,10 @@
  [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS EVENTS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, SERVER_ID INTEGER, KIND TEXT, BEGIN TEXT, END TEXT, DATE TEXT, SPEAKER_ID INTEGER, KEYNOTE INTEGER,  LOCAL_ID INTEGER)" WithName:@"events.db"];
  
  */
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.title = @"Search";
+}
 //initialize indices
 -(void)tableIndices{
     indices = [NSMutableDictionary dictionary];
@@ -211,9 +215,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {NSLog(@"cellForRowAtIndexPath");
     NSString *CellIdentifier = @"Cell1";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     
@@ -402,7 +405,9 @@
 
 }
 
-
+-(void)viewDidDisappear:(BOOL)animated{
+    [self setTitle:@"Back"];   
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
