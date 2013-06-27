@@ -271,28 +271,25 @@
 }
 
 -(NSMutableArray*)getColorFromEvent:(NSString*)event{
+    
     NSMutableArray * res = [NSMutableArray arrayWithCapacity:3];
-    UIColor * background = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
-    UIColor * border = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
-    UIColor * text = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
+    UIColor * background = [UIColor colorWithRed:(205.f/255.f) green:(179.f/255.f) blue:(139.f/255.f) alpha:1];
+    UIColor * border = [UIColor blackColor];
+    UIColor * text = [UIColor whiteColor];
     //'Workshop', 'Paper Session', 'Keynote', 'Social Event', 'Demo', 'Tutorial'
     if([event isEqualToString:@"Workshop"]){
         
     } else if([event isEqualToString:@"Paper Session"]){
-       // 72	118	255
         background = [UIColor colorWithRed:(72.f/255.f) green:(118.f/255.f) blue:1 alpha:1];
         text = [UIColor whiteColor];
-        border = [UIColor blackColor];
+        
         
     } else if([event isEqualToString:@"Keynote"]){
-        //255	215	0
         background = [UIColor  colorWithRed:1 green:(215.f/255.f) blue:0 alpha:1];
-        text = [UIColor orangeColor];
-        border = [UIColor blackColor];
+        text = [UIColor blackColor];
     } else if([event isEqualToString:@"Social Event"]){
         background = [UIColor colorWithRed:(50.f/255.f) green:(205.f/255.f) blue:(50.f/255.f) alpha:1];
         text = [UIColor whiteColor];
-        border = [UIColor blackColor];
         
     } else if([event isEqualToString:@"Demo"]){
         
