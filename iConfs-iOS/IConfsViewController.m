@@ -97,8 +97,8 @@
     NSString *completeLink = [initial stringByAppendingString:completeArgs];
     
     //I send a POST url request
-  //  NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://193.136.122.134:3000/"];
-      NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://0.0.0.0:3000/"];
+    NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://193.136.122.134:3000/"];
+   //   NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://0.0.0.0:3000/"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postUrlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [request setHTTPMethod:@"GET"];
     

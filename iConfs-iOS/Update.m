@@ -95,8 +95,8 @@
 {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
-   // NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
-     NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
+   NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
+   //  NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
     //  NSLog(postURL);
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
