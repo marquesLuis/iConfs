@@ -20,6 +20,7 @@
     NSIndexPath* rowselected;
     NSString * preselectedSelectedValue;
     UISegmentedControl *contactToolbar;
+    NSString * titlePage;
 
 }
 @property (strong, nonatomic) UIToolbar *t;
@@ -171,6 +172,10 @@
     [self navigationButtons];
 }
 
+
+
+
+
 - (IBAction)goHome:(UIBarButtonItem *)sender {
     [[self navigationController] popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
@@ -178,6 +183,7 @@
 - (IBAction)goSearch:(UIBarButtonItem *)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
     SearchViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    titlePage = self.title;
     [self setTitle:@"Back"];
     [self.navigationController pushViewController:viewController animated:NO];
 
