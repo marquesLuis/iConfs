@@ -37,8 +37,8 @@
     
     NSArray *itemArray = [NSArray arrayWithObjects: @"My interests", @"All", nil];
     _typeNet  = [[UISegmentedControl alloc] initWithItems:itemArray];
-    NSLog(@"%f",self.navigationBar.frame.size.width );
-    NSLog(@"%f",self.navigationBar.frame.size.height );
+    //NSLog(@"%f",self.navigationBar.frame.size.width );
+    //NSLog(@"%f",self.navigationBar.frame.size.height );
     
     _typeNet.frame = CGRectMake(0, 5, self.view.frame.size.width-12, 30);
     _typeNet.segmentedControlStyle = UISegmentedControlStyleBar;
@@ -77,7 +77,7 @@
  UISegmentedControl *segmentedControl = (UISegmentedControl *).//navigationItem.rightBarButtonItem.customView;
  
  // Before we show this view make sure the segmentedControl matches the nav bar style
- if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTranslucent ||
+ if (self.navigationController.navigationBar.barStyle == UIBarStyleBlackTra//NSLucent ||
  self.navigationController.navigationBar.barStyle == UIBarStyleBlackOpaque)
  segmentedControl.tintColor = [UIColor darkGrayColor];
  else
@@ -235,13 +235,13 @@
     //get index position for the selected control
     NSInteger selectedIndex = [segment selectedSegmentIndex];
     if(selectedIndex == 0) {
-        NSLog(@"carreguei em my interests");
+        //NSLog(@"carreguei em my interests");
         if([_privateNetworking count]== 0){
-            NSLog(@"ainda n tinha carregado aqui");
+            //NSLog(@"ainda n tinha carregado aqui");
             [self displayNetworkingPersonal];
             
             if([_privateNetworking count] == 0){
-                NSLog(@"nao ha networking com os meus interesses");
+                //NSLog(@"nao ha networking com os meus interesses");
                 _typeNet.selectedSegmentIndex = 1;
                 
                 [self alertMessages:@"There's no personal networking to show" withMessage:@""];
@@ -369,7 +369,7 @@
 
 #pragma mark TKCalendarDayViewDelegate
 - (void) displayNetworkingPersonal{
-    NSLog(@"1");
+    //NSLog(@"1");
     sqlite3 *db;
     NSString * personID = [self getPersonID];
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -379,20 +379,20 @@
     NSString * dbNetworking = [docPath stringByAppendingPathComponent:@"networkings.db"];
     [_privateNetworking removeAllObjects];
     NSMutableArray * networks = [NSMutableArray array];
-    NSLog(@"2");
+    //NSLog(@"2");
     if (sqlite3_open([dbPathPeople_area UTF8String], &db) == SQLITE_OK)
     {
         NSString *strSQLAttach = [NSString stringWithFormat:@"ATTACH DATABASE \'%s\' AS SECOND", [dbPathNet_area UTF8String]];
         char *errorMessage;
-        NSLog(@"3");
+        //NSLog(@"3");
         if (sqlite3_exec(db, [strSQLAttach UTF8String], NULL, NULL, &errorMessage) == SQLITE_OK)
-        {NSLog(@"4");
+        {//NSLog(@"4");
             
             sqlite3_stmt *myStatment;
             NSString *strSQL = [@"select * from main.PEOPLE_AREA people_area inner join SECOND.NET_AREA net_area on people_area.AREA_ID = net_area.AREA_ID AND people_area.PERSON_ID = "stringByAppendingString:personID];
-            NSLog(@"Pesquisa SQL: %@", strSQL);
+            //NSLog(@"Pesquisa SQL: %@", strSQL);
             if (sqlite3_prepare_v2(db, [strSQL UTF8String], -1, &myStatment, nil) == SQLITE_OK){
-                NSLog(@"6");
+                //NSLog(@"6");
                 while (sqlite3_step(myStatment)==SQLITE_ROW) {
                     [networks addObject:[[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 5)]];
                 }
@@ -403,7 +403,7 @@
                 
                 
             } else
-                NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
+            NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
             
             
         }
@@ -413,11 +413,11 @@
     
     sqlite3 *notificationDB;
     //NSString *dbPathString = [docPath stringByAppendingPathComponent:dbNetworking];
-    NSLog(@"a");
+    //NSLog(@"a");
     sqlite3_stmt *myStatment;
     
     if (sqlite3_open([dbNetworking UTF8String], &notificationDB)==SQLITE_OK) {
-        NSLog(@"b");
+        //NSLog(@"b");
         @try {
             NSString * where = @"";
             for (int i = 0; i<[networks count]; i++){
@@ -428,11 +428,11 @@
                     where = [where stringByAppendingString:@") ORDER BY DATE DESC"];
             }
             NSString * querySql = [NSString stringWithFormat:@"SELECT * FROM NETWORKINGS WHERE SERVER_ID IN (%@", where];
-            NSLog(@"Pesquisa SQL: %@", querySql);
+            //NSLog(@"Pesquisa SQL: %@", querySql);
             const char* query_sql = [querySql UTF8String];
             if (sqlite3_prepare(notificationDB, query_sql, -1, &myStatment, NULL)==SQLITE_OK) {
                 while (sqlite3_step(myStatment)==SQLITE_ROW) {
-                    NSLog(@"7");
+                    //NSLog(@"7");
                     NSString *title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
                     NSString *text = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 2)];
                     NSString *personID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 4)];
@@ -448,7 +448,7 @@
             }
         }
         @catch (NSException *exception) {
-            NSLog(@"PROBLEMA %@",[exception description] );
+            //NSLog(@"PROBLEMA %@",[exception description] );
         }
         @finally {
             sqlite3_close(notificationDB);

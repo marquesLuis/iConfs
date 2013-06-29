@@ -300,7 +300,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSLog(@"header");
+    //NSLog(@"header");
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 100)]; // x,y,width,height
     
     
@@ -407,7 +407,7 @@
     return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    NSLog(@"%d", y);
+    //NSLog(@"%d", y);
     return y;
 }
 
@@ -430,7 +430,7 @@
         map.localID = self.event.localID;
     } else if([[segue identifier] isEqualToString:@"segue15"]){
         
-        NSLog(@"Edit note...");
+        //NSLog(@"Edit note...");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = YES;
@@ -446,7 +446,7 @@
         
         
     } else if([[segue identifier] isEqualToString:@"segue14"]){
-        NSLog(@"New note");
+        //NSLog(@"New note");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = NO;
         note.hideSessionButton = YES;
@@ -467,7 +467,7 @@
 
 -(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"removing the note...");
+    //NSLog(@"removing the note...");
     
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Note * note = [sections objectAtIndex:indexPath.row];
@@ -498,6 +498,7 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
         const char* query_sql = [querySql UTF8String];
+        NSLog(@"%@",querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
         }else{
@@ -519,7 +520,7 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
         const char* query_sql = [querySql UTF8String];
-        
+        NSLog(@"%@", querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ deleted", [table_name capitalizedString]);
         }else{
@@ -532,12 +533,12 @@
 }
 
 -(NSUInteger)supportedInterfaceOrientations{
-    NSLog(@"supportedInterfaceOrientations");
+    //NSLog(@"supportedInterfaceOrientations");
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskLandscapeLeft;
 }
 
 -(BOOL)shouldAutorotate{
-    NSLog(@"shouldAutorotate");
+    //NSLog(@"shouldAutorotate");
 
     return YES;
 }
@@ -550,11 +551,11 @@
     
     y = 80;
     
-    NSLog(@"changePosition");
-    NSLog(@"%d", self.interfaceOrientation);
+    //NSLog(@"changePosition");
+    //NSLog(@"%d", self.interfaceOrientation);
 
     if( self.interfaceOrientation == 3 || self.interfaceOrientation == 4 ){
-        NSLog(@"UIInterfaceOrientationIsLandscape");
+        //NSLog(@"UIInterfaceOrientationIsLandscape");
         CGRect LabelFrameTitle = CGRectMake(10, 5, 550, 30);
         CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
         CGRect LabelFrameRoom = CGRectMake(460, 45, 80, 30);
@@ -602,7 +603,7 @@
         
         
     } else {
-        NSLog(@"UIInterfaceOrientationIsPortrait");
+        //NSLog(@"UIInterfaceOrientationIsPortrait");
         
         CGRect LabelFrameTitle = CGRectMake(10, 5, self.view.frame.size.width-20, 30);
         CGRect LabelFrameDate = CGRectMake(10, 45, 150, 30);
@@ -646,13 +647,13 @@
         
         
         if(sections.count != 0){
-            NSLog(@"notes...");
+            //NSLog(@"notes...");
             CGRect LabelFrameNotes = CGRectMake(10, y, self.view.frame.size.width-20, 20);
             [notes setFrame:LabelFrameNotes];
         }
         y+=25;
         
-        NSLog(@"%d", y);
+        //NSLog(@"%d", y);
     }
 }
 

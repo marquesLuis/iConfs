@@ -144,7 +144,7 @@
     
     
     if(sqlite3_open([dbPath UTF8String], &db)== SQLITE_OK){
-        
+        NSLog(@"%@", insert);
         if (sqlite3_exec(db, [insert UTF8String], NULL, NULL, &error)==SQLITE_OK) {
             NSLog(@"Feedback added");
             
@@ -158,6 +158,9 @@
                 [msg setEmail:self.emailField.text];
             }
             
+        }else{
+            NSLog(@"Feedback NOT ADDED");
+            NSLog(@"%s", error);
         }
         sqlite3_close(db);
     }

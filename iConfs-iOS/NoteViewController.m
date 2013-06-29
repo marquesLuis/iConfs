@@ -128,7 +128,7 @@ return self;
         return;
     }
     
-    NSLog(@"saving note in notes_local.db...");
+    //NSLog(@"saving note in notes_local.db...");
     NSString* content = [NSString stringWithFormat:@"%@", [noteTextView.text stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n"]];
     NSString *values = [@"" stringByAppendingFormat:@" '%@' , '%@'  ,  '%@' , ", self.noteID, [self getPersonID], content];
 
@@ -150,7 +150,7 @@ return self;
     [self insertTo:@"notes_local.db" table:@"NOTES_LOCAL" definition: @"SERVER_ID, OWNER_ID, CONTENT, ABOUT_PERSON, ABOUT_SESSION,LAST_DATE"
  values:values];
     
-    NSLog(@"%@", self.noteID);
+    //NSLog(@"%@", self.noteID);
     
     //remove old note
     if(![self.date isEqualToString:@"0"])
@@ -391,7 +391,7 @@ return self;
 
 
 -(void) insertTo:(NSString *) db_file table: (NSString *) table_name definition: (NSString *) definition values: (NSString *) values{
-    NSLog(@"noteVc");
+    //NSLog(@"noteVc");
     sqlite3 *notesLocalDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
@@ -399,7 +399,7 @@ return self;
     if (sqlite3_open([dbPathString UTF8String], &notesLocalDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
-        NSLog(@"insert : %@", querySql);
+        NSLog(@"%@", querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notesLocalDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
@@ -488,7 +488,7 @@ return self;
 }
 
 -(void) removeFrom: (NSString *) db_file table: (NSString *) table_name attribute: (NSString *) attribute withID: (int) server_id{
-    NSLog(@"noteVC");
+    //NSLog(@"noteVC");
     sqlite3 *notificationDB;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
@@ -497,7 +497,7 @@ return self;
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
-        NSLog(@"delete : %@", querySql);
+        NSLog(@"%@", querySql);
         const char* query_sql = [querySql UTF8String];
         
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){

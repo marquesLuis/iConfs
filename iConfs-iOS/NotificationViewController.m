@@ -51,7 +51,7 @@
     self.notificationDate.clipsToBounds = YES;
     
     [description setFrame:CGRectMake(15, 80, self.view.frame.size.width-25,description.contentSize.height) ];
-    NSLog(@"description content : %f", description.contentSize.height);
+    //NSLog(@"description content : %f", description.contentSize.height);
     
     if(description.contentSize.height <= 350){
         CGRect frame = description.frame;
@@ -61,7 +61,7 @@
         [description setFrame:CGRectMake(15, 80, self.view.frame.size.width-25,350) ];
     }
     [self.view addSubview:description];
-    NSLog(@"description done : %f", description.frame.size.height);
+    //NSLog(@"description done : %f", description.frame.size.height);
     
     self.notificationName.layer.cornerRadius = 5.0f;
     self.notificationName.clipsToBounds = YES;

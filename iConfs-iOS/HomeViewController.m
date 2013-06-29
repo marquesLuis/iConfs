@@ -143,7 +143,7 @@
         sqlite3_close(db);
        
     }
-    NSLog(@"%d",last_row );
+    //NSLog(@"%d",last_row );
     return last_row;
 }
 

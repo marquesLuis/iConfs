@@ -43,7 +43,7 @@
     NSDateFormatter *dateFormatter1 = [[NSDateFormatter alloc] init];
     [dateFormatter1 setDateFormat:@"yyyy-MM-dd"];
     dateFormatter1.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    NSDate *date = [dateFormatter1 dateFromString:beginDate];NSLog(@"date : %@", date);
+    NSDate *date = [dateFormatter1 dateFromString:beginDate];//NSLog(@"date : %@", date);
     [self.dayView setFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (self.navigationController.toolbar.frame.size.height))];
     self.dayView.date = date;
     
@@ -89,7 +89,7 @@
         
         NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM CALENDAR"];
         const char* query_sql = [querySql UTF8String];
-        NSLog(@"3");
+        //NSLog(@"3");
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
             while (sqlite3_step(statement)==SQLITE_ROW) {
                 beginDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
@@ -137,14 +137,14 @@
 #pragma mark TKCalendarDayViewDelegate
 - (NSArray *) calendarDayTimelineView:(TKCalendarDayView*)calendarDayTimeline eventsForDate:(NSDate *)eventDate{
 //    UIInterfaceOrientation orien = [UIApplication sharedApplication].statusBarOrientation;
-    NSLog(@"calendarDayTimelineView");
+    //NSLog(@"calendarDayTimelineView");
     sqlite3 *db;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     
     if(options.selectedSegmentIndex == PERSONAL){
         self.title = @"Program";
-        NSLog(@"personal");
+        //NSLog(@"personal");
         NSString *dbPathAttending = [docPath stringByAppendingPathComponent:@"attending.db"];
         NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
         [events removeAllObjects];
@@ -194,7 +194,7 @@
     } else {
         NSString *dbPathEvents = [docPath stringByAppendingPathComponent:@"events.db"];
         [events removeAllObjects];
-                NSLog(@"complete");
+                //NSLog(@"complete");
         self.title = @"Program";
         if (sqlite3_open([dbPathEvents UTF8String], &db)==SQLITE_OK) {
             sqlite3_stmt *myStatment;

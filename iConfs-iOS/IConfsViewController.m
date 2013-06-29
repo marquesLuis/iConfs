@@ -316,14 +316,14 @@
     NSString *s = @"create ";
     s = [s stringByAppendingString:name];
     s = [s stringByAppendingString:@" database"];
-    NSLog(@"%@", s);
+    //NSLog(@"%@", s);
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     
     NSString *dbPathFeed = [docPath stringByAppendingPathComponent:name];
     
-    char *error; //TODO
+    char *error;
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -332,13 +332,13 @@
         
         //creat db
         if(sqlite3_open(dbPath, &feedback)== SQLITE_OK){
-            sqlite3_exec(feedback, sql_stnt, NULL, NULL, &error);
+            if(sqlite3_exec(feedback, sql_stnt, NULL, NULL, &error)==SQLITE_OK){
+                NSLog(@"table %@ created", name);
+            }else{
+                NSLog(@"table NOT %@ created", name);
+                NSLog(@"%s", error);
+            }
             sqlite3_close(feedback);
-            
-            NSString *s = @"table ";
-            s = [s stringByAppendingString:name];
-            s = [s stringByAppendingString:@" created! =)"];
-            NSLog(@"%@", s);
         }
     }
 }
@@ -372,7 +372,7 @@
         if (!last_row){
             
             NSString *inserStmt = [NSString stringWithFormat:@"INSERT INTO %@(LAST_DATE , LAST_ID , LAST_REMOVED) VALUES ('2000-01-01', '0', '0')", [table_file uppercaseString]];
-            
+            NSLog(@"%@", inserStmt);
             const char *insert_stmt = [inserStmt UTF8String];
             
             if (sqlite3_exec(db, insert_stmt, NULL, NULL, &error)==SQLITE_OK) {
@@ -416,6 +416,7 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
         const char* query_sql = [querySql UTF8String];
+        NSLog(@"%@", querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
         }else{

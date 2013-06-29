@@ -38,7 +38,7 @@
     picker.delegate = self;
     picker.showsSelectionIndicator = YES;
     picker.autoresizingMask = UIAlertViewStyleDefault;
-    NSLog(@"%f", self.view.frame.size.height);
+    //NSLog(@"%f", self.view.frame.size.height);
     picker.frame = CGRectMake(0, 300, self.view.frame.size.width, 162);
     picker.dataSource = self;
 	[self.view addSubview:picker];

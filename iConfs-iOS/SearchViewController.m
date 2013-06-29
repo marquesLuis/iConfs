@@ -127,7 +127,7 @@
 #pragma mark - UITableView Datasource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSLog(@"numberOfSectionsInTableView");
+    //NSLog(@"numberOfSectionsInTableView");
     [self tableIndices];
     int size = [[self sortedIndices]count];
     
@@ -141,26 +141,26 @@
     id p = [[self sortedIndices] objectAtIndex:section];
     
     NSMutableArray * rows = [indices objectForKey:p];
-    NSLog(@"numberOfRowsInSection section : %d, num rows : %d with id : %@", section, rows.count, p);
+    //NSLog(@"numberOfRowsInSection section : %d, num rows : %d with id : %@", section, rows.count, p);
 
     return rows.count;
 }
 
 -(NSArray*)sortedIndices {
-    NSLog(@"sortedIndices");
+    //NSLog(@"sortedIndices");
     return [indices.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
 #pragma mark - Table indices
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-    NSLog(@"titleForHeaderInSection");
-    NSLog(@"%d", section);
+    //NSLog(@"titleForHeaderInSection");
+    //NSLog(@"%d", section);
             return [[self sortedIndices] objectAtIndex:section];
         
 }
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    NSLog(@"sectionIndexTitlesForTableView");
+    //NSLog(@"sectionIndexTitlesForTableView");
             return [self sortedIndices];
         
 }
@@ -213,7 +213,7 @@
 }*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{NSLog(@"cellForRowAtIndexPath");
+{//NSLog(@"cellForRowAtIndexPath");
     NSString *CellIdentifier = @"Cell1";
     
     UITableViewCell * cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -236,10 +236,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"heightForRowAtIndexPath");
-    NSLog(@"segmentindex = %d", NETWORKING);
+    //NSLog(@"heightForRowAtIndexPath");
+    //NSLog(@"segmentindex = %d", NETWORKING);
     if(options.selectedSegmentIndex == NETWORKING){
-        NSLog(@"HELLO!");
+        //NSLog(@"HELLO!");
         return 80.0f;
     }
     return 40.0f;
@@ -304,9 +304,9 @@
 - (void)configureNotesCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"indexPath. row = %d", indexPath.row);
+    //NSLog(@"indexPath. row = %d", indexPath.row);
     NSMutableArray * note = [[indices objectForKey:[[self sortedIndices] objectAtIndex:indexPath.section]]objectAtIndex:indexPath.row];
-    NSLog(@"count note %d", [note count]);
+    //NSLog(@"count note %d", [note count]);
 
     //  local notes
     if([note count] == 7)
@@ -433,7 +433,7 @@
         network.personId = personID;
         
     } else if([[segue identifier] isEqualToString:@"segue27"]){
-        NSLog(@"My note");
+        //NSLog(@"My note");
         NoteViewController *note = (NoteViewController*)segue.destinationViewController;
         note.hidePersonButton = YES;
         note.hideSessionButton = NO;
@@ -517,7 +517,7 @@
 - (IBAction)doSearch:(UIButton *)sender {
     
     Search *s = [[Search alloc]init];
-    NSLog(@"search is : %@", self.searchBar.text);
+    //NSLog(@"search is : %@", self.searchBar.text);
     persons = [s getPeopleFromRegex:self.searchBar.text];
     sessions = [s getEventsFromRegex:self.searchBar.text];
     notesServer = [s getNotesServerFromRegex:self.searchBar.text];

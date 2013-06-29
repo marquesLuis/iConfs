@@ -86,7 +86,7 @@
                 NSString *notificationDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 3)];
                 
                 Notification *notification = [[Notification alloc]init];
-                NSLog(@"%@", notificationTitle);
+                //NSLog(@"%@", notificationTitle);
                 [notification setTitle:notificationTitle];
                 [notification setText:notificationText];
                 [notification setDate:notificationDate];
@@ -154,7 +154,7 @@
     Notification *notification = [_arrayOfNotifications objectAtIndex:indexPath.row];
     notif.numNotification = indexPath.row;
     notif.notificationTitle = notification.title;
-    NSLog(@"%@", notification.date);
+    //NSLog(@"%@", notification.date);
     notif.notificationDateContent = notification.date;
     notif.notificationContent = notification.text;
     }

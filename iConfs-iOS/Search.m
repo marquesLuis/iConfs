@@ -58,7 +58,7 @@
        @try {
         
            NSString * querySql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@",table_name, where];
-           // NSLog(@"Pesquisa SQL: %@", querySql);
+           // //NSLog(@"Pesquisa SQL: %@", querySql);
            const char* query_sql = [querySql UTF8String];
         if (sqlite3_prepare(notificationDB, query_sql, -1, &statement, NULL)==SQLITE_OK) {
                 while (sqlite3_step(statement)==SQLITE_ROW) {
@@ -72,7 +72,7 @@
             }
         }
         @catch (NSException *exception) {
-            NSLog(@"PROBLEMA %@",[exception description] );
+            //NSLog(@"PROBLEMA %@",[exception description] );
         }
         @finally {
             sqlite3_close(notificationDB);

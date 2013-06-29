@@ -45,7 +45,7 @@
     description.backgroundColor = [UIColor lightTextColor];
 
     [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,description.contentSize.height) ];
-    NSLog(@"description content : %f", description.contentSize.height);
+    //NSLog(@"description content : %f", description.contentSize.height);
     
     if(description.contentSize.height <= 300){
         CGRect frame = description.frame;
@@ -55,11 +55,11 @@
         [description setFrame:CGRectMake(15, 145, self.view.frame.size.width-30,300) ];
     }
     [self.view addSubview:description];
-    NSLog(@"description done : %f", description.frame.size.height);
+    //NSLog(@"description done : %f", description.frame.size.height);
     
 
    /* if(description.contentSize.height <= 100){
-        NSLog(@"hey");
+        //NSLog(@"hey");
         CGRect frame = description.frame;
         frame.size.height = description.contentSize.height;
         description.frame = frame;

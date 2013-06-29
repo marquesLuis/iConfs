@@ -360,7 +360,7 @@
     } else {
         
         if([[segue identifier] isEqualToString:@"segue18"]){
-            NSLog(@"Edit note");
+            //NSLog(@"Edit note");
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
@@ -374,7 +374,7 @@
             note.date = n.date;
             note.noteID = n.noteID;
         } else {
-           /* NSLog(@"new note...");
+           /* //NSLog(@"new note...");
             NoteViewController *note = (NoteViewController*)segue.destinationViewController;
             note.hidePersonButton = YES;
             note.hideSessionButton = NO;
@@ -641,7 +641,7 @@
             
             
             [biography setFrame:CGRectMake(15, height, self.view.frame.size.width-25,biography.contentSize.height) ];
-            NSLog(@"biography content : %f", biography.contentSize.height);
+            //NSLog(@"biography content : %f", biography.contentSize.height);
             
             if(biography.contentSize.height <= 200){
                 CGRect frame = biography.frame;
@@ -653,18 +653,18 @@
                 height+=210;
             }
             [headerView addSubview:biography];
-            NSLog(@"biography done : %f", biography.frame.size.height);
+            //NSLog(@"biography done : %f", biography.frame.size.height);
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,30,100,90)];
         imageView.contentMode  = UIViewContentModeScaleAspectFit;
         
         UIImage * imageFromURL;
-        NSLog(@"photo:  %@", personProfile.photo);
-                NSLog(@"photo:  %d", personProfile.photo == nil);
+        //NSLog(@"photo:  %@", personProfile.photo);
+                //NSLog(@"photo:  %d", personProfile.photo == nil);
         if([personProfile.photo isEqualToString:@""]){
             imageFromURL = [UIImage imageNamed:@"defaultPerson.jpg"];
-            NSLog(@"hey");
+            //NSLog(@"hey");
         }        else
             imageFromURL = [UIImage imageWithContentsOfFile:personProfile.photo];
         
@@ -778,7 +778,7 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
-        //NSLog(@"%@",querySql);
+        NSLog(@"%@",querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
             NSLog(@"%@ inserted", [table_name capitalizedString]);
@@ -798,7 +798,7 @@
 
 - (IBAction)addNote:(UIBarButtonItem *)sender {
     
-    NSLog(@"new note...");
+    //NSLog(@"new note...");
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle: nil];
     
     NoteViewController *note =[storyboard instantiateViewControllerWithIdentifier:@"NoteViewController"];
@@ -817,7 +817,7 @@
 
 -(void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSLog(@"removing the note...");
+    //NSLog(@"removing the note...");
     
     if(editingStyle == UITableViewCellEditingStyleDelete){
         Note * note = [notes objectAtIndex:indexPath.row];
@@ -847,10 +847,10 @@
         const char* query_sql = [querySql UTF8String];
         
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-            NSLog(@"%@ deleted", [table_name capitalizedString]);
+            //NSLog(@"%@ deleted", [table_name capitalizedString]);
         }else{
-            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-            NSLog(@"%s", error);
+            //NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            //NSLog(@"%s", error);
         }
         
         sqlite3_close(notificationDB);
