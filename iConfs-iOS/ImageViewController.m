@@ -93,8 +93,8 @@
                 [local setLocalID:localID];
                 [locations addObject:local];
             }
+            sqlite3_finalize(statement);
         }
-        sqlite3_finalize(statement);
         sqlite3_close(db);
     }
     return locations;

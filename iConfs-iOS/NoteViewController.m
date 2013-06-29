@@ -169,6 +169,7 @@ return self;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"my_self.db"];
+    NSString * result = nil;
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
@@ -176,15 +177,16 @@ return self;
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-                
+            while (!result && sqlite3_step(statement)==SQLITE_ROW) {
+                result = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                break;
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }
     
-    return nil;
+    return result;
 }
 
 -(NSMutableArray*)getAllPersons{
@@ -216,6 +218,7 @@ return self;
                 [items addObject:[[KNSelectorItem alloc] initWithDisplayValue:name selectValue:personID imageUrl:photo]];
                 
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }
@@ -245,9 +248,9 @@ return self;
 
                     name = [[[[[prefix stringByAppendingString:@" " ]stringByAppendingString:lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
                 }
-                sqlite3_close(peopleDB);
+                sqlite3_finalize(statement);
             }
-            
+            sqlite3_close(peopleDB); 
         }
         return name;
     
@@ -265,8 +268,9 @@ return self;
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &myStatment, NULL)==SQLITE_OK) {
-            while (sqlite3_step(myStatment)==SQLITE_ROW) {
+            while (!title && sqlite3_step(myStatment)==SQLITE_ROW) {
                 title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
+                break;
             }
             sqlite3_finalize(myStatment);
         }
@@ -297,6 +301,7 @@ return self;
 
                 
             }
+            sqlite3_finalize(myStatment);
         }
         sqlite3_close(db);
     }

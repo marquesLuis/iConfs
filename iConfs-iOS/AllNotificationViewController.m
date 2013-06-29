@@ -92,9 +92,9 @@
                 [notification setDate:notificationDate];
                 [_arrayOfNotifications addObject:notification];
             }
-            sqlite3_close(notificationDB);
+            sqlite3_finalize(statement);
         }
-        
+       sqlite3_close(notificationDB); 
     }
 }
 #pragma mark - Table view data source

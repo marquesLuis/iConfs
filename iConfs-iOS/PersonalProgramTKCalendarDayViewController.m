@@ -96,6 +96,7 @@
                 endDate = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 2)];
                 
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }

@@ -146,8 +146,10 @@
                 [person setBiography:biography];
                 [person setCalendar_version:calendarVersion];
                 [person setDate:dates];
+               
                 [person setPhoto:photo];
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(peopleDB);
     }
@@ -249,8 +251,8 @@
                     [array addObject:note];
                 }
             }
+            sqlite3_finalize(statement);
         }
-        sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
     return array;

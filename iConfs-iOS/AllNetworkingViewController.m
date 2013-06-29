@@ -60,12 +60,12 @@
     [self displayNetworking];
     
     //self.tableNetworking = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
-  //  self.tableNetworking.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height));
+    //  self.tableNetworking.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (2*self.navigationController.toolbar.frame.size.height));
     
-
+    
     self.tableNetworking.dataSource = self;
     self.tableNetworking.delegate = self;
-   // [self.view addSubview:self.tableNetworking ];
+    // [self.view addSubview:self.tableNetworking ];
     
     [self navigationButtons];
 }
@@ -205,28 +205,28 @@
 {
     
     if([[segue identifier] isEqualToString:@"segue2"]){
-
-    NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
-    NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
-    network.personPhoto = [[UIImageView alloc] init];
-    
-    Networking *networking;
-    
-    if(self.typeNet.selectedSegmentIndex == 0)
-        networking = [_privateNetworking objectAtIndex:indexPath.row];
-    else
-        networking= [_arrayOfNetworking objectAtIndex:indexPath.row];
-    
-    network.numNetworking = indexPath.row;
-    network.netTitle = networking.title;
-    Person * person = [self getPerson:networking.personID];
-    NSString * letter = [person.firstName substringToIndex:1];
-    network.namePerson = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
-    network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
-    network.photoPath = person.photo;
-    network.networkingDescriptionContent = networking.text;
-    network.personId = networking.personID;
-}
+        
+        NSIndexPath *indexPath = [tableNetworking indexPathForSelectedRow];
+        NetworkingViewController * network = (NetworkingViewController*)segue.destinationViewController;
+        network.personPhoto = [[UIImageView alloc] init];
+        
+        Networking *networking;
+        
+        if(self.typeNet.selectedSegmentIndex == 0)
+            networking = [_privateNetworking objectAtIndex:indexPath.row];
+        else
+            networking= [_arrayOfNetworking objectAtIndex:indexPath.row];
+        
+        network.numNetworking = indexPath.row;
+        network.netTitle = networking.title;
+        Person * person = [self getPerson:networking.personID];
+        NSString * letter = [person.firstName substringToIndex:1];
+        network.namePerson = [[[[[person.prefix stringByAppendingString:@" " ]stringByAppendingString:person.lastName]stringByAppendingString:@", "]stringByAppendingString:letter]stringByAppendingString:@"."];
+        network.personPhoto = [[UIImageView alloc] initWithFrame:CGRectMake(200,10,100,50)];
+        network.photoPath = person.photo;
+        network.networkingDescriptionContent = networking.text;
+        network.personId = networking.personID;
+    }
 }
 
 
@@ -292,8 +292,9 @@
                 [networking setDate:date];
                 [_arrayOfNetworking addObject:networking];
             }
-            sqlite3_close(networkingDB);
+            sqlite3_finalize(statement);
         }
+        sqlite3_close(networkingDB);
     }
 }
 
@@ -332,8 +333,9 @@
                 [person setDate:date];
                 [person setPhoto:photo];
             }
-            sqlite3_close(peopleDB);
+            sqlite3_finalize(statement);
         }
+        sqlite3_close(peopleDB);
         
     }
     return person;
@@ -345,6 +347,7 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"my_self.db"];
+    NSString * result = nil;
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
@@ -352,15 +355,16 @@
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
-                
+            while (!nil &&sqlite3_step(statement)==SQLITE_ROW) {
+                result = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 0)];
+                break;
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }
     
-    return nil;
+    return result;
 }
 
 #pragma mark TKCalendarDayViewDelegate
@@ -392,17 +396,18 @@
                 while (sqlite3_step(myStatment)==SQLITE_ROW) {
                     [networks addObject:[[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 5)]];
                 }
-               
-                    
-                    
+                
+                
+                
                 sqlite3_finalize(myStatment);
-
+                
                 
             } else
                 NSLog(@"Error while attaching '%s'", sqlite3_errmsg(db));
-            sqlite3_close(db);
+            
             
         }
+        sqlite3_close(db);
     }
     
     
@@ -410,7 +415,7 @@
     //NSString *dbPathString = [docPath stringByAppendingPathComponent:dbNetworking];
     NSLog(@"a");
     sqlite3_stmt *myStatment;
-
+    
     if (sqlite3_open([dbNetworking UTF8String], &notificationDB)==SQLITE_OK) {
         NSLog(@"b");
         @try {

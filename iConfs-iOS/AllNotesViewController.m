@@ -151,8 +151,8 @@
                     [allNotes addObject:note];
                 }
             }
+            sqlite3_finalize(statement);
         }
-        sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
     return allNotes;

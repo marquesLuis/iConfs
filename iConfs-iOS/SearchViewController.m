@@ -280,9 +280,9 @@
                 [person setDate:date];
                 [person setPhoto:photo];
             }
-            sqlite3_close(peopleDB);
+            sqlite3_finalize(statement);
         }
-        
+       sqlite3_close(peopleDB); 
     }
     return person;
 }
@@ -488,6 +488,7 @@
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docPath = [path objectAtIndex:0];
     NSString *dbPathString = [docPath stringByAppendingPathComponent:@"location.db"];
+    NSString * result = nil;
     
     if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
         
@@ -495,11 +496,11 @@
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
-            while (sqlite3_step(statement)==SQLITE_ROW) {
-                return [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
-                
-                
+            while (!result  && sqlite3_step(statement)==SQLITE_ROW) {
+                result = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                break;
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }

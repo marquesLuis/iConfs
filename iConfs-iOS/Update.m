@@ -97,7 +97,7 @@
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
    NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
    // NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
-    NSLog(postURL);
+    NSLog(@"%@", postURL);
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [urlRequest setHTTPMethod:@"POST"];
@@ -115,7 +115,7 @@
         NSString *string = [[NSString alloc]  initWithBytes:[returnData bytes]
                                                      length:[returnData length] encoding:NSUTF8StringEncoding];
         string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"&newline;"]];
-       // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\n" withString:@"&newline;"]];
+        string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"&#x27;" withString:@"&quot;"]];
        // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r" withString:@"&newline;"]];
        NSLog(@"String result:");
        NSLog(@"%@", string);
@@ -1075,12 +1075,12 @@
     
     NSLog(@"Handling");
     
-    NSMutableDictionary *feedbacks = [request objectForKey:@"feedbacks"];
+    NSMutableArray *feedbacks = [request objectForKey:@"feedbacks"];
     if(feedbacks){
         [self handleFeedbacks: feedbacks];
     }
     
-    NSMutableDictionary *messages = [request objectForKey:@"messages"];
+    NSMutableArray * messages = [request objectForKey:@"messages"];
     if(messages){
         [self handleMessages:messages];
     }

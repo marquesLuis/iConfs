@@ -98,7 +98,8 @@
 		9DBF869D175600D700845BD7 /* Feedback.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF869C175600D700845BD7 /* Feedback.m */; };
 		9DBF86A01756014000845BD7 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF869F1756014000845BD7 /* Message.m */; };
 		9DBF86A61756021800845BD7 /* CommunicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBF86A51756021800845BD7 /* CommunicationViewController.m */; };
-		9DBF86A8175602F200845BD7 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBF86A7175602F100845BD7 /* libsqlite3.0.dylib */; };
+		9DE203C2177F929E007E522D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE203C1177F929E007E522D /* libsqlite3.dylib */; };
+		9DE203C4177F9372007E522D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE203C1177F929E007E522D /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,6 +274,7 @@
 		9DBF86A41756021800845BD7 /* CommunicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommunicationViewController.h; sourceTree = "<group>"; };
 		9DBF86A51756021800845BD7 /* CommunicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommunicationViewController.m; sourceTree = "<group>"; };
 		9DBF86A7175602F100845BD7 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		9DE203C1177F929E007E522D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,12 +282,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DE203C2177F929E007E522D /* libsqlite3.dylib in Frameworks */,
 				9DBF865F1755FD6E00845BD7 /* CoreGraphics.framework in Frameworks */,
 				62F3B06B176CF0CC00E4BA8F /* ImageIO.framework in Frameworks */,
 				621A5A33175E499300B02EEC /* libTapkuLibrary.a in Frameworks */,
 				621A5A21175E456C00B02EEC /* QuartzCore.framework in Frameworks */,
 				621A5A1F175E456300B02EEC /* MapKit.framework in Frameworks */,
-				9DBF86A8175602F200845BD7 /* libsqlite3.0.dylib in Frameworks */,
 				9DBF865B1755FD6E00845BD7 /* UIKit.framework in Frameworks */,
 				9DBF865D1755FD6E00845BD7 /* Foundation.framework in Frameworks */,
 				9DBF86611755FD6E00845BD7 /* CoreData.framework in Frameworks */,
@@ -296,6 +298,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DE203C4177F9372007E522D /* libsqlite3.dylib in Frameworks */,
 				9DBF867E1755FD6E00845BD7 /* SenTestingKit.framework in Frameworks */,
 				9DBF867F1755FD6E00845BD7 /* UIKit.framework in Frameworks */,
 				9DBF86801755FD6E00845BD7 /* Foundation.framework in Frameworks */,
@@ -370,6 +373,7 @@
 		9DBF864E1755FD6E00845BD7 = {
 			isa = PBXGroup;
 			children = (
+				9DE203C1177F929E007E522D /* libsqlite3.dylib */,
 				9D0349741777359D007801DE /* NSString+HTML.h */,
 				9D0349751777359D007801DE /* NSString+HTML.m */,
 				9D877CEF1774CF7600894D5C /* AESCrypt.h */,

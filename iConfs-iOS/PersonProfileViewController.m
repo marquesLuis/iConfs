@@ -85,10 +85,10 @@
                     [info addObject:infos];
                     
                 }
+                sqlite3_finalize(statement);
             }
-            sqlite3_close(db);
         }
-        
+        sqlite3_close(db);
     }
 }
 
@@ -131,6 +131,7 @@
                 [areas addObject:area];
                 
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(db);
     }
@@ -158,6 +159,7 @@
                     NSString *area = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
                     personInterests = [personInterests stringByAppendingString:area];
                 }
+                sqlite3_finalize(statement);
             }
         }
         sqlite3_close(db);
@@ -206,6 +208,7 @@
                 [person setDate:date];
                 [person setPhoto:photo];
             }
+            sqlite3_finalize(statement);
         }
         sqlite3_close(peopleDB);
     }
@@ -234,8 +237,9 @@
                 [networking setDate:date];
                 [personNetworking addObject:networking];
             }
-            sqlite3_close(networkingDB);
+            sqlite3_finalize(statement);
         }
+        sqlite3_close(networkingDB);
     }
 }
 
@@ -485,8 +489,8 @@
                     [allNotes addObject:note];
                 }
             }
+            sqlite3_finalize(statement);
         }
-        sqlite3_finalize(statement);
         sqlite3_close(peopleDB);
     }
     return allNotes;
