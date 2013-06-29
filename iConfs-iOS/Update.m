@@ -97,7 +97,7 @@
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
    //NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
     NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
-    //  // NSLog(postURL);
+    //  NSLog(postURL);
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [urlRequest setHTTPMethod:@"POST"];
@@ -117,8 +117,8 @@
         string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r\n" withString:@"&newline;"]];
        // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\n" withString:@"&newline;"]];
        // string = [NSString stringWithFormat:@"%@", [string stringByReplacingOccurrencesOfString:@"\r" withString:@"&newline;"]];
-       // // NSLog(@"String result:");
-       // // NSLog(@"%@", string);
+       NSLog(@"String result:");
+       NSLog(@"%@", string);
         //NSArray *array= [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:&error];
         
         
@@ -528,7 +528,7 @@
  */
 
 - (void)handleFeedbacks:(NSMutableDictionary *)feedbacks{
-  //  // NSLog(@"Handling Feedbacks");
+  //  NSLog(@"Handling Feedbacks");
     NSUInteger size = [[feedbacks objectForKey:@"size"] integerValue];
     NSMutableArray *feedbacks_delete = [NSMutableArray arrayWithCapacity:size];
     
@@ -543,7 +543,7 @@
 }
 
 - (void)handleMessages:(NSMutableDictionary *)messages {
-  //  // NSLog(@"Handling Messages");
+  //  NSLog(@"Handling Messages");
     NSUInteger size = [[messages objectForKey:@"size"] integerValue];
     NSMutableArray *messages_delete = [NSMutableArray arrayWithCapacity:size];
     
@@ -558,7 +558,7 @@
 }
 
 - (void)handleNotifications:(NSMutableDictionary *)notifications {
-    // // NSLog(@"Handling Notifications");
+    NSLog(@"Handling Notifications");
     NSString * notif_db_file = @"notifications.db";
     NSString * notif_table_name = @"notifications";
     
@@ -632,7 +632,7 @@
 }
 
 - (void)handleEvents:(NSMutableDictionary *) events{
-    // NSLog(@"Handling Events");
+    NSLog(@"Handling Events");
     NSString * db_file = @"events.db";
     NSString * table_name = @"EVENTS";
     
@@ -693,7 +693,7 @@
 }
 
 - (void)handleNetworkings: (NSMutableDictionary *)networkings{
-    // NSLog(@"Handling Networkings");
+    NSLog(@"Handling Networkings");
     NSString * db_file = @"networkings.db";
     NSString * table_name = @"NETWORKINGS";
     
@@ -746,7 +746,7 @@
     if (tmp){
         NSString * pic = [@"person" stringByAppendingFormat:@"_%d",server_id];
         photo = [self downloadFile:tmp withName:pic];
-        //// NSLog(@"Photo at %@", photo);
+        NSLog(@"Photo at %@", photo);
     }
     
     NSString * bio = [person objectForKey:@"bio"];
@@ -771,7 +771,7 @@
 }
 
 - (void) handlePeople:(NSMutableDictionary *)people{
-    // NSLog(@"Handling People");
+    NSLog(@"Handling People");
     NSString * db_file = @"people.db";
     NSString * table_name = @"PEOPLE";
     
@@ -854,7 +854,7 @@
 }
 
 - (void) handleAttending:(NSMutableDictionary *)attendings{
-    // NSLog(@"Handling Attending");
+    NSLog(@"Handling Attending");
     NSString * db_file = @"attending.db";
     NSString * table_name = @"ATTENDING";
     
@@ -891,7 +891,7 @@
 }
 
 - (void) handleAreas:(NSMutableDictionary *)areas{
-    // NSLog(@"Handling Areas");
+    NSLog(@"Handling Areas");
     NSString * db_file = @"areas.db";
     NSString * table_name = @"AREAS";
     
@@ -938,14 +938,14 @@
     if (tmp){
         NSString * pic = [@"local" stringByAppendingFormat:@"_%d",server_id];
         photo = [self downloadFile:tmp withName:pic];
-        //// NSLog(@"Photo at %@", photo);
+        NSLog(@"Photo at %@", photo);
     }
     
     return [@"" stringByAppendingFormat:@"'%@','%@','%d'", title, photo, server_id];
 }
 
 - (void) handleLocations:(NSMutableDictionary *)locations{
-    // NSLog(@"Handling Locations");
+    NSLog(@"Handling Locations");
     NSString * db_file = @"location.db";
     NSString * table_name = @"LOCATION";
     
@@ -991,7 +991,7 @@
 }
 
 - (void) handleNotes: (NSMutableDictionary *)notes{
-    // NSLog(@"Handling Notes");
+    NSLog(@"Handling Notes");
     NSString * db_file = @"notes.db";
     NSString * table_name = @"NOTES";
     
@@ -1037,7 +1037,7 @@
 }
 
 - (void) handleContacts: (NSMutableDictionary *) contacts{
-    // NSLog(@"Handling Contacts");
+    NSLog(@"Handling Contacts");
     NSMutableArray *news = [contacts objectForKey:@"contacts"];
     if (news){
         [self deleteAllFrom:@"contact_local.db" table:@"CONTACT_LOCAL"];
@@ -1089,11 +1089,11 @@
 
 - (BOOL) handleResponse:(NSMutableDictionary *)request{
     if (!request){
-        // NSLog(@"Request is null");
+        NSLog(@"Request is null");
         return NO;
     }
     
-    // NSLog(@"Handling");
+    NSLog(@"Handling");
     
     NSMutableDictionary *feedbacks = [request objectForKey:@"feedbacks"];
     if(feedbacks){
@@ -1190,7 +1190,7 @@
     } else if ([low_extension isEqualToString:@".jpg"] || [low_extension isEqualToString:@".jpeg"]) {
         [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
     } else {
-        // NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+        NSLog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
     }
 }
 
@@ -1226,12 +1226,12 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString],[attribute uppercaseString], server_id];
         const char* query_sql = [querySql UTF8String];
-        
+        NSLog(@"%@", querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-            // NSLog(@"%@ deleted", [table_name capitalizedString]);
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
         }else{
-            // NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-            // NSLog(@"%s", error);
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
         }
         
         sqlite3_close(notificationDB);
@@ -1246,13 +1246,13 @@
     if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)",[table_name uppercaseString], [definition uppercaseString], values];
-        //// NSLog(@"%@",querySql);
+        NSLog(@"%@",querySql);
         const char* query_sql = [querySql UTF8String];
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-            // NSLog(@"%@ inserted", [table_name capitalizedString]);
+            NSLog(@"%@ inserted", [table_name capitalizedString]);
         }else{
-            // NSLog(@"%@ NOT inserted", [table_name capitalizedString]);
-            // NSLog(@"%s", error);
+            NSLog(@"%@ NOT inserted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
         }
         
         sqlite3_close(notificationDB);
@@ -1274,12 +1274,12 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@",[table_name uppercaseString]];
         const char* query_sql = [querySql UTF8String];
-        
+        NSLog(@"%@", querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-            // NSLog(@"%@ deleted", [table_name capitalizedString]);
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
         }else{
-            // NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-            // NSLog(@"%s", error);
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
         }
         
         sqlite3_close(notificationDB);
@@ -1301,12 +1301,12 @@
         char *error;
         NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ ",[table_name uppercaseString]];
         const char* query_sql = [querySql UTF8String];
-        
+        NSLog(@"%@", querySql);
         if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-            // NSLog(@"%@ deleted", [table_name capitalizedString]);
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
         }else{
-            // NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-            // NSLog(@"%s", error);
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
         }
         
         sqlite3_close(notificationDB);
@@ -1324,12 +1324,12 @@
         for(NSNumber *n in array){
             NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %d",[table_name uppercaseString], [attribute uppercaseString], [n integerValue]];
             const char* query_sql = [querySql UTF8String];
-            
+            NSLog(@"%@", querySql);
             if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-                // NSLog(@"%@ deleted", [table_name capitalizedString]);
+                NSLog(@"%@ deleted", [table_name capitalizedString]);
             }else{
-                // NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-                // NSLog(@"%s", error);
+                NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+                NSLog(@"%s", error);
             }
         }
         sqlite3_close(notificationDB);
@@ -1347,12 +1347,12 @@
         for(NSString *n in array){
             NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %@",[table_name uppercaseString], [atribute uppercaseString], n];
             const char* query_sql = [querySql UTF8String];
-            
+            NSLog(@"%@", querySql);
             if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
-                // NSLog(@"%@ deleted", [table_name capitalizedString]);
+                NSLog(@"%@ deleted", [table_name capitalizedString]);
             }else{
-                // NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
-                // NSLog(@"%s", error);
+                NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+                NSLog(@"%s", error);
             }
         }
         sqlite3_close(notificationDB);
