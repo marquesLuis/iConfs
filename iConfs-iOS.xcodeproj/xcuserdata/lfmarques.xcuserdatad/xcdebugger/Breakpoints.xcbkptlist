@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "847"
-         endingLineNumber = "847"
+         startingLineNumber = "827"
+         endingLineNumber = "827"
          landmarkName = "-handlePeople:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "848"
-         endingLineNumber = "848"
+         startingLineNumber = "828"
+         endingLineNumber = "828"
          landmarkName = "@implementation Update"
          landmarkType = "3">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "849"
-         endingLineNumber = "849"
+         startingLineNumber = "829"
+         endingLineNumber = "829"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "850"
-         endingLineNumber = "850"
+         startingLineNumber = "830"
+         endingLineNumber = "830"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "851"
-         endingLineNumber = "851"
+         startingLineNumber = "831"
+         endingLineNumber = "831"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "852"
-         endingLineNumber = "852"
+         startingLineNumber = "832"
+         endingLineNumber = "832"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "iConfs-iOS/Update.m"
-         timestampString = "394032365.377531"
+         timestampString = "394217782.525436"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "853"
-         endingLineNumber = "853"
+         startingLineNumber = "833"
+         endingLineNumber = "833"
          landmarkName = "-readAttending:"
          landmarkType = "5">
       </FileBreakpoint>

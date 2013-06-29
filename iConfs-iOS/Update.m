@@ -95,9 +95,9 @@
 {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
-   //NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
-    NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
-    //  NSLog(postURL);
+   NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
+   // NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
+    NSLog(postURL);
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [urlRequest setHTTPMethod:@"POST"];
@@ -527,34 +527,14 @@
  -----------------------------------------------------Handling Zone-----------------------------------------------------
  */
 
-- (void)handleFeedbacks:(NSMutableDictionary *)feedbacks{
-  //  NSLog(@"Handling Feedbacks");
-    NSUInteger size = [[feedbacks objectForKey:@"size"] integerValue];
-    NSMutableArray *feedbacks_delete = [NSMutableArray arrayWithCapacity:size];
-    
-    for(NSString *key in feedbacks.allKeys){
-        if(![key isEqual:@"size"]){
-            NSUInteger feedback = [[feedbacks objectForKey:key] integerValue];
-            [feedbacks_delete addObject:[NSNumber numberWithInt:feedback]];
-        }
-    }
-    
-    [self deleteAllFrom:@"feedbacks.db" table:@"feedbacks" where:@"ID" equalsIntegerArray:feedbacks_delete];
+- (void)handleFeedbacks:(NSMutableArray *)feedbacks{
+    NSLog(@"Handling Feedbacks");
+    [self deleteAllFrom:@"feedbacks.db" table:@"feedbacks" where:@"ID" equalsIntegerArray:feedbacks];
 }
 
-- (void)handleMessages:(NSMutableDictionary *)messages {
-  //  NSLog(@"Handling Messages");
-    NSUInteger size = [[messages objectForKey:@"size"] integerValue];
-    NSMutableArray *messages_delete = [NSMutableArray arrayWithCapacity:size];
-    
-    for(NSString *key in messages.allKeys){
-        if(![key isEqual:@"size"]){
-            NSUInteger message = [[messages objectForKey:key] integerValue];
-            [messages_delete addObject:[NSNumber numberWithInt:message]];
-        }
-    }
-    
-    [self deleteAllFrom:@"messages.db" table:@"MESSAGES" where:@"ID" equalsIntegerArray:messages_delete];
+- (void)handleMessages:(NSMutableArray *)messages {
+    NSLog(@"Handling Messages");
+    [self deleteAllFrom:@"messages.db" table:@"MESSAGES" where:@"ID" equalsIntegerArray:messages];
 }
 
 - (void)handleNotifications:(NSMutableDictionary *)notifications {
