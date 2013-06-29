@@ -67,6 +67,7 @@
     [self.navigationItem setLeftItemsSupplementBackButton:YES];
     
     
+    
     UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search:)];
     buttonItem.style = UIBarButtonItemStyleBordered;
     
