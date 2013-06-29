@@ -32,7 +32,6 @@
     self.update = [[Update alloc] initDB];
     
     
-    NSLog(@"HomeVC %d", self.interfaceOrientation);
     [self navigationButtons];
 }
 
@@ -74,11 +73,9 @@
 
 }
 
-- (IBAction)goToContacts:(UIButton *)sender {
+/*- (IBAction)goToContacts:(UIButton *)sender {
     [self performSegueWithIdentifier:@"segue33" sender:nil];
-
-    
-}
+}*/
 
 - (IBAction)updateButton:(UIButton *)sender {
     [self.update update];
