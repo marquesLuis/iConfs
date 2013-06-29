@@ -118,8 +118,6 @@
         NSMutableDictionary * person = [json objectForKey:@"person"];
         NSString * server_id = [person objectForKey:@"server_id"];
         NSString * values = [@"" stringByAppendingFormat:@"'%@', '%@','%@'",server_id, email, password];
-        [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"SERVER_ID, EMAIL, PASSWORD" values:values];
-        [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:[NSString stringWithFormat:@"'%@'",server_id]];
         
         NSMutableDictionary * dates = [json objectForKey:@"dates"];
         [self insertTo:@"calendar.db" table:@"CALENDAR" definition:@"FIRST, LAST" values:[@"" stringByAppendingFormat:@"'%@', '%@'", [dates objectForKey:@"begin"], [dates objectForKey:@"end"]]];
@@ -131,6 +129,8 @@
             [self alertMessages:@"Error on Login" withMessage:@"Something went wrong on your login :("];
             return NO;
         }
+        [self insertTo:@"my_self.db" table:@"MY_SELF" definition:@"SERVER_ID, EMAIL, PASSWORD" values:values];
+        [self insertTo:@"asked_contact.db" table:@"ASKED_CONTACT" definition:@"PERSON_ID" values:[NSString stringWithFormat:@"'%@'",server_id]];
         
     }
     @catch (NSException * e) {
@@ -170,7 +170,7 @@
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS MESSAGES( ID INTEGER PRIMARY KEY AUTOINCREMENT, MESSAGE TEXT, EMAIL TEXT)" WithName:@"messages.db"];
     
     //notifications
-    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE TEXT, SERVER_ID INTEGER PRIMARY KEY)" WithName:@"notifications.db"];
+    [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS( ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, NOTIFICATION TEXT, DATE TEXT, SERVER_ID INTEGER )" WithName:@"notifications.db"];
     
     [self createOrOpenDB:"CREATE TABLE IF NOT EXISTS NOTIFICATIONS_STATUS( ID INTEGER PRIMARY KEY AUTOINCREMENT, LAST_DATE TEXT, LAST_ID INTEGER, LAST_REMOVED INTEGER)" WithName:@"notifications_status.db"];
     
