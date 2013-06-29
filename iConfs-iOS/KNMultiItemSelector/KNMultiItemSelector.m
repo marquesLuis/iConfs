@@ -104,14 +104,16 @@
 
 -(void)viewDidLoad {
     rowselected = nil;
-
+    [self treatKeyboard ];
   //self.view = [[UIView alloc] initWithFrame:CGRectZero];
   self.view.backgroundColor = [UIColor whiteColor];
   
   // Initialize tableView
   //self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.height- (3*self.navigationController.toolbar.frame.size.height)) style:UITableViewStyleGrouped];
-  self.tableView.delegate = self;
+    
+
+    self.tableView.delegate = self;
   self.tableView.dataSource = self;
   self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
   [self.view addSubview:self.tableView];
@@ -223,7 +225,7 @@
     
     if(self.infoType == CONTACT){
         
-        NSArray *itemArray = [NSArray arrayWithObjects: @"My contacts", @"Participants", @"Pending contacts", nil];
+        NSArray *itemArray = [NSArray arrayWithObjects: @"My contacts", @"Participants", @"Pending", nil];
         contactToolbar  = [[UISegmentedControl alloc] initWithItems:itemArray];
         
         
@@ -372,6 +374,24 @@
     }
 }
 
+/**
+ * Handles a recognized single tap gesture.
+ */
+- (void) handleTapFrom: (UITapGestureRecognizer *) recognizer {
+    // hide the keyboard
+    [self.searchTextField resignFirstResponder];
+}
+
+/*
+ * single tap to resign (hide) the keyboard
+ */
+- (void) treatKeyboard {
+    NSLog(@"keyboard");
+    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapFrom:)];
+    singleTapRecognizer.numberOfTouchesRequired = 1;
+    singleTapRecognizer.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:singleTapRecognizer];
+}
 
 -(void)viewWillAppear:(BOOL)animated {
     
@@ -511,16 +531,30 @@
     return cell;
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    if(self.infoType == CONTACT)
+        return YES;
+    return NO;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+   // PersonProfileViewController * person = [[PersonProfileViewController alloc] init];
+    PersonProfileViewController * person = (PersonProfileViewController*)segue.destinationViewController;
+
+     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    KNSelectorItem * item = [self itemAtIndexPath:indexPath];
+    person.personID = item.selectValue;
+//    [[self navigationController] pushViewController:person animated:YES];
+}
+
 #pragma mark - UITableView Delegate
 -(void)tableView:(UITableView *)_tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
     if(self.infoType == CONTACT){
-        PersonProfileViewController * person = [[PersonProfileViewController alloc] init];
-        KNSelectorItem * item = [self itemAtIndexPath:indexPath];
-        person.personID = item.selectValue;
-        [[self navigationController] pushViewController:person animated:YES];
+        [self performSegueWithIdentifier:@"segue32" sender:nil];
+
         return;
     }
     
@@ -572,7 +606,8 @@
                 [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
         }
-    
+    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
 

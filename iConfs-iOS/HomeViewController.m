@@ -51,22 +51,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-- (IBAction)goToContacts:(UIButton *)sender {
-    
-    NSLog(@"goToParticipants");
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"segue33"]){
+    // PersonProfileViewController * person = [[PersonProfileViewController alloc] init];
+    KNMultiItemSelector * selector = (KNMultiItemSelector*)segue.destinationViewController;
     NSMutableArray * items = [self getAllPersons];
-    KNMultiItemSelector * selector;
     
+    selector = [selector initWithItems:items preselectedItems:nil title:@"Participants"
+                                          placeholderText:@"Search by name"
+                                                 delegate:self
+                                                     text:nil];
     
-    selector = [[KNMultiItemSelector alloc] initWithItems:items
-                                             preselectedItems:nil
-                                                        title:@"Participants"
-                                              placeholderText:@"Search by name"
-                                                     delegate:self
-                                                         text:nil];
-        
     selector.infoType = 3;
     // Again, the two optional settings
     selector.allowSearchControl = YES;
@@ -74,10 +70,14 @@
     selector.useRecentItems     = NO;
     selector.maxNumberOfRecentItems = 0;
     selector.allowModeButtons = NO;
-    UINavigationController * uinav = [[UINavigationController alloc] initWithRootViewController:selector];
-    uinav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    uinav.modalPresentationStyle = UIModalPresentationFormSheet;
-   [self.navigationController pushViewController:selector animated:YES];
+    }
+
+}
+
+- (IBAction)goToContacts:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"segue33" sender:nil];
+
+    
 }
 
 - (IBAction)updateButton:(UIButton *)sender {
