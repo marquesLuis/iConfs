@@ -79,6 +79,14 @@
         password = self.passwordField.text;
     }
     
+    NSString * my_self = [self getMySelf];
+    if (my_self){
+        Update *update = [[Update alloc] initDB];
+        if([update updateWithoutMessage])
+            if([my_self isEqualToString:email])
+                [self eraseDBS];
+    }
+    
     // [self postRquest];
     
     NSError *error;
@@ -139,6 +147,53 @@
     }
     return YES;
 
+}
+
+-(void)eraseDBS{
+    [self clearDBFile:@"asked_contact.db" table:@"ASKED_CONTACT"];
+    [self clearDBFile:@"asked_contact_local.db" table:@"ASKED_CONTACT_LOCAL"];
+    [self clearDBFile:@"attending.db" table:@"ATTENDING"];
+    [self clearDBFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
+    [self clearDBFile:@"contact.db" table:@"CONTACT"];
+    [self clearDBFile:@"contact_local.db" table:@"CONTACT_LOCAL"];
+    [self clearDBFile:@"deleted_local.db" table:@"DELETED_LOCAL"];
+    [self clearDBFile:@"info.db" table:@"INFO"];
+    [self clearDBFile:@"my_self.db" table:@"MY_SELF"];
+    [self clearDBFile:@"notes.db" table:@"NOTES"];
+    [self clearDBFile:@"notes_local.db" table:@"NOTES_LOCAL"];
+    [self clearDBFile:@"notes_status.db" table:@"NOTES_STATUS"];
+    [self clearDBFile:@"pending_contact.db" table:@"PENDING_CONTACT"];
+    [self clearDBFile:@"rejected_contact.db" table:@"REJECTED_CONTACT"];
+    [self clearDBFile:@"rejected_contact_local.db" table:@"REJECTED_CONTACT_LOCAL"];
+    
+    [self initBDFile:@"attending_status.db" table:@"ATTENDING_STATUS"];
+    [self initBDFile:@"notes_status.db" table:@"NOTES_STATUS"];
+}
+
+-(NSString*)getMySelf{
+    sqlite3_stmt *statement;
+    sqlite3 *db;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:@"my_self.db"];
+    NSString * result = nil;
+    
+    if (sqlite3_open([dbPathString UTF8String], &db)==SQLITE_OK) {
+        
+        NSString *querySql = [NSString stringWithFormat:@"SELECT * FROM MY_SELF"];
+        const char* query_sql = [querySql UTF8String];
+        
+        if (!result && sqlite3_prepare(db, query_sql, -1, &statement, NULL)==SQLITE_OK) {
+            while (sqlite3_step(statement)==SQLITE_ROW) {
+                result = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(statement, 1)];
+                break;
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(db);
+    }
+    
+    return result;
 }
 
 
@@ -327,6 +382,28 @@
             }
         }
         sqlite3_close(db);
+    }
+}
+
+-(void) clearDBFile:(NSString *) db_file table: (NSString *) table_name{
+    sqlite3 *notificationDB;
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docPath = [path objectAtIndex:0];
+    NSString *dbPathString = [docPath stringByAppendingPathComponent:db_file];
+    
+    if (sqlite3_open([dbPathString UTF8String], &notificationDB)==SQLITE_OK) {
+        char *error;
+        NSString *querySql = [NSString stringWithFormat:@"DELETE FROM %@",[table_name uppercaseString]];
+        const char* query_sql = [querySql UTF8String];
+        NSLog(@"%@", querySql);
+        if(sqlite3_exec(notificationDB, query_sql, NULL, NULL, &error)==SQLITE_OK){
+            NSLog(@"%@ deleted", [table_name capitalizedString]);
+        }else{
+            NSLog(@"%@ NOT deleted", [table_name capitalizedString]);
+            NSLog(@"%s", error);
+        }
+        
+        sqlite3_close(notificationDB);
     }
 }
 

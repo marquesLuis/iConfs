@@ -81,8 +81,8 @@
         [self alertMessages:@"Success" withMessage:@"Everything is now up to date :)"];
 }
 
-- (void) updateWithoutMessage{
-    [self handleResponse:[self postRequest:[self buildRequest]withAlert:NO]];
+- (BOOL) updateWithoutMessage{
+    return [self handleResponse:[self postRequest:[self buildRequest]withAlert:NO]];
 }
 
 
