@@ -95,6 +95,10 @@
 {
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonRequest options:0 error:&error];
+    NSString *sent = [[NSString alloc]  initWithBytes:[data bytes]
+                                                 length:[data length] encoding:NSUTF8StringEncoding];
+    NSLog(@"JSON Sent: \n%@",sent);
+    
    NSString *postURL = [@"http://193.136.122.134:3000/update/update?" stringByAppendingString:[self auth_params]];
    // NSString *postURL = [@"http://0.0.0.0:3000/update/update?" stringByAppendingString:[self auth_params]];
    // NSLog(@"%@", postURL);
