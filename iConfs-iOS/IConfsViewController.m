@@ -71,9 +71,8 @@
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
-    //TODO
-    NSString *email = @"lfmarques2@gmail.com";
-    NSString *password = @"123123123";
+    NSString *email = @"";
+    NSString *password = @"";
     if (self.emailField.text.length || self.passwordField.text.length){
         email = self.emailField.text;
         password = self.passwordField.text;

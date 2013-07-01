@@ -173,10 +173,12 @@
                         NSString *date = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 10)];
                         NSString *local = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 13)];
                         NSString * eventID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
+                        NSString * speakerID = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 11)];
                         e.title = title;
                         e.description = description;
                         e.kind = kind;
                         e.eventID = eventID;
+                        e.speakerID = speakerID;
                         e.begin = [date stringByAppendingString:dateBegin];
                         e.date = date;
                         e.end = [date stringByAppendingString:dateEnd];

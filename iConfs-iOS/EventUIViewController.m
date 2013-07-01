@@ -15,10 +15,13 @@
     UILabel * date;
     UITextView * authors;
     UILabel * author;
+    UITextView * speakers;
+    UILabel * speaker;
     UILabel * description;
     UITextView * descriptionText;
     UILabel * notes;
     NSString * all_authors;
+    NSString * all_speakers;
     
 }
 
@@ -61,6 +64,8 @@
     title = [[UITextView alloc]init];
     date = [[UILabel alloc]init];
     authors = [[UITextView alloc]init];
+    speakers = [[UITextView alloc]init];
+    speaker = [[UILabel alloc]init];
     author = [[UILabel alloc]init];
     description = [[UILabel alloc]init];
     descriptionText = [[UITextView alloc]init];
@@ -193,6 +198,8 @@
     }
     return allAuthors;
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -356,6 +363,29 @@
         [author setText: @"Authors:"];
         author.font = [UIFont boldSystemFontOfSize:15.0f];
         [headerView addSubview:author];
+    }
+    
+    if(![all_speakers isEqualToString:@""]){
+        
+        //speakers
+        [speakers setEditable:NO];
+        speakers.scrollEnabled = YES;
+        speakers.layer.cornerRadius = 5.0f;
+        speakers.clipsToBounds = YES;
+        speakers.backgroundColor = [UIColor lightTextColor];
+        speakers.layer.borderColor = [[UIColor colorWithRed:(255/255.f) green:(250/255.f) blue:(240/255) alpha:1.0f ]CGColor];
+        [speakers setTextAlignment: NSTextAlignmentJustified];
+        [speakers setText:all_speakers];
+        [headerView addSubview:speakers];
+        
+        //speaker label
+        speaker.backgroundColor = [UIColor colorWithRed:(16/255.f) green:(78/255.f) blue:(139/255.f) alpha:1.0f ];
+        speaker.textColor = [UIColor whiteColor];
+        speaker.layer.cornerRadius = 5.0f;
+        speaker.clipsToBounds = YES;
+        [speaker setText: @"Speakers:"];
+        speaker.font = [UIFont boldSystemFontOfSize:15.0f];
+        [headerView addSubview:speaker];
     }
     
     if(![self.event.description isEqualToString:@""]){
@@ -572,7 +602,19 @@
             [author setFrame:LabelFrameAuthor];
         }
         
-        
+        Person * p = [self getPerson:self.event.speakerID];
+        all_speakers = [p.lastName stringByAppendingFormat:@", %@", p.firstName ];
+        NSLog(@"speaker : %@", all_speakers);
+
+        if(![all_speakers isEqualToString:@""]){
+            NSLog(@"speaker : %@", all_speakers);
+
+            CGRect LabelFrameAuthor = CGRectMake(10, 170, 550, 20);
+            CGRect LabelFrameAuthors = CGRectMake(10, 190, 550, 40);
+            y = 210;
+            [authors setFrame:LabelFrameAuthors];
+            [author setFrame:LabelFrameAuthor];
+        }
         
         
         if(![self.event.description isEqualToString:@""]){
@@ -620,7 +662,18 @@
             [authors setFrame:LabelFrameAuthors];
             [author setFrame:LabelFrameAuthor];
         }
-        
+        Person * p = [self getPerson:self.event.speakerID];
+        all_speakers = [p.lastName stringByAppendingFormat:@", %@", p.firstName ];
+        NSLog(@"speaker : %@", all_speakers);
+        if(![all_speakers isEqualToString:@""] && all_speakers != nil){
+            CGRect LabelFrameAuthor = CGRectMake(10, y, self.view.frame.size.width-20, 20);
+            y+=20;
+            CGRect LabelFrameAuthors = CGRectMake(10, y, self.view.frame.size.width-20, 20);
+            y +=35;
+            [authors setFrame:LabelFrameAuthors];
+            [author setFrame:LabelFrameAuthor];
+        }
+
         
         
         
