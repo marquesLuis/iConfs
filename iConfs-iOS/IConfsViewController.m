@@ -76,8 +76,13 @@
     if (self.emailField.text.length || self.passwordField.text.length){
         email = self.emailField.text;
         password = self.passwordField.text;
+        
+        
+        NSString *key = @"235677A81B29A981E47FB176F6C1F";
+        password = [AESCrypt encrypt:password password:key];
+        email = [AESCrypt encrypt:email password:key];
     }
-    
+          
     NSString * my_self = [self getMySelf];
     if (my_self){
         Update *update = [[Update alloc] initDB];
@@ -90,10 +95,6 @@
     
     NSError *error;
     //First build up the JSON body for login
-    
-    NSString *key = @"235677A81B29A981E47FB176F6C1F";
-    password = [AESCrypt encrypt:password password:key];
-    email = [AESCrypt encrypt:email password:key];
     
     NSString *initial = @"%@update/login";
     NSString *initialArgs = @"?registry[email]=";
