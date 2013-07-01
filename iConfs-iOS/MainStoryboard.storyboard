@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4vQ-CZ-OHC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4vQ-CZ-OHC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -411,7 +411,7 @@
             <objects>
                 <viewController storyboardIdentifier="NetworkingViewController" id="Lf2-YB-DYM" customClass="NetworkingViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FDa-dO-WKK">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVf-UX-OtY">
@@ -496,7 +496,7 @@
                                     <fragment>
                                         <string key="content">This application doesn’t update or download data all the time to save energy of your iPhone. 
 Data is only updated when you create, edit or remove notes, send feedback or a message to the organization, invite, accept or reject contacts. 
-You can also force the synchronization with the server by clicking on the arrow button on the main screen.</string>
+You can also force the synchronization with the server by clicking on the arrow button on the home screen.</string>
                                         <attributes>
                                             <font key="NSFont" size="17" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -1261,7 +1261,7 @@ You can also force the synchronization with the server by clicking on the arrow 
             <objects>
                 <viewController storyboardIdentifier="NoteViewController" id="Djl-U9-qqq" customClass="NoteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lXc-zi-VKq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ5-4O-OME">
@@ -1417,7 +1417,6 @@ You can also force the synchronization with the server by clicking on the arrow 
         <class className="HomeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goToContacts:" candidateClass="UIButton"/>
                 <relationship kind="action" name="updateButton:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="logout" candidateClass="UIBarButtonItem"/>
             </relationships>
@@ -1440,7 +1439,6 @@ You can also force the synchronization with the server by clicking on the arrow 
         <class className="InfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="goBack:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="content" candidateClass="UITextView"/>
             </relationships>
         </class>
