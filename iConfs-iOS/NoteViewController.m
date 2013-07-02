@@ -68,6 +68,7 @@ return self;
         
 
         if(self.eventID){
+            NSLog(@"há um event %@", [self getEventTitle]);
             [self.aboutSessionButton setTitle:[self getEventTitle] forState:UIControlStateNormal];
         }
         if(self.personID){
@@ -268,7 +269,7 @@ return self;
         const char* query_sql = [querySql UTF8String];
         
         if (sqlite3_prepare(db, query_sql, -1, &myStatment, NULL)==SQLITE_OK) {
-            while (!title && sqlite3_step(myStatment)==SQLITE_ROW) {
+            while (sqlite3_step(myStatment)==SQLITE_ROW) {
                 title = [[NSString alloc]initWithUTF8String:(const char *)sqlite3_column_text(myStatment, 1)];
                 break;
             }

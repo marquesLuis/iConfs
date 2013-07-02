@@ -604,16 +604,14 @@
         
         Person * p = [self getPerson:self.event.speakerID];
         all_speakers = [p.lastName stringByAppendingFormat:@", %@", p.firstName ];
-        NSLog(@"speaker : %@", all_speakers);
 
         if(![all_speakers isEqualToString:@""]){
-            NSLog(@"speaker : %@", all_speakers);
 
             CGRect LabelFrameAuthor = CGRectMake(10, 170, 550, 20);
             CGRect LabelFrameAuthors = CGRectMake(10, 190, 550, 40);
             y = 210;
-            [authors setFrame:LabelFrameAuthors];
-            [author setFrame:LabelFrameAuthor];
+            [speakers setFrame:LabelFrameAuthors];
+            [speaker setFrame:LabelFrameAuthor];
         }
         
         
@@ -664,14 +662,14 @@
         }
         Person * p = [self getPerson:self.event.speakerID];
         all_speakers = [p.lastName stringByAppendingFormat:@", %@", p.firstName ];
-        NSLog(@"speaker : %@", all_speakers);
         if(![all_speakers isEqualToString:@""] && all_speakers != nil){
             CGRect LabelFrameAuthor = CGRectMake(10, y, self.view.frame.size.width-20, 20);
             y+=20;
-            CGRect LabelFrameAuthors = CGRectMake(10, y, self.view.frame.size.width-20, 20);
+            CGRect LabelFrameAuthors = CGRectMake(10, y, self.view.frame.size.width-20, 40);
             y +=35;
-            [authors setFrame:LabelFrameAuthors];
-            [author setFrame:LabelFrameAuthor];
+            [speakers setFrame:LabelFrameAuthors];
+            [speaker setFrame:LabelFrameAuthor];
+            y+=15;
         }
 
         

@@ -221,6 +221,7 @@
         note.isLocal = n.isLocal;
         note.content = n.content;
         note.personID = n.personID;
+        NSLog(@"eventID: %@", n.eventID);
         note.eventID = n.eventID;
         note.noteID = n.noteID;
         note.date = n.date;

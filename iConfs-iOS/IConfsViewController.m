@@ -78,16 +78,18 @@
         password = self.passwordField.text;
         
         
-        NSString *key = @"235677A81B29A981E47FB176F6C1F";
-        password = [AESCrypt encrypt:password password:key];
-        email = [AESCrypt encrypt:email password:key];
+        
     }
-          
+    
+    NSString *key = @"235677A81B29A981E47FB176F6C1F";
+    password = [AESCrypt encrypt:password password:key];
+    email = [AESCrypt encrypt:email password:key];
+    
     NSString * my_self = [self getMySelf];
     if (my_self){
         Update *update = [[Update alloc] initDB];
         if([update updateWithoutMessage])
-            if([my_self isEqualToString:email])
+            if(![my_self isEqualToString:email])
                 [self eraseDBS];
     }
     
@@ -106,7 +108,7 @@
     
     //I send a POST url request
     NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://193.136.122.134:3000/"];
-  // NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://0.0.0.0:3000/"];
+   // NSString *postUrlString = [NSString stringWithFormat:completeLink, @"http://0.0.0.0:3000/"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: postUrlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [request setHTTPMethod:@"GET"];
     
